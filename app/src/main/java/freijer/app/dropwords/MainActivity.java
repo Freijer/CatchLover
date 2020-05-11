@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
     protected int f001;
+    protected int y002;
 
     ObjectAnimator  button1;
     ObjectAnimator  button2;
@@ -70,16 +71,18 @@ public class MainActivity extends AppCompatActivity  {
 
     protected TextView textSee, textClock, score, textView2, textView3, textView4;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
-    protected Button faq, start, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
+    protected Button progress,  faq, start, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
     private Button chek1, chek2, chek3, chek4, chek5, chek6, chek7, chek8, chek9, chek10;
     private ImageView  clock;
     protected ArrayList<String> MainListWord = new ArrayList<String>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
     protected ArrayList<Integer> LineY_1 = new ArrayList<Integer>();
+    protected ArrayList<Integer> MooveToEdgeDropLayout = new ArrayList<>();
     private ArrayList<String> list;
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();;
+    protected ConstraintLayout dropLayout;
 
     int counter;
     public int getCounter() {
@@ -118,6 +121,13 @@ public class MainActivity extends AppCompatActivity  {
         return new Point(x, y);
     } //определние координат
 
+    public Point viewLocateDrop(View v) {
+        int[] location = new int[2];
+        v.getLocationOnScreen(location);
+        int x = location[0];
+        int y = location[1];
+        return new Point(x, y);
+    } //определние координат
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -156,10 +166,12 @@ public class MainActivity extends AppCompatActivity  {
         textButton8 = findViewById(R.id.textButton8);
         textButton9 = findViewById(R.id.textButton9);
         textButton10 = findViewById(R.id.textButton10);
+        progress = findViewById(R.id.progress);
 
         score = findViewById(R.id.score);
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
+        dropLayout = findViewById(R.id.dropLayout);
 
         ListXUpFull(); // заполняем листы координат
         ControlWordsfinFail(); // читаем проверочные слова
@@ -175,21 +187,6 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     public void ListXUpFull(){
-// Первое словор по горзинотале
-//        ListCoordinateX_1.add(0-40);
-//        ListCoordinateX_1.add(100-this.shiftLiterals);
-//        ListCoordinateX_1.add(180-this.shiftLiterals);
-//        ListCoordinateX_1.add(260-this.shiftLiterals);
-//        ListCoordinateX_1.add(340-this.shiftLiterals);
-//        ListCoordinateX_1.add(420-this.shiftLiterals);
-//        ListCoordinateX_1.add(500-this.shiftLiterals);
-//        ListCoordinateX_1.add(580-this.shiftLiterals);
-//        ListCoordinateX_1.add(660-this.shiftLiterals);
-//        ListCoordinateX_1.add(740-this.shiftLiterals);
-//        ListCoordinateX_1.add(820-this.shiftLiterals);
-//        ListCoordinateX_1.add(900-this.shiftLiterals);
-//        ListCoordinateX_1.add(980-this.shiftLiterals);
-//        ListCoordinateX_1.add(1060-this.shiftLiterals);
         ListCoordinateX_1.add(200);
         ListCoordinateX_1.add(200);
     } //координаты для первого слова
@@ -420,23 +417,10 @@ public class MainActivity extends AppCompatActivity  {
         AlertDialog alert = builder.create();
         alert.show();
     } //Всплывабщее окно
+
     public void LetsGo(View v){
         ShowButtons();
         starter.setVisibility(GONE);
-//        button1.start();
-//        button2.start();
-//        button3.start();
-//        button4.start();
-//        button5.start();
-//        button6.start();
-//        button7.start();
-//        button8.start();
-//        button9.start();
-//        button10.start();
-//        button11.start();
-//        button12.start();
-//        button13.start();
-//        button14.start();
         new CountDownTimer(120000, 1000) {
             @SuppressLint("SetTextI18n")
             public void onTick(long millisUntilFinished) {
@@ -456,6 +440,8 @@ public class MainActivity extends AppCompatActivity  {
                 LineY_1.add(f001);
             }
         }, 500);
+
+
     }  // СТАРТ, часы
     protected void HowScore(int A){
         switch (A){
@@ -944,7 +930,7 @@ public class MainActivity extends AppCompatActivity  {
     public void Creates(){
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
                 PropertyValuesHolder.ofFloat("x", 0, 850),
-                PropertyValuesHolder.ofFloat("y", 140, 1050));
+                PropertyValuesHolder.ofFloat("y", 140,   1050));
         button1.setDuration(9000);
         button1.setRepeatCount(ObjectAnimator.INFINITE);
         button1.setRepeatMode(ObjectAnimator.REVERSE);
