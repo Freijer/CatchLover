@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -17,6 +22,7 @@ import android.os.Build;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -41,6 +47,9 @@ public class MainActivity extends AppCompatActivity  {
     //ctrl+shift+ - все свернуть
 
 
+    protected Button but1, but2, but3;
+    private AlertDialog OptionDialog;
+
 
     protected int textFlag;
     public int getTextFlag() {
@@ -53,6 +62,7 @@ public class MainActivity extends AppCompatActivity  {
 
     protected int f001;
     protected int y002;
+
 
     ObjectAnimator  button1;
     ObjectAnimator  button2;
@@ -78,7 +88,7 @@ public class MainActivity extends AppCompatActivity  {
     protected ArrayList<String> MainListWord = new ArrayList<String>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
     protected ArrayList<Integer> LineY_1 = new ArrayList<Integer>();
-    protected ArrayList<Integer> MooveToEdgeDropLayout = new ArrayList<>();
+    protected ArrayList<Integer> MooveToEdgeDropLayout = new ArrayList<Integer>();
     private ArrayList<String> list;
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();;
@@ -121,13 +131,6 @@ public class MainActivity extends AppCompatActivity  {
         return new Point(x, y);
     } //определние координат
 
-    public Point viewLocateDrop(View v) {
-        int[] location = new int[2];
-        v.getLocationOnScreen(location);
-        int x = location[0];
-        int y = location[1];
-        return new Point(x, y);
-    } //определние координат
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -185,6 +188,10 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
+
+
+
+
 
     public void ListXUpFull(){
         ListCoordinateX_1.add(200);
@@ -930,7 +937,7 @@ public class MainActivity extends AppCompatActivity  {
     public void Creates(){
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
                 PropertyValuesHolder.ofFloat("x", 0, 850),
-                PropertyValuesHolder.ofFloat("y", 140,   1050));
+                PropertyValuesHolder.ofFloat("y", 140, 1050));
         button1.setDuration(9000);
         button1.setRepeatCount(ObjectAnimator.INFINITE);
         button1.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1657,5 +1664,39 @@ public class MainActivity extends AppCompatActivity  {
         ListXUpFull();
     } //кнопка 14
 
+    public void ShowStats(View v){
+        Dialogus();
+    }
+
+    public void Dialogus(){
+
+        OptionDialog = new AlertDialog.Builder(this).create();
+        OptionDialog.setTitle("Статистика");
+        LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = li.inflate(R.layout.stats_fragment, null, false);
+        but1 =  v.findViewById(R.id.but1);
+        but2 =  v.findViewById(R.id.but2);
+        but3 =  v.findViewById(R.id.but3);
+
+        OptionDialog.setView(v);
+        OptionDialog.setCancelable(true);
+
+        but2.setBackgroundColor(Color.CYAN);
+        but2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                OptionDialog.dismiss();
+            }
+
+        });
+
+        but3.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                but3.setBackgroundColor(Color.YELLOW);
+            }
+        });
+
+
+        OptionDialog.show();
+    }
 
 }

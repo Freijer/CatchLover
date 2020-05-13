@@ -21,6 +21,8 @@
         app:layout_constraintVertical_bias="0.0">
 
 
+
+
         <ImageView
             android:id="@+id/imageView7"
             android:layout_width="414dp"
@@ -33,6 +35,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.003" />
+
+
+        
 
 
         <Button
@@ -313,18 +318,6 @@
             app:layout_constraintVertical_bias="0.995">
 
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="49dp"
-                android:layout_height="47dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/scrollView2"
-                app:layout_constraintHorizontal_bias="0.491"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.117"
-                app:srcCompat="@android:drawable/btn_star_big_on" />
-
             <ScrollView
                 android:id="@+id/scrollView2"
                 android:layout_width="291dp"
@@ -513,13 +506,14 @@
                 android:id="@+id/progress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="ShowStats"
                 android:text="Прогресс"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/scrollView2"
-                app:layout_constraintHorizontal_bias="0.727"
+                app:layout_constraintHorizontal_bias="0.428"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.354" />
+                app:layout_constraintVertical_bias="0.098" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
