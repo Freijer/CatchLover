@@ -11,9 +11,6 @@ import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -47,7 +44,7 @@ public class MainActivity extends AppCompatActivity  {
     //ctrl+shift+ - все свернуть
 
 
-    protected Button but1, but2, but3;
+    protected Button butClose, but2, but3;
     private AlertDialog OptionDialog;
 
 
@@ -62,7 +59,6 @@ public class MainActivity extends AppCompatActivity  {
 
     protected int f001;
     protected int y002;
-
 
     ObjectAnimator  button1;
     ObjectAnimator  button2;
@@ -81,7 +77,7 @@ public class MainActivity extends AppCompatActivity  {
 
     protected TextView textSee, textClock, score, textView2, textView3, textView4;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
-    protected Button progress,  faq, start, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
+    protected Button progress,  faq, task, start, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
     private Button chek1, chek2, chek3, chek4, chek5, chek6, chek7, chek8, chek9, chek10;
     private ImageView  clock;
@@ -123,6 +119,74 @@ public class MainActivity extends AppCompatActivity  {
         this.speed = speed;
     }
 
+    protected int list_2;
+    protected int list_3;
+    protected int list_4;
+    protected int list_5;
+    protected int list_6;
+    protected int list_7;
+    protected int list_8;
+    protected int list_9;
+    protected int list_10;
+
+    public int getList_2() {
+        return list_2;
+    }
+    public void setList_2(int list_2) {
+        this.list_2 = list_2;
+    }
+    public int getList_3() {
+        return list_3;
+    }
+    public void setList_3(int list_3) {
+        this.list_3 = list_3;
+    }
+    public int getList_4() {
+        return list_4;
+    }
+    public void setList_4(int list_4) {
+        this.list_4 = list_4;
+    }
+    public int getList_5() {
+        return list_5;
+    }
+    public void setList_5(int list_5) {
+        this.list_5 = list_5;
+    }
+    public int getList_6() {
+        return list_6;
+    }
+    public void setList_6(int list_6) {
+        this.list_6 = list_6;
+    }
+    public int getList_7() {
+        return list_7;
+    }
+    public void setList_7(int list_7) {
+        this.list_7 = list_7;
+    }
+    public int getList_8() {
+        return list_8;
+    }
+    public void setList_8(int list_8) {
+        this.list_8 = list_8;
+    }
+    public int getList_9() {
+        return list_9;
+    }
+    public void setList_9(int list_9) {
+        this.list_9 = list_9;
+    }
+    public int getList_10() {
+        return list_10;
+    }
+    public void setList_10(int list_10) {
+        this.list_10 = list_10;
+    }
+
+
+    protected TextView text_2_inner, text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner;
+
     public Point viewLocatedAt(View v) {
         int[] location = new int[2];
         v.getLocationOnScreen(location);
@@ -130,7 +194,6 @@ public class MainActivity extends AppCompatActivity  {
         int y = location[1];
         return new Point(x, y);
     } //определние координат
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -154,7 +217,9 @@ public class MainActivity extends AppCompatActivity  {
         pr13 = findViewById(R.id.pr13);
         pr14 = findViewById(R.id.pr14);
         starter = findViewById(R.id.starter);
+        reset = findViewById(R.id.reset);
         faq = findViewById(R.id.faq);
+        task = findViewById(R.id.task);
 
         clock = findViewById(R.id.clock);
         textSee = findViewById(R.id.textSee);
@@ -185,12 +250,9 @@ public class MainActivity extends AppCompatActivity  {
         SetLiteralsonButtons(); //установка букв на слова
         Creates(); //активация и движеение кнопок
         String gg = Integer.toString(numsofliteralsinword);
-
+        reset.setVisibility(GONE);
 
     }
-
-
-
 
 
     public void ListXUpFull(){
@@ -300,6 +362,7 @@ public class MainActivity extends AppCompatActivity  {
                 button13.start();
                 button14.start();
                 break;
+
         }
         clock.setVisibility(VISIBLE);
         textSee.setVisibility(VISIBLE);
@@ -425,20 +488,11 @@ public class MainActivity extends AppCompatActivity  {
         alert.show();
     } //Всплывабщее окно
 
+
     public void LetsGo(View v){
         ShowButtons();
         starter.setVisibility(GONE);
-        new CountDownTimer(120000, 1000) {
-            @SuppressLint("SetTextI18n")
-            public void onTick(long millisUntilFinished) {
-                textClock.setText("Сек :" + millisUntilFinished / 1000);
-            }
-            public void onFinish() {
-                textClock.setText("done!");
-                GoneButnnons();
-            }
-        }.start();
-
+        Clocks();
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -448,27 +502,84 @@ public class MainActivity extends AppCompatActivity  {
             }
         }, 500);
 
-
     }  // СТАРТ, часы
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void NewWord(){
+        starter.setVisibility(GONE);
+        reset.setVisibility(GONE);
+        ControlWordsfinFail(); // читаем проверочные слова
+        ReadWords(); // читаем ключевык
+        Randomizator(); // разиваем на буквы
+        SetLiteralsonButtons(); //установка букв на слова
+        ListXUpFull(); // заполняем листы координат
+        ShowButtons(); // услвие появление кнопок зависитот кол-ва букв в слове
+        Creates(); //активация и движеение кнопок
+        Clocks();
+    } // следующее слово
+
+    public void Clocks(){
+        new CountDownTimer(12000, 1000) {
+            @SuppressLint("SetTextI18n")
+            public void onTick(long millisUntilFinished) {
+                textClock.setText("Сек :" + millisUntilFinished / 1000);
+            }
+            public void onFinish() {
+                textClock.setText("done!");
+                GoneButnnons();
+                Dialogus();
+                reset.setVisibility(VISIBLE);
+                ResetREesetr();
+                setTextFlag(0);
+
+            }
+        }.start();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void ResTart(View v){
+        NewWord();
+    }
+    @SuppressLint("SetTextI18n")
     protected void HowScore(int A){
         switch (A){
             case 2:
                 setCounter(getCounter()-1);
+                setList_2(getList_3()-1);
                 break;
             case 3:
                 setCounter(getCounter()+1);
+                setList_3(getList_3()+1);
                 break;
             case 4:
                 setCounter(getCounter()+2);
+                setList_4(getList_4()+1);
                 break;
             case 5:
                 setCounter(getCounter()+3);
+                setList_5(getList_4()+1);
+                break;
             case 6:
                 setCounter(getCounter()+4);
+                setList_6(getList_4()+1);
+                break;
+            case 7:
+                setCounter(getCounter()+4);
+                setList_7(getList_4()+1);
+                break;
+            case 8:
+                setCounter(getCounter()+4);
+                setList_8(getList_4()+1);
+                break;
+            case 9:
+                setCounter(getCounter()+4);
+                setList_9(getList_4()+1);
+                break;
+            case 10:
+                setCounter(getCounter()+4);
+                setList_10(getList_10()+1);
                 break;
         }
     }//подсчет очков
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Chek_1(View v){
@@ -778,130 +889,11 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.removeAll(MainListWord);
         textSee.setText(String.valueOf(MainListWord));
         textButton10.setEnabled(false);
+        GoneButnnons();
+        Dialogus();
+        reset.setVisibility(VISIBLE);
     }
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    public void Chek_2(View v){
-//        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-//        String KeyWord = (String.join("", ArrayListWord));
-//        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(1620);
-//            this.f001 = viewLocatedAt(textView4).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek2.setBackgroundResource(R.drawable.thrue);
-//            HowScore(ArrayListWord.length);
-//            score.setText(""+getCounter());
-//        } else if (listBuffer.contains(KeyWord)){
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(1620);
-//            this.f001 = viewLocatedAt(textView4).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek2.setBackgroundResource(R.drawable.wrong);
-//            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-//            setCounter(getCounter()-1);
-//            score.setText(""+getCounter());
-//        }  else  {
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(1620);
-//            this.f001 = viewLocatedAt(textView4).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek2.setBackgroundResource(R.drawable.wrong);
-//            setCounter(getCounter()-1);
-//            score.setText(""+getCounter());
-//        }
-//        EneblendButtonsAffterPress();
-//        listBuffer.add(KeyWord);
-//        MainListWord.removeAll(MainListWord);
-//        textSee.setText(String.valueOf(MainListWord));
-//    }
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    public void Chek_3(View v){
-//        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-//        String KeyWord = (String.join("", ArrayListWord));
-//        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(1820);
-//            this.f001 = viewLocatedAt(textView4).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek3.setBackgroundResource(R.drawable.thrue);
-//            HowScore(ArrayListWord.length);
-//            score.setText(""+getCounter());
-//        } else if (listBuffer.contains(KeyWord)){
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(1820);
-//            this.f001 = viewLocatedAt(textView4).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek3.setBackgroundResource(R.drawable.wrong);
-//            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-//            setCounter(getCounter()-1);
-//            score.setText(""+getCounter());
-//        }  else  {
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(1820);
-//            this.f001 = viewLocatedAt(textView4).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek3.setBackgroundResource(R.drawable.wrong);
-//            setCounter(getCounter()-1);
-//            score.setText(""+getCounter());
-//        }
-//        EneblendButtonsAffterPress();
-//        listBuffer.add(KeyWord);
-//        MainListWord.removeAll(MainListWord);
-//        textSee.setText(String.valueOf(MainListWord));
-//    }
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    public void Chek_4(View v){
-//        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-//        String KeyWord = (String.join("", ArrayListWord));
-//        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(2020);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek4.setBackgroundResource(R.drawable.thrue);
-//            HowScore(ArrayListWord.length);
-//            score.setText(""+getCounter());
-//        } else if (listBuffer.contains(KeyWord)){
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(2020);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek4.setBackgroundResource(R.drawable.wrong);
-//            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-//            setCounter(getCounter()-1);
-//            score.setText(""+getCounter());
-//        }  else  {
-////            this.LineY_1.remove(0);
-////            this.LineY_1.add(2020);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-//            ListXUpFull();
-//            chek4.setBackgroundResource(R.drawable.wrong);
-//            setCounter(getCounter()-1);
-//            score.setText(""+getCounter());
-//        }
-//        EneblendButtonsAffterPress();
-//        listBuffer.add(KeyWord);
-//        MainListWord.removeAll(MainListWord);
-//        textSee.setText(String.valueOf(MainListWord));
-//    }
+
     protected void EneblendButtonsAffterPress(){
         pr1.setEnabled(true);
         pr1.setBackgroundResource(R.drawable.forlessbutton);
@@ -1664,39 +1656,134 @@ public class MainActivity extends AppCompatActivity  {
         ListXUpFull();
     } //кнопка 14
 
-    public void ShowStats(View v){
-        Dialogus();
-    }
 
+    public void ShowStats(View v){
+       Dialogus();
+
+    }
     public void Dialogus(){
 
         OptionDialog = new AlertDialog.Builder(this).create();
         OptionDialog.setTitle("Статистика");
         LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = li.inflate(R.layout.stats_fragment, null, false);
-        but1 =  v.findViewById(R.id.but1);
-        but2 =  v.findViewById(R.id.but2);
-        but3 =  v.findViewById(R.id.but3);
+        butClose =  v.findViewById(R.id.butClose);
+        text_2_inner = v.findViewById(R.id.text_2_inner);
+        text_3_inner = v.findViewById(R.id.text_3_inner);
+        text_4_inner = v.findViewById(R.id.text_4_inner);
+        text_5_inner = v.findViewById(R.id.text_5_inner);
+        text_6_inner = v.findViewById(R.id.text_6_inner);
+        text_7_inner = v.findViewById(R.id.text_7_inner);
+        text_8_inner = v.findViewById(R.id.text_8_inner);
+        text_9_inner = v.findViewById(R.id.text_9_inner);
+        text_10_inner = v.findViewById(R.id.text_10_inner);
+
+        text_2_inner.setText(String.valueOf(getList_2()));
+        text_3_inner.setText(String.valueOf(getList_3()));
+        text_4_inner.setText(String.valueOf(getList_4()));
+        text_5_inner.setText(String.valueOf(getList_5()));
+        text_6_inner.setText(String.valueOf(getList_6()));
+        text_7_inner.setText(String.valueOf(getList_7()));
+        text_8_inner.setText(String.valueOf(getList_8()));
+        text_9_inner.setText(String.valueOf(getList_9()));
+        text_10_inner.setText(String.valueOf(getList_10()));
 
         OptionDialog.setView(v);
         OptionDialog.setCancelable(true);
 
-        but2.setBackgroundColor(Color.CYAN);
-        but2.setOnClickListener(new View.OnClickListener() {
+        butClose.setBackgroundColor(Color.CYAN);
+        butClose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 OptionDialog.dismiss();
             }
 
         });
-
-        but3.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                but3.setBackgroundColor(Color.YELLOW);
-            }
-        });
+//        but2 =  v.findViewById(R.id.butClose);
+//        but3.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                but3.setBackgroundColor(Color.YELLOW);
+//            }
+//        });
 
 
         OptionDialog.show();
+    }  // окно статистика
+
+    public void Task(){
+
     }
 
-}
+    public void ResetField(View v){
+        MainListWord.clear();
+        EneblendButtonsAffterPress();
+        switch (getTextFlag()){
+            case 1:
+                textButton1.setText("Собери слово");
+                break;
+            case 2:
+                textButton2.setText("Собери слово");
+                break;
+            case 3:
+                textButton3.setText("Собери слово");
+                break;
+            case 4:
+                textButton4.setText("Собери слово");
+                break;
+            case 5:
+                textButton5.setText("Собери слово");
+                break;
+            case 6:
+                textButton6.setText("Собери слово");
+                break;
+            case 7:
+                textButton7.setText("Собери слово");
+                break;
+            case 8:
+                textButton8.setText("Собери слово");
+                break;
+            case 9:
+                textButton9.setText("Собери слово");
+                break;
+            case 10:
+                textButton10.setText("Собери слово");
+                break;
+        }
+    } //сброс кнопок
+    public void ResetREesetr(){
+        MainListWord.clear();
+        EneblendButtonsAffterPress();
+                textButton1.setText("");
+                textButton2.setText("");
+                textButton3.setText("");
+                textButton4.setText("");
+                textButton5.setText("");
+                textButton6.setText("");
+                textButton7.setText("");
+                textButton8.setText("");
+                textButton9.setText("");
+                textButton10.setText("");
+        textButton1.setBackgroundResource(R.drawable.textstyle1);
+        textButton2.setBackgroundResource(R.drawable.textstyle1);
+        textButton3.setBackgroundResource(R.drawable.textstyle1);
+        textButton4.setBackgroundResource(R.drawable.textstyle1);
+        textButton5.setBackgroundResource(R.drawable.textstyle1);
+        textButton6.setBackgroundResource(R.drawable.textstyle1);
+        textButton7.setBackgroundResource(R.drawable.textstyle1);
+        textButton8.setBackgroundResource(R.drawable.textstyle1);
+        textButton9.setBackgroundResource(R.drawable.textstyle1);
+        textButton10.setBackgroundResource(R.drawable.textstyle1);
+        textButton1.setEnabled(true);
+        textButton2.setEnabled(true);
+        textButton3.setEnabled(true);
+        textButton4.setEnabled(true);
+        textButton5.setEnabled(true);
+        textButton6.setEnabled(true);
+        textButton7.setEnabled(true);
+        textButton8.setEnabled(true);
+        textButton9.setEnabled(true);
+        textButton10.setEnabled(true);
+        }
+    }
+
+
+
