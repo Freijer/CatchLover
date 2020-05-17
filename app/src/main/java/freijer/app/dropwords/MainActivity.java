@@ -44,8 +44,9 @@ public class MainActivity extends AppCompatActivity  {
     //ctrl+shift+ - все свернуть
 
 
-    protected Button butClose, but2, but3;
+    protected Button butClose, butCloseTask, but2, but3;
     private AlertDialog OptionDialog;
+    private AlertDialog TaskDialog;
 
 
     protected int textFlag;
@@ -75,7 +76,7 @@ public class MainActivity extends AppCompatActivity  {
     ObjectAnimator  button13;
     ObjectAnimator  button14;
 
-    protected TextView textSee, textClock, score, textView2, textView3, textView4;
+    protected TextView textSee, textClock, score, textView2, textView3, textView4, task_1, task_2;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
     protected Button progress,  faq, task, start, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
@@ -128,6 +129,17 @@ public class MainActivity extends AppCompatActivity  {
     protected int list_8;
     protected int list_9;
     protected int list_10;
+
+    protected int worrdcount_1;
+    protected int worrdcount_2;
+    protected int worrdcount_3;
+    protected int worrdcount_4;
+    protected int worrdcount_5;
+    protected int worrdcount_6;
+    protected int worrdcount_7;
+    protected int worrdcount_8;
+    protected int worrdcount_9;
+    protected int worrdcount_10;
 
     public int getList_2() {
         return list_2;
@@ -183,6 +195,70 @@ public class MainActivity extends AppCompatActivity  {
     public void setList_10(int list_10) {
         this.list_10 = list_10;
     }
+
+    public int getWorrdcount_1() {
+        return worrdcount_1;
+    }
+    public void setWorrdcount_1(int worrdcount_1) {
+        this.worrdcount_1 = worrdcount_1;
+    }
+    public int getWorrdcount_2() {
+        return worrdcount_2;
+    }
+    public void setWorrdcount_2(int worrdcount_2) {
+        this.worrdcount_2 = worrdcount_2;
+    }
+    public int getWorrdcount_3() {
+        return worrdcount_3;
+    }
+    public void setWorrdcount_3(int worrdcount_3) {
+        this.worrdcount_3 = worrdcount_3;
+    }
+    public int getWorrdcount_4() {
+        return worrdcount_4;
+    }
+    public void setWorrdcount_4(int worrdcount_4) {
+        this.worrdcount_4 = worrdcount_4;
+    }
+    public int getWorrdcount_5() {
+        return worrdcount_5;
+    }
+    public void setWorrdcount_5(int worrdcount_5) {
+        this.worrdcount_5 = worrdcount_5;
+    }
+    public int getWorrdcount_6() {
+        return worrdcount_6;
+    }
+    public void setWorrdcount_6(int worrdcount_6) {
+        this.worrdcount_6 = worrdcount_6;
+    }
+    public int getWorrdcount_7() {
+        return worrdcount_7;
+    }
+    public void setWorrdcount_7(int worrdcount_7) {
+        this.worrdcount_7 = worrdcount_7;
+    }
+    public int getWorrdcount_8() {
+        return worrdcount_8;
+    }
+    public void setWorrdcount_8(int worrdcount_8) {
+        this.worrdcount_8 = worrdcount_8;
+    }
+    public int getWorrdcount_9() {
+        return worrdcount_9;
+    }
+    public void setWorrdcount_9(int worrdcount_9) {
+        this.worrdcount_9 = worrdcount_9;
+    }
+    public int getWorrdcount_10() {
+        return worrdcount_10;
+    }
+    public void setWorrdcount_10(int worrdcount_10) {
+        this.worrdcount_10 = worrdcount_10;
+    }
+
+
+
 
 
     protected TextView text_2_inner, text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner;
@@ -488,7 +564,6 @@ public class MainActivity extends AppCompatActivity  {
         alert.show();
     } //Всплывабщее окно
 
-
     public void LetsGo(View v){
         ShowButtons();
         starter.setVisibility(GONE);
@@ -545,6 +620,7 @@ public class MainActivity extends AppCompatActivity  {
             case 2:
                 setCounter(getCounter()-1);
                 setList_2(getList_3()-1);
+
                 break;
             case 3:
                 setCounter(getCounter()+1);
@@ -1660,7 +1736,10 @@ public class MainActivity extends AppCompatActivity  {
     public void ShowStats(View v){
        Dialogus();
 
-    }
+    } //открытие статистики
+    public void TaskShow(View v){
+        TaskDialog();
+    } //кнопка открытия заадний
     public void Dialogus(){
 
         OptionDialog = new AlertDialog.Builder(this).create();
@@ -1687,7 +1766,6 @@ public class MainActivity extends AppCompatActivity  {
         text_8_inner.setText(String.valueOf(getList_8()));
         text_9_inner.setText(String.valueOf(getList_9()));
         text_10_inner.setText(String.valueOf(getList_10()));
-
         OptionDialog.setView(v);
         OptionDialog.setCancelable(true);
 
@@ -1708,10 +1786,36 @@ public class MainActivity extends AppCompatActivity  {
 
         OptionDialog.show();
     }  // окно статистика
+    TaskListing tasker = new TaskListing();
 
-    public void Task(){
+    public void TaskDialog(){
+        TaskDialog = new AlertDialog.Builder(this).create();
+        TaskDialog.setTitle("Задания");
+        LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = tasks.inflate(R.layout.task_fragment, null, false);
+        butCloseTask =  v.findViewById(R.id.butCloseTask);
+        task_1 = v.findViewById(R.id.task_1);
+        task_2 = v.findViewById(R.id.task_2);
+        TaskDialog.setView(v);
+        TaskDialog.setCancelable(true);
 
-    }
+        task_1.setText(tasker.TaskList());
+       // task_2.setText(tasker.TY);
+
+
+
+        butCloseTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TaskDialog.dismiss();
+            }
+        });
+        TaskDialog.show();
+    }  // окно задания список
+
+
+
+
 
     public void ResetField(View v){
         MainListWord.clear();
@@ -1783,6 +1887,13 @@ public class MainActivity extends AppCompatActivity  {
         textButton9.setEnabled(true);
         textButton10.setEnabled(true);
         }
+
+        public void MonitorTaskComplate(){
+        switch (tasker.TY){
+
+        }
+        }
+
     }
 
 
