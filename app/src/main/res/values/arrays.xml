@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="speed_name">
+        <item> Медленно </item>
+        <item> Станадртно </item>
+        <item> Быстро </item>
+    </array>
+
+    <array name="speed_values">
+        <item> slow </item>
+        <item> midle </item>
+        <item> fast </item>
+    </array>
+
+</resources>

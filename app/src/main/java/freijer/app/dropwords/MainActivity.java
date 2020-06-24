@@ -1,4 +1,5 @@
 package freijer.app.dropwords;
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,23 +7,35 @@ import android.animation.Animator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.preference.PreferenceManager;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
@@ -43,6 +56,22 @@ public class MainActivity extends AppCompatActivity  {
 
     //ctrl+shift+ - все свернуть
 
+    ListView QuestList, QuestList2;
+
+
+    ArrayList<String> Quest;
+    ArrayList<String> Quest2;
+    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapter2;
+
+
+    TaskListing tasker = new TaskListing();
+    Random rand = new Random();
+    private int indexTask;
+    protected String wordTask;
+    protected ArrayList <String> listTask = new ArrayList <String>();
+
+
 
     protected Button butClose, butCloseTask, but2, but3;
     private AlertDialog OptionDialog;
@@ -58,8 +87,18 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
+    private int TestFlag = 1;
+
+    public int getTestFlag() {
+        return TestFlag;
+    }
+
+    public void setTestFlag(int testFlag) {
+        TestFlag = testFlag;
+    }
+
     protected int f001;
-    protected int y002;
+    protected int x002;
 
     ObjectAnimator  button1;
     ObjectAnimator  button2;
@@ -76,7 +115,7 @@ public class MainActivity extends AppCompatActivity  {
     ObjectAnimator  button13;
     ObjectAnimator  button14;
 
-    protected TextView textSee, textClock, score, textView2, textView3, textView4, task_1, task_2;
+    protected TextView QAWord, textSee, textClock, score, textView2, textView3, textView4, task_1, task_2;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
     protected Button progress,  faq, task, start, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
@@ -90,6 +129,7 @@ public class MainActivity extends AppCompatActivity  {
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();;
     protected ConstraintLayout dropLayout;
+    protected Chronometer mChronometer;
 
     int counter;
     public int getCounter() {
@@ -111,14 +151,22 @@ public class MainActivity extends AppCompatActivity  {
     private final int USERID = 6000;
     private int countID;
     protected int numsofliteralsinword;
-    protected int speed;
-    protected int shiftLiterals =60;//миещние букв в лево
+
+    private int speed;
     public int getSpeed() {
         return speed;
     }
     public void setSpeed(int speed) {
         this.speed = speed;
     }
+
+
+
+    SharedPreferences sharedPreferences;
+
+    protected int shiftLiterals =60;//миещние букв в лево
+    private int defaultinterval;
+
 
     protected int list_2;
     protected int list_3;
@@ -131,15 +179,7 @@ public class MainActivity extends AppCompatActivity  {
     protected int list_10;
 
     protected int worrdcount_1;
-    protected int worrdcount_2;
-    protected int worrdcount_3;
-    protected int worrdcount_4;
-    protected int worrdcount_5;
-    protected int worrdcount_6;
-    protected int worrdcount_7;
-    protected int worrdcount_8;
-    protected int worrdcount_9;
-    protected int worrdcount_10;
+
 
     public int getList_2() {
         return list_2;
@@ -202,60 +242,6 @@ public class MainActivity extends AppCompatActivity  {
     public void setWorrdcount_1(int worrdcount_1) {
         this.worrdcount_1 = worrdcount_1;
     }
-    public int getWorrdcount_2() {
-        return worrdcount_2;
-    }
-    public void setWorrdcount_2(int worrdcount_2) {
-        this.worrdcount_2 = worrdcount_2;
-    }
-    public int getWorrdcount_3() {
-        return worrdcount_3;
-    }
-    public void setWorrdcount_3(int worrdcount_3) {
-        this.worrdcount_3 = worrdcount_3;
-    }
-    public int getWorrdcount_4() {
-        return worrdcount_4;
-    }
-    public void setWorrdcount_4(int worrdcount_4) {
-        this.worrdcount_4 = worrdcount_4;
-    }
-    public int getWorrdcount_5() {
-        return worrdcount_5;
-    }
-    public void setWorrdcount_5(int worrdcount_5) {
-        this.worrdcount_5 = worrdcount_5;
-    }
-    public int getWorrdcount_6() {
-        return worrdcount_6;
-    }
-    public void setWorrdcount_6(int worrdcount_6) {
-        this.worrdcount_6 = worrdcount_6;
-    }
-    public int getWorrdcount_7() {
-        return worrdcount_7;
-    }
-    public void setWorrdcount_7(int worrdcount_7) {
-        this.worrdcount_7 = worrdcount_7;
-    }
-    public int getWorrdcount_8() {
-        return worrdcount_8;
-    }
-    public void setWorrdcount_8(int worrdcount_8) {
-        this.worrdcount_8 = worrdcount_8;
-    }
-    public int getWorrdcount_9() {
-        return worrdcount_9;
-    }
-    public void setWorrdcount_9(int worrdcount_9) {
-        this.worrdcount_9 = worrdcount_9;
-    }
-    public int getWorrdcount_10() {
-        return worrdcount_10;
-    }
-    public void setWorrdcount_10(int worrdcount_10) {
-        this.worrdcount_10 = worrdcount_10;
-    }
 
 
 
@@ -272,9 +258,19 @@ public class MainActivity extends AppCompatActivity  {
     } //определние координат
 
 
+    Achives aa = new Achives();
+
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+//        tasker.GetMoreTask();
+
+//        SetSpeedFromSheredPref(PreferenceManager.getDefaultSharedPreferences(this));
+
         setTextFlag(1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -298,24 +294,21 @@ public class MainActivity extends AppCompatActivity  {
         task = findViewById(R.id.task);
 
         clock = findViewById(R.id.clock);
-        textSee = findViewById(R.id.textSee);
 
         textButton1 = findViewById(R.id.textButton1);
-        textButton2 = findViewById(R.id.textButton2);
-        textButton3 = findViewById(R.id.textButton3);
-        textButton4 = findViewById(R.id.textButton4);
-        textButton5 = findViewById(R.id.textButton5);
-        textButton6 = findViewById(R.id.textButton6);
-        textButton7 = findViewById(R.id.textButton7);
-        textButton8 = findViewById(R.id.textButton8);
-        textButton9 = findViewById(R.id.textButton9);
-        textButton10 = findViewById(R.id.textButton10);
+
         progress = findViewById(R.id.progress);
 
         score = findViewById(R.id.score);
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
         dropLayout = findViewById(R.id.dropLayout);
+
+        QAWord = findViewById(R.id.textButton1);
+
+        mChronometer = findViewById(R.id.chronometer);
+
+
 
         ListXUpFull(); // заполняем листы координат
         ControlWordsfinFail(); // читаем проверочные слова
@@ -327,11 +320,49 @@ public class MainActivity extends AppCompatActivity  {
         Creates(); //активация и движеение кнопок
         String gg = Integer.toString(numsofliteralsinword);
         reset.setVisibility(GONE);
+        score.setText("" + aa.WORD_3(4));  //ТЕСТОВАЯ ОБРАБОТКА!!!!!
+
+
+      QuestList = findViewById(R.id.QuestList);
+      Quest = new ArrayList<>();
+
+        QuestList2 = findViewById(R.id.QuestList);
+        Quest2 = new ArrayList<>();
+
 
     }
 
+//    private void SetSpeedFromSheredPref(SharedPreferences sharedPreferences){
+//        defaultinterval = sharedPreferences.getInt("speed", 0);
+//        setSpeed(defaultinterval);
+//    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuinflater = getMenuInflater();
+        menuinflater.inflate(R.menu.speed_menu, menu);
+        return true;
+    } // добавить МЕНЮ 1
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_settings){
+            Intent openSettings  = new Intent(this, SetingsActivity.class);
+            startActivity(openSettings);
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
+    } // отработка нажтий на МЕНЮ элементе 2
+
 
     public void ListXUpFull(){
+        ListCoordinateX_1.add(textButton1.getHeight()/8);
+        ListCoordinateX_1.add(200);
+        ListCoordinateX_1.add(200);
+        ListCoordinateX_1.add(200);
         ListCoordinateX_1.add(200);
         ListCoordinateX_1.add(200);
     } //координаты для первого слова
@@ -353,30 +384,14 @@ public class MainActivity extends AppCompatActivity  {
 
         clock.setVisibility(GONE);
 
-        textSee.setVisibility(GONE);
+
         textClock.setVisibility(GONE);
 
         textButton1.setEnabled(false);
-        textButton2.setEnabled(false);
-        textButton3.setEnabled(false);
-        textButton4.setEnabled(false);
-        textButton5.setEnabled(false);
-        textButton6.setEnabled(false);
-        textButton7.setEnabled(false);
-        textButton8.setEnabled(false);
-        textButton9.setEnabled(false);
-        textButton10.setEnabled(false);
+
 
         textButton1.setVisibility(GONE);
-        textButton2.setVisibility(GONE);
-        textButton3.setVisibility(GONE);
-        textButton4.setVisibility(GONE);
-        textButton5.setVisibility(GONE);
-        textButton6.setVisibility(GONE);
-        textButton7.setVisibility(GONE);
-        textButton8.setVisibility(GONE);
-        textButton9.setVisibility(GONE);
-        textButton10.setVisibility(GONE);
+
 
     } //убрать кнопки с экрана
     public void ShowButtons(){
@@ -441,20 +456,12 @@ public class MainActivity extends AppCompatActivity  {
 
         }
         clock.setVisibility(VISIBLE);
-        textSee.setVisibility(VISIBLE);
+
         textClock.setVisibility(VISIBLE);
         starter.setVisibility(GONE);
         //--
         textButton1.setVisibility(VISIBLE);
-        textButton2.setVisibility(VISIBLE);
-        textButton3.setVisibility(VISIBLE);
-        textButton4.setVisibility(VISIBLE);
-        textButton5.setVisibility(VISIBLE);
-        textButton6.setVisibility(VISIBLE);
-        textButton7.setVisibility(VISIBLE);
-        textButton8.setVisibility(VISIBLE);
-        textButton9.setVisibility(VISIBLE);
-        textButton10.setVisibility(VISIBLE);
+
     } // показ кнопок на экране
     public void ReadWords(){
         try {
@@ -565,19 +572,37 @@ public class MainActivity extends AppCompatActivity  {
     } //Всплывабщее окно
 
     public void LetsGo(View v){
+
         ShowButtons();
         starter.setVisibility(GONE);
         Clocks();
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                f001 = viewLocatedAt(textButton1).y - (textButton1.getHeight()/2 );
+                f001 = viewLocatedAt(textButton1).y - (textButton1.getHeight()/8);
                 LineY_1.clear();
                 LineY_1.add(f001);
             }
         }, 500);
 
+//        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        String melodyName = sharedPreferences.getString("speed_but", "fast");
+//        if (melodyName.equals("slow")) {
+//            setSpeed(-5500);
+//        } else if (melodyName.equals("midle")) {
+//            setSpeed(0);
+//        } else if (melodyName.equals("fast")) {
+//            setSpeed(5500);
+//        }
+//        score.setText(""+getSpeed());
+
+
     }  // СТАРТ, часы
+
+
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
         starter.setVisibility(GONE);
@@ -593,22 +618,28 @@ public class MainActivity extends AppCompatActivity  {
     } // следующее слово
 
     public void Clocks(){
-        new CountDownTimer(12000, 1000) {
-            @SuppressLint("SetTextI18n")
-            public void onTick(long millisUntilFinished) {
-                textClock.setText("Сек :" + millisUntilFinished / 1000);
-            }
-            public void onFinish() {
-                textClock.setText("done!");
-                GoneButnnons();
-                Dialogus();
-                reset.setVisibility(VISIBLE);
-                ResetREesetr();
-                setTextFlag(0);
 
-            }
-        }.start();
+
+//        new CountDownTimer(120000, 1000) {
+//            @SuppressLint("SetTextI18n")
+//            public void onTick(long millisUntilFinished) {
+//                textClock.setText("Сек :" + millisUntilFinished / 1000);
+//            }
+//            public void onFinish() {
+//                textClock.setText("done!");
+//                GoneButnnons();
+////                Dialogus();
+//               reset.setVisibility(VISIBLE);
+////                ResetREesetr();
+////                setTextFlag(0);
+//
+//            }
+//        }.start();
     }
+
+
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ResTart(View v){
@@ -620,7 +651,6 @@ public class MainActivity extends AppCompatActivity  {
             case 2:
                 setCounter(getCounter()-1);
                 setList_2(getList_3()-1);
-
                 break;
             case 3:
                 setCounter(getCounter()+1);
@@ -659,316 +689,74 @@ public class MainActivity extends AppCompatActivity  {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Chek_1(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-//            this.f001 = viewLocatedAt(textButton2).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton1.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-//            this.f001 = viewLocatedAt(textButton2).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton1.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-//            this.f001 = viewLocatedAt(textButton2).y - (pr1.getHeight()/4 );
-//            LineY_1.clear();
-//            LineY_1.add(f001);
-//            this.ListCoordinateX_1.removeAll(ListCoordinateX_1);
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton1.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(2);
-        textButton2.setEnabled(true);
-        textButton2.setText("Собери слово");
-        textButton1.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_2(View v){
+
+
+
+//анимация альфа канала (прозрачности от 0 до 1)
+        Animation animation = new AlphaAnimation(0.0f, 1.0f);
+//длительность анимации 1/10 секунды
+        animation.setDuration(300);
+//сдвижка начала анимации (с середины)
+        animation.setStartOffset(50);
+//режим повтора - сначала или в обратном порядке
+        animation.setRepeatMode(Animation.REVERSE);
+//режим повтора (бесконечно)
+       animation.setRepeatCount(0);
+//накладываем анимацию на TextView
+
+//анимация альфа канала (прозрачности от 0 до 1)
+        Animation animation2 = new TranslateAnimation(-10, 30, 0, 30);
+//длительность анимации 1/10 секунды
+        animation2.setDuration(300);
+//сдвижка начала анимации (с середины)
+        animation2.setStartOffset(50);
+//режим повтора - сначала или в обратном порядке
+        animation2.setRepeatMode(Animation.REVERSE);
+//режим повтора (бесконечно
+        animation2.setInterpolator(new BounceInterpolator());
+        animation2.setRepeatCount(1);
+//накладываем анимацию на TextView
+
+
+
+
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length);
             score.setText(""+getCounter());
-            textButton2.setBackgroundResource(R.drawable.textstyletrue);
+//            textButton1.setBackgroundResource(R.drawable.textstyletrue);
+            Quest.add(KeyWord);
+            textButton1.startAnimation(animation);
         } else if (listBuffer.contains(KeyWord)){
             ListXUpFull();
             setCounter(getCounter()-1);
             score.setText(""+getCounter());
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton2.setBackgroundResource(R.drawable.textstyle_false);
+//            textButton1.setBackgroundResource(R.drawable.textstyle_false);
+            Quest2.add(KeyWord);
+            textButton1.startAnimation(animation2);
         }  else  {
             ListXUpFull();
             setCounter(getCounter()-1);
             score.setText(""+getCounter());
-            textButton2.setBackgroundResource(R.drawable.textstyle_false);
+//            textButton1.setBackgroundResource(R.drawable.textstyle_false);
+            Quest2.add(KeyWord);
+            textButton1.startAnimation(animation2);
         }
         EneblendButtonsAffterPress();
         listBuffer.add(KeyWord);
         MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(3);
-        textButton3.setEnabled(true);
-        textButton3.setText("Собери слово");
-        textButton2.setEnabled(false);
+//        textSee.setText(String.valueOf(MainListWord));
+       // setTextFlag(2);
+//        textButton2.setEnabled(true);
+          textButton1.setText("Собери слово");
+//        textButton1.setEnabled(false);
+
+
     }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_3(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton3.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton3.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton3.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(4);
-        textButton4.setEnabled(true);
-        textButton4.setText("Собери слово");
-        textButton3.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_4(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton4.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton4.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton4.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(5);
-        textButton5.setEnabled(true);
-        textButton5.setText("Собери слово");
-        textButton4.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_5(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton5.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton5.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton5.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(6);
-        textButton6.setEnabled(true);
-        textButton6.setText("Собери слово");
-        textButton5.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_6(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton6.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton6.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton6.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(7);
-        textButton7.setEnabled(true);
-        textButton7.setText("Собери слово");
-        textButton6.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_7(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton7.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton7.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton7.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(8);
-        textButton8.setEnabled(true);
-        textButton8.setText("Собери слово");
-        textButton7.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_8(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton8.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton8.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton8.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(9);
-        textButton9.setEnabled(true);
-        textButton9.setText("Собери слово");
-        textButton8.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_9(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton9.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton9.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton9.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        setTextFlag(10);
-        textButton10.setEnabled(true);
-        textButton10.setText("Собери слово");
-        textButton9.setEnabled(false);
-    }
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Chek_10(View v){
-        String[] ArrayListWord = MainListWord.toArray(new String[0]);
-        String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
-            ListXUpFull();
-            HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
-            textButton10.setBackgroundResource(R.drawable.textstyletrue);
-        } else if (listBuffer.contains(KeyWord)){
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            textButton10.setBackgroundResource(R.drawable.textstyle_false);
-        }  else  {
-            ListXUpFull();
-            setCounter(getCounter()-1);
-            score.setText(""+getCounter());
-            textButton10.setBackgroundResource(R.drawable.textstyle_false);
-        }
-        EneblendButtonsAffterPress();
-        listBuffer.add(KeyWord);
-        MainListWord.removeAll(MainListWord);
-        textSee.setText(String.valueOf(MainListWord));
-        textButton10.setEnabled(false);
-        GoneButnnons();
-        Dialogus();
-        reset.setVisibility(VISIBLE);
-    }
+
 
     protected void EneblendButtonsAffterPress(){
         pr1.setEnabled(true);
@@ -1001,12 +789,25 @@ public class MainActivity extends AppCompatActivity  {
         pr14.setBackgroundResource(R.drawable.forlessbutton);
     } //кнопки снова активны и имеют исходный стиль
 
+    int a;
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Creates(){
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String melodyName = sharedPreferences.getString("speed_but", "midle");
+        if (melodyName.equals("slow")) {
+            this.a = 5500;
+        } else if (melodyName.equals("midle")) {
+            this.a = 0;
+        } else if (melodyName.equals("fast")) {
+            this.a = -5500;
+        }
+        score.setText(""+this.a);
+
+
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
                 PropertyValuesHolder.ofFloat("x", 0, 850),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-        button1.setDuration(9000);
+        button1.setDuration(6000 +this.a);
         button1.setRepeatCount(ObjectAnimator.INFINITE);
         button1.setRepeatMode(ObjectAnimator.REVERSE);
 //        button1.start();
@@ -1014,7 +815,7 @@ public class MainActivity extends AppCompatActivity  {
         button2 = ObjectAnimator.ofPropertyValuesHolder(pr2,
                 PropertyValuesHolder.ofFloat("x", 200, 400),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-        button2.setDuration(4400 +  getSpeed());
+        button2.setDuration(6300+this.a);
         button2.setRepeatCount(ObjectAnimator.INFINITE);
         button2.setRepeatMode(ObjectAnimator.REVERSE);
 //        button2.start();
@@ -1022,7 +823,7 @@ public class MainActivity extends AppCompatActivity  {
         button3 = ObjectAnimator.ofPropertyValuesHolder(pr3,
                 PropertyValuesHolder.ofFloat("x", 0, 910),
                 PropertyValuesHolder.ofFloat("y", 140, 140));
-        button3.setDuration(5000 +  getSpeed());
+        button3.setDuration(7500+this.a);
         button3.setRepeatCount(ObjectAnimator.INFINITE);
         button3.setRepeatMode(ObjectAnimator.REVERSE);
 //        button3.start();
@@ -1030,7 +831,7 @@ public class MainActivity extends AppCompatActivity  {
         button4 = ObjectAnimator.ofPropertyValuesHolder(pr4,
                 PropertyValuesHolder.ofFloat("x", 0, 910),
                 PropertyValuesHolder.ofFloat("y", 500, 500));
-        button4.setDuration(4600 +  getSpeed());
+        button4.setDuration(8000+this.a);
         button4.setRepeatCount(ObjectAnimator.INFINITE);
         button4.setRepeatMode(ObjectAnimator.REVERSE);
 //        button4.start();
@@ -1038,7 +839,7 @@ public class MainActivity extends AppCompatActivity  {
         button5 = ObjectAnimator.ofPropertyValuesHolder(pr5,
                 PropertyValuesHolder.ofFloat("x", 0, 910),
                 PropertyValuesHolder.ofFloat("y", 900, 900));
-        button5.setDuration(5300 +  getSpeed());
+        button5.setDuration(5300+this.a);
         button5.setRepeatCount(ObjectAnimator.INFINITE);
         button5.setRepeatMode(ObjectAnimator.REVERSE);
 //        button5.start();
@@ -1046,7 +847,7 @@ public class MainActivity extends AppCompatActivity  {
         button6 = ObjectAnimator.ofPropertyValuesHolder(pr6,
                 PropertyValuesHolder.ofFloat("x", 910, 0),
                 PropertyValuesHolder.ofFloat("y", 300, 300));
-        button6.setDuration(5600 +  getSpeed());
+        button6.setDuration(5600 +this.a);
         button6.setRepeatCount(ObjectAnimator.INFINITE);
         button6.setRepeatMode(ObjectAnimator.REVERSE);
 //        button6.start();
@@ -1054,7 +855,7 @@ public class MainActivity extends AppCompatActivity  {
         button7 = ObjectAnimator.ofPropertyValuesHolder(pr7,
                 PropertyValuesHolder.ofFloat("x", 910, 0),
                 PropertyValuesHolder.ofFloat("y", 700, 700));
-        button7.setDuration(4400 +  getSpeed());
+        button7.setDuration(4400 +this.a);
         button7.setRepeatCount(ObjectAnimator.INFINITE);
         button7.setRepeatMode(ObjectAnimator.REVERSE);
 //        button7.start();
@@ -1062,7 +863,7 @@ public class MainActivity extends AppCompatActivity  {
         button8 = ObjectAnimator.ofPropertyValuesHolder(pr8,
                 PropertyValuesHolder.ofFloat("x", 200, 650),
                 PropertyValuesHolder.ofFloat("y", 1050, 140));
-        button8.setDuration(3900 +  getSpeed());
+        button8.setDuration(3900 +this.a);
         button8.setRepeatCount(ObjectAnimator.INFINITE);
         button8.setRepeatMode(ObjectAnimator.REVERSE);
 //        button8.start();
@@ -1070,7 +871,7 @@ public class MainActivity extends AppCompatActivity  {
         button9 = ObjectAnimator.ofPropertyValuesHolder(pr9,
                 PropertyValuesHolder.ofFloat("x", 800, 800),
                 PropertyValuesHolder.ofFloat("y", 1050, 140));
-        button9.setDuration(4100 +  getSpeed());
+        button9.setDuration(4100 +this.a);
         button9.setRepeatCount(ObjectAnimator.INFINITE);
         button9.setRepeatMode(ObjectAnimator.REVERSE);
 //        button9.start();
@@ -1078,7 +879,7 @@ public class MainActivity extends AppCompatActivity  {
         button10 = ObjectAnimator.ofPropertyValuesHolder(pr10,
                 PropertyValuesHolder.ofFloat("x", 0, 250),
                 PropertyValuesHolder.ofFloat("y", 1050, 140));
-        button10.setDuration(4500 +  getSpeed());
+        button10.setDuration(4500 +this.a);
         button10.setRepeatCount(ObjectAnimator.INFINITE);
         button10.setRepeatMode(ObjectAnimator.REVERSE);
 //        button10.start();
@@ -1086,7 +887,7 @@ public class MainActivity extends AppCompatActivity  {
         button11 = ObjectAnimator.ofPropertyValuesHolder(pr11,
                 PropertyValuesHolder.ofFloat("x", 910, 100),
                 PropertyValuesHolder.ofFloat("y", 140, 950));
-        button11.setDuration(5700 +  getSpeed());
+        button11.setDuration(5700 +this.a);
         button11.setRepeatCount(ObjectAnimator.INFINITE);
         button11.setRepeatMode(ObjectAnimator.REVERSE);
 //        button11.start();
@@ -1094,7 +895,7 @@ public class MainActivity extends AppCompatActivity  {
         button12 = ObjectAnimator.ofPropertyValuesHolder(pr12,
                 PropertyValuesHolder.ofFloat("x", 700, 400),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-        button12.setDuration(3600 +  getSpeed());
+        button12.setDuration(3600 +this.a);
         button12.setRepeatCount(ObjectAnimator.INFINITE);
         button12.setRepeatMode(ObjectAnimator.REVERSE);
 //        button12.start();
@@ -1103,7 +904,7 @@ public class MainActivity extends AppCompatActivity  {
         button13 = ObjectAnimator.ofPropertyValuesHolder(pr13,
                 PropertyValuesHolder.ofFloat("x", 910, 0),
                 PropertyValuesHolder.ofFloat("y", 1100, 1050));
-        button13.setDuration(5100 +  getSpeed());
+        button13.setDuration(5100 +this.a);
         button13.setRepeatCount(ObjectAnimator.INFINITE);
         button13.setRepeatMode(ObjectAnimator.REVERSE);
 //        button13.start();
@@ -1111,55 +912,10 @@ public class MainActivity extends AppCompatActivity  {
         button14 = ObjectAnimator.ofPropertyValuesHolder(pr14,
                 PropertyValuesHolder.ofFloat("x", 500, 500),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-        button14.setDuration(4800 +  getSpeed());
+        button14.setDuration(4800 +this.a);
         button14.setRepeatCount(ObjectAnimator.INFINITE);
         button14.setRepeatMode(ObjectAnimator.REVERSE);
 //        button14.start();
-
-//рерзевное создание через XML
-//        set1 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper1); // диагональ, с 0
-//        set2 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper2); // лево У 100, с0
-//        set3 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper3); // верх, Х 30    с 1
-//        set4 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper4); // низ   Х 350      с 1
-//        set5 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper5); // прав
-//        set6 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper1); // диагональ, с 0
-//        set7 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper2); // лево У 100, с0
-//        set8 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper3); // верх, Х 30    с 1
-//        set9 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper4); // низ   Х 350      с 1
-//        set10 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper5); // прав
-//        set11 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper11); // диагональ, с 0
-//        set12 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper2); // лево У 100, с0
-//        set13 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper3); // верх, Х 30    с 1
-//        set14 = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.upper4); // низ   Х 350      с 1
-//        //set1.setTarget(pr1);
-//        set2.setTarget(pr2);
-//        set3.setTarget(pr3);
-//        set4.setTarget(pr4);
-//        set5.setTarget(pr5);
-//        set6.setTarget(pr6);
-//        set7.setTarget(pr7);
-//        set8.setTarget(pr8);
-//        set9.setTarget(pr9);
-//        set10.setTarget(pr10);
-//        set11.setTarget(pr11);
-//        set12.setTarget(pr12);
-//        set13.setTarget(pr13);
-//        set14.setTarget(pr14);
-//        //set1.start();
-//        set2.start();
-//        set3.start();
-////        set4.start();
-////        set5.start();
-////       set6.start();
-////       set7.start();
-////       set8.start();
-////       set9.start();
-////       set10.start();
-//        set11.start();
-////        set12.start();
-////        set13.start();
-////        set14.start();   ht
-
     } //движение кнопок
 
     protected void SwitchTextField(){
@@ -1196,6 +952,7 @@ public class MainActivity extends AppCompatActivity  {
                 break;
         }
     } // изменение флага печати текста
+
     public void ClickButton1(View v){
 
         copy_pr1 = new Button(getApplicationContext());
@@ -1210,12 +967,12 @@ public class MainActivity extends AppCompatActivity  {
         button_copy_button1.setDuration(1500);
         button_copy_button1.start();
 
-        ListCoordinateX_1.remove(0);
+       // ListCoordinateX_1.remove(0);
 
         MainListWord.add(pr1.getText().toString());
         pr1.setBackgroundResource(R.drawable.acceptbutton);
         pr1.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button1.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1255,7 +1012,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr2.getText().toString());
         pr2.setBackgroundResource(R.drawable.acceptbutton);
         pr2.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+
 
         button_copy_button2.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1293,7 +1050,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr3.getText().toString());
         pr3.setBackgroundResource(R.drawable.acceptbutton);
         pr3.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button3.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1331,7 +1088,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr4.getText().toString());
         pr4.setBackgroundResource(R.drawable.acceptbutton);
         pr4.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button4.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1369,7 +1126,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr5.getText().toString());
         pr5.setBackgroundResource(R.drawable.acceptbutton);
         pr5.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button5.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1407,7 +1164,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr6.getText().toString());
         pr6.setBackgroundResource(R.drawable.acceptbutton);
         pr6.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button6.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1445,7 +1202,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr7.getText().toString());
         pr7.setBackgroundResource(R.drawable.acceptbutton);
         pr7.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button7.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1483,7 +1240,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr8.getText().toString());
         pr8.setBackgroundResource(R.drawable.acceptbutton);
         pr8.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button8.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1521,7 +1278,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr9.getText().toString());
         pr9.setBackgroundResource(R.drawable.acceptbutton);
         pr9.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button9.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1559,7 +1316,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr10.getText().toString());
         pr10.setBackgroundResource(R.drawable.acceptbutton);
         pr10.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button10.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1597,7 +1354,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr11.getText().toString());
         pr11.setBackgroundResource(R.drawable.acceptbutton);
         pr11.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button11.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1635,7 +1392,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr12.getText().toString());
         pr12.setBackgroundResource(R.drawable.acceptbutton);
         pr12.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button12.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1673,7 +1430,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr13.getText().toString());
         pr13.setBackgroundResource(R.drawable.acceptbutton);
         pr13.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button13.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1711,7 +1468,7 @@ public class MainActivity extends AppCompatActivity  {
         MainListWord.add(pr14.getText().toString());
         pr14.setBackgroundResource(R.drawable.acceptbutton);
         pr14.setEnabled(false);
-        textSee.setText(String.valueOf(MainListWord));
+//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button14.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1739,6 +1496,9 @@ public class MainActivity extends AppCompatActivity  {
     } //открытие статистики
     public void TaskShow(View v){
         TaskDialog();
+
+
+
     } //кнопка открытия заадний
     public void Dialogus(){
 
@@ -1783,39 +1543,38 @@ public class MainActivity extends AppCompatActivity  {
 //            }
 //        });
 
-
         OptionDialog.show();
     }  // окно статистика
-    TaskListing tasker = new TaskListing();
+
 
     public void TaskDialog(){
+
         TaskDialog = new AlertDialog.Builder(this).create();
-        TaskDialog.setTitle("Задания");
         LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         View v = tasks.inflate(R.layout.task_fragment, null, false);
         butCloseTask =  v.findViewById(R.id.butCloseTask);
-        task_1 = v.findViewById(R.id.task_1);
-        task_2 = v.findViewById(R.id.task_2);
+        QuestList = v.findViewById(R.id.QuestList);
+        QuestList2 = v.findViewById(R.id.QuestList2);
+
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Quest);
+        adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Quest2);
+        QuestList.setAdapter(adapter);
+        QuestList2.setAdapter(adapter2);
+
         TaskDialog.setView(v);
         TaskDialog.setCancelable(true);
-
-        task_1.setText(tasker.TaskList());
-       // task_2.setText(tasker.TY);
-
-
 
         butCloseTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TaskDialog.dismiss();
+//                Quest.clear();
             }
         });
         TaskDialog.show();
-    }  // окно задания список
-
-
-
-
+    }  // список собранных слов
 
     public void ResetField(View v){
         MainListWord.clear();
@@ -1824,75 +1583,12 @@ public class MainActivity extends AppCompatActivity  {
             case 1:
                 textButton1.setText("Собери слово");
                 break;
-            case 2:
-                textButton2.setText("Собери слово");
-                break;
-            case 3:
-                textButton3.setText("Собери слово");
-                break;
-            case 4:
-                textButton4.setText("Собери слово");
-                break;
-            case 5:
-                textButton5.setText("Собери слово");
-                break;
-            case 6:
-                textButton6.setText("Собери слово");
-                break;
-            case 7:
-                textButton7.setText("Собери слово");
-                break;
-            case 8:
-                textButton8.setText("Собери слово");
-                break;
-            case 9:
-                textButton9.setText("Собери слово");
-                break;
-            case 10:
-                textButton10.setText("Собери слово");
-                break;
         }
     } //сброс кнопок
-    public void ResetREesetr(){
-        MainListWord.clear();
-        EneblendButtonsAffterPress();
-                textButton1.setText("");
-                textButton2.setText("");
-                textButton3.setText("");
-                textButton4.setText("");
-                textButton5.setText("");
-                textButton6.setText("");
-                textButton7.setText("");
-                textButton8.setText("");
-                textButton9.setText("");
-                textButton10.setText("");
-        textButton1.setBackgroundResource(R.drawable.textstyle1);
-        textButton2.setBackgroundResource(R.drawable.textstyle1);
-        textButton3.setBackgroundResource(R.drawable.textstyle1);
-        textButton4.setBackgroundResource(R.drawable.textstyle1);
-        textButton5.setBackgroundResource(R.drawable.textstyle1);
-        textButton6.setBackgroundResource(R.drawable.textstyle1);
-        textButton7.setBackgroundResource(R.drawable.textstyle1);
-        textButton8.setBackgroundResource(R.drawable.textstyle1);
-        textButton9.setBackgroundResource(R.drawable.textstyle1);
-        textButton10.setBackgroundResource(R.drawable.textstyle1);
-        textButton1.setEnabled(true);
-        textButton2.setEnabled(true);
-        textButton3.setEnabled(true);
-        textButton4.setEnabled(true);
-        textButton5.setEnabled(true);
-        textButton6.setEnabled(true);
-        textButton7.setEnabled(true);
-        textButton8.setEnabled(true);
-        textButton9.setEnabled(true);
-        textButton10.setEnabled(true);
-        }
 
-        public void MonitorTaskComplate(){
-        switch (tasker.TY){
 
-        }
-        }
+
+
 
     }
 

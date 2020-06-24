@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditTextPreference
+        android:title="Скорость букв"
+        android:key="speed"
+        android:defaultValue="0"
+        />
+
+
+    <ListPreference
+    android:title="Скорость"
+    android:key="speed_but"
+    android:summary="Значения скорости"
+    android:entries="@array/speed_name"
+    android:entryValues="@array/speed_values">
+
+
+
+</ListPreference>
+
+</PreferenceScreen>

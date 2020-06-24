@@ -1,38 +1,98 @@
 package freijer.app.dropwords;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-public class TaskListing {
-    String task1;
-    int TaskFlag;
-   int TY;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 
-    String[] Task_1 = {"Собрать 3 слова из 3 букв", "Собрать 1 слово из 5 букв"};
+public class TaskListing  {
 
 
-    public String TaskList(){
-//        RandomTasks();
-        switch (RandomTasks()){
-            case 0:
-                this.task1 = "Нет задания";
-                this.TY = 0;
-                break;
-            case 1:
-                this.task1 = "Собрать 3 слова из 3 букв";
-                this.TY = 1;
-                break;
-            case 2:
-                this.task1 = "Собрать 1 слово из 5 букв";
-                this.TY = 2;
-                break;
-            case 3:
-                this.task1 = "Собрать 1 слово из 4 букв";
-                this.TY = 3;
-                break;
+
+
+
+    Random rand = new Random();
+    private int indexWord;
+    protected String word;
+    protected ArrayList <String> list = new ArrayList <String>();
+
+    protected String task_1;
+    protected String task_2;
+
+    public void GetMoreTask(){
+        ListUp();
+        GetTask_1();
+        GetTask_2();
+
+    }
+
+    public void ListUp() {
+        list.add("Собрать 3 слова из 3 букв");
+        list.add("Собрать 1 слово из 5 букв");
+        list.add("Собрать 1 слово из 4 букв");
+        list.add("Собрать слова без повторов");
+    }
+
+
+    public void GetTask_1(){
+        if (!list.isEmpty()) {
+            this.indexWord = rand.nextInt(list.size());
+            this.word = list.get(indexWord);
+            this.list.remove(this.word);
+        } else if (list.isEmpty()) {
+          // this.word = "конец";
+           ListUp();
         }
-        return this.task1;
+         this.task_1 =  this.word;
+  }
+    public void GetTask_2(){
+        if (!list.isEmpty()) {
+            this.indexWord = rand.nextInt(list.size());
+            this.word = list.get(indexWord);
+            this.list.remove(this.word);
+        } else if (list.isEmpty()) {
+            ListUp();
+        }
+        this.task_2 = this.word;
     }
-    public int RandomTasks(){
-        this.TaskFlag = 1 +(int) (Math.random() * 3);
-        return this.TaskFlag;
+
+    protected void Goze() {
+
+
+
+//        AlertDialog.Builder builder1 = new AlertDialog.Builder(TaskListing);
+//        builder1.setMessage("Write your message here.");
+//        builder1.setCancelable(true);
+//
+//        builder1.setPositiveButton(
+//                "Yes",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//        builder1.setNegativeButton(
+//                "No",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//        AlertDialog alert11 = builder1.create();
+//        alert11.show();
     }
+
+
 }
+

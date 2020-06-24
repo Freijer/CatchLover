@@ -8,8 +8,63 @@
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/Colo"
+        android:id="@+id/dropLayout"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="140dp"
+        android:background="@drawable/desk_fore"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/Colo">
+
+        <Button
+            android:id="@+id/starter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="150dp"
+            android:background="@drawable/startgame"
+            android:onClick="LetsGo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.953" />
+
+        <TextView
+            android:id="@+id/textButton1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/scroll"
+            android:gravity="center"
+            android:onClick="Chek_1"
+            android:padding="10dp"
+            android:text=" "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.917" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/Colo"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
@@ -17,10 +72,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
@@ -29,16 +81,10 @@
             android:layout_height="42dp"
             android:background="@drawable/tamplatetfive"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.003" />
-
-
-        
-
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/pr10"
@@ -250,17 +296,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.003" />
 
-        <TextView
-            android:id="@+id/textSee"
-            android:layout_width="100dp"
-            android:layout_height="25dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.059"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.011" />
-
         <ImageView
             android:id="@+id/clock"
             android:layout_width="70dp"
@@ -294,302 +329,82 @@
             android:layout_marginTop="14dp"
             android:layout_marginEnd="204dp"
             android:layout_marginBottom="698dp"
-            android:text="очков"
-            android:textColor="#FAF6F6"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.88"
             app:layout_constraintStart_toStartOf="@+id/imageView7"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:text=" "/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="420dp"
-            android:background="@drawable/forest"
+            android:layout_marginTop="650dp"
+            android:padding="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="0.909">
 
-
-            <ScrollView
-                android:id="@+id/scrollView2"
-                android:layout_width="291dp"
-                android:layout_height="284dp"
-                android:layout_marginLeft="100dp"
-                android:padding="5dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:id="@+id/textButton1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_1"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_2"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_3"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_4"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton5"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_5"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton6"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_6"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton7"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_7"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton8"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_8"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton9"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_9"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textButton10"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/textstyle1"
-                        android:gravity="center"
-                        android:onClick="Chek_10"
-                        android:padding="15dp"
-                        android:text=" "
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-
-            </ScrollView>
 
             <Button
                 android:id="@+id/progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/list"
                 android:onClick="ShowStats"
-                android:padding="10dp"
-                android:text="Прогресс"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/scrollView2"
-                app:layout_constraintHorizontal_bias="0.51"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.644"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.067" />
-
-            <Button
-                android:id="@+id/reset"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
-                android:onClick="ResTart"
-                android:padding="10dp"
-                android:text="Новое слово"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/scrollView2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button2" />
+                app:layout_constraintVertical_bias="0.47" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
 
-                android:padding="10dp"
+                android:background="@drawable/resets"
                 android:onClick="ResetField"
-                android:text="Сброс"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/scrollView2"
-                app:layout_constraintHorizontal_bias="0.523"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.046"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/task"
-                app:layout_constraintVertical_bias="0.25" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.8" />
 
             <Button
                 android:id="@+id/task"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/task"
                 android:onClick="TaskShow"
-                android:padding="10dp"
-                android:text="Задания"
-                app:layout_constraintEnd_toStartOf="@+id/scrollView2"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/progress" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/dropLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="37dp"
-            android:layout_marginBottom="301dp"
-            app:layout_constraintBottom_toTopOf="@+id/constraintLayout1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView7">
-
-            <Button
-                android:id="@+id/starter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="LetsGo"
-                android:text="Старт"
+                android:padding="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintHorizontal_bias="0.337"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.953" />
+                app:layout_constraintVertical_bias="0.8" />
+
+            <Button
+                android:id="@+id/reset"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/wordnew"
+                android:onClick="ResTart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.902"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
