@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,6 +28,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
@@ -56,8 +58,14 @@ public class MainActivity extends AppCompatActivity  {
 
     //ctrl+shift+ - все свернуть
 
-    ListView QuestList, QuestList2;
+    // добавить задания, типа: собрать 3 слова по 4 буквы
+    // каждое следующее слово длиннее на 1 букву
+    // набоать как больше слов за меньшее время
 
+
+
+    ListView QuestList, QuestList2;
+    boolean isNextLvl = true;
 
     ArrayList<String> Quest;
     ArrayList<String> Quest2;
@@ -115,12 +123,13 @@ public class MainActivity extends AppCompatActivity  {
     ObjectAnimator  button13;
     ObjectAnimator  button14;
 
-    protected TextView QAWord, textSee, textClock, score, textView2, textView3, textView4, task_1, task_2;
+
+    protected TextView lvlview, QAWord, textSee, textClock, score, textView2, textView3, textView4, task_1, task_2;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
     protected Button progress,  faq, task, start, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
     private Button chek1, chek2, chek3, chek4, chek5, chek6, chek7, chek8, chek9, chek10;
-    private ImageView  clock;
+    private ImageView  clock, img_nextlvl;
     protected ArrayList<String> MainListWord = new ArrayList<String>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
     protected ArrayList<Integer> LineY_1 = new ArrayList<Integer>();
@@ -260,12 +269,14 @@ public class MainActivity extends AppCompatActivity  {
 
     Achives aa = new Achives();
 
-
+    Supports Alfa = new Supports();
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
 
 //        tasker.GetMoreTask();
 
@@ -292,6 +303,8 @@ public class MainActivity extends AppCompatActivity  {
         reset = findViewById(R.id.reset);
         faq = findViewById(R.id.faq);
         task = findViewById(R.id.task);
+        lvlview = findViewById(R.id.lvlview);
+        img_nextlvl = findViewById(R.id.img_nextlvl);
 
         clock = findViewById(R.id.clock);
 
@@ -328,6 +341,8 @@ public class MainActivity extends AppCompatActivity  {
 
         QuestList2 = findViewById(R.id.QuestList);
         Quest2 = new ArrayList<>();
+
+
 
 
     }
@@ -649,7 +664,7 @@ public class MainActivity extends AppCompatActivity  {
     protected void HowScore(int A){
         switch (A){
             case 2:
-                setCounter(getCounter()-1);
+                setCounter(getCounter()+0);
                 setList_2(getList_3()-1);
                 break;
             case 3:
@@ -690,8 +705,6 @@ public class MainActivity extends AppCompatActivity  {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Chek_1(View v){
 
-
-
 //анимация альфа канала (прозрачности от 0 до 1)
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
 //длительность анимации 1/10 секунды
@@ -702,7 +715,7 @@ public class MainActivity extends AppCompatActivity  {
         animation.setRepeatMode(Animation.REVERSE);
 //режим повтора (бесконечно)
        animation.setRepeatCount(0);
-//накладываем анимацию на TextView
+
 
 //анимация альфа канала (прозрачности от 0 до 1)
         Animation animation2 = new TranslateAnimation(-10, 30, 0, 30);
@@ -720,12 +733,14 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
+
+
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length);
-            score.setText(""+getCounter());
+            score.setText("Очков "+getCounter());
 //            textButton1.setBackgroundResource(R.drawable.textstyletrue);
             Quest.add(KeyWord);
             textButton1.startAnimation(animation);
@@ -755,8 +770,41 @@ public class MainActivity extends AppCompatActivity  {
 //        textButton1.setEnabled(false);
 
 
+        lvlview.setText("Уровень: "+ Alfa.LVL_UP(getCounter())); // Увеличение уровня, подсчет
+
+        switch (Alfa.LVL_UP(getCounter())){
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                ShowNewLvl();
+                break;
+        }
+
+        setCounter(getCounter() + Alfa.countCorrectSeqLen(Quest));
+
+
     }
 
+    protected void ShowNewLvl(){
+
+        ObjectAnimator scaleXAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleX", 0.3f, 2.5f);
+        scaleXAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleXAnimation.setDuration(1900);
+        ObjectAnimator scaleYAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleY", 0.3f, 2.5f);
+        scaleYAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleYAnimation.setDuration(1900);
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(img_nextlvl, "alpha", 1F, 0F);
+        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        alphaAnimation.setDuration(2500);
+
+
+        AnimatorSet animationSet = new AnimatorSet();
+        animationSet.play(scaleXAnimation).with(scaleYAnimation).with(alphaAnimation);
+        animationSet.start();
+    } //показать уведомление о новом уровне
 
     protected void EneblendButtonsAffterPress(){
         pr1.setEnabled(true);
@@ -799,7 +847,7 @@ public class MainActivity extends AppCompatActivity  {
         } else if (melodyName.equals("midle")) {
             this.a = 0;
         } else if (melodyName.equals("fast")) {
-            this.a = -5500;
+            this.a = -2500;
         }
         score.setText(""+this.a);
 
@@ -1545,8 +1593,6 @@ public class MainActivity extends AppCompatActivity  {
 
         OptionDialog.show();
     }  // окно статистика
-
-
     public void TaskDialog(){
 
         TaskDialog = new AlertDialog.Builder(this).create();
@@ -1574,8 +1620,8 @@ public class MainActivity extends AppCompatActivity  {
             }
         });
         TaskDialog.show();
-    }  // список собранных слов
 
+    }  // список собранных слов
     public void ResetField(View v){
         MainListWord.clear();
         EneblendButtonsAffterPress();

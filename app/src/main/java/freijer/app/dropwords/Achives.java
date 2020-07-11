@@ -25,7 +25,7 @@ public class Achives {
 
     protected String WORD_3(int incom3){  // задания, добавляем в список сколько выполленных сбора слов из 3 букв
 
-        String done_3 = "Еще не открыто";
+        String done_3 = "0";
         switch (incom3){
             case 3:
                 done_3 = "Собрано из 3 букв 3 раза";
