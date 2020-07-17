@@ -62,7 +62,70 @@ public class MainActivity extends AppCompatActivity  {
     // каждое следующее слово длиннее на 1 букву
     // набоать как больше слов за меньшее время
 
+    int number_word_3 = 0;
+    int number_word_4 = 0;
+    int number_word_5 = 0;
+    int number_word_6 = 0;
+    int number_word_7 = 0;
+    int number_word_8 = 0;
+    int number_word_9 = 0;
+    int number_word_10 = 0;
 
+
+
+
+
+    public int getNumber_word_3() {
+        return number_word_3;
+    }
+    public void setNumber_word_3(int number_word_3) {
+        this.number_word_3 = number_word_3;
+    }
+    public int getNumber_word_4() {
+        return number_word_4;
+    }
+    public void setNumber_word_4(int number_word_4) {
+        this.number_word_4 = number_word_4;
+    }
+    public int getNumber_word_5() {
+        return number_word_5;
+    }
+    public void setNumber_word_5(int number_word_5) {
+        this.number_word_5 = number_word_5;
+    }
+    public int getNumber_word_6() {
+        return number_word_6;
+    }
+    public void setNumber_word_6(int number_word_6) {
+        this.number_word_6 = number_word_6;
+    }
+    public int getNumber_word_7() {
+        return number_word_7;
+    }
+    public void setNumber_word_7(int number_word_7) {
+        this.number_word_7 = number_word_7;
+    }
+    public int getNumber_word_8() {
+        return number_word_8;
+    }
+    public void setNumber_word_8(int number_word_8) {
+        this.number_word_8 = number_word_8;
+    }
+    public int getNumber_word_9() {
+        return number_word_9;
+    }
+    public void setNumber_word_9(int number_word_9) {
+        this.number_word_9 = number_word_9;
+    }
+    public int getNumber_word_10() {
+        return number_word_10;
+    }
+    public void setNumber_word_10(int number_word_10) {
+        this.number_word_10 = number_word_10;
+    }
+
+
+    ArrayAdapter<String> adapterDone;
 
     ListView QuestList, QuestList2;
     boolean isNextLvl = true;
@@ -139,6 +202,7 @@ public class MainActivity extends AppCompatActivity  {
     protected ArrayList<String> listBuffer = new ArrayList<String>();;
     protected ConstraintLayout dropLayout;
     protected Chronometer mChronometer;
+    ListView taskDoneList;
 
     int counter;
     public int getCounter() {
@@ -266,21 +330,15 @@ public class MainActivity extends AppCompatActivity  {
         return new Point(x, y);
     } //определние координат
 
-
+    List<String> taskList = new ArrayList<>();
     Achives aa = new Achives();
 
-    Supports Alfa = new Supports();
+    Supports supportClass = new Supports();
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-
-//        tasker.GetMoreTask();
-
-//        SetSpeedFromSheredPref(PreferenceManager.getDefaultSharedPreferences(this));
 
         setTextFlag(1);
         super.onCreate(savedInstanceState);
@@ -305,6 +363,7 @@ public class MainActivity extends AppCompatActivity  {
         task = findViewById(R.id.task);
         lvlview = findViewById(R.id.lvlview);
         img_nextlvl = findViewById(R.id.img_nextlvl);
+
 
         clock = findViewById(R.id.clock);
 
@@ -587,7 +646,7 @@ public class MainActivity extends AppCompatActivity  {
     } //Всплывабщее окно
 
     public void LetsGo(View v){
-
+        supportClass.Gos();
         ShowButtons();
         starter.setVisibility(GONE);
         Clocks();
@@ -654,8 +713,6 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ResTart(View v){
         NewWord();
@@ -665,42 +722,75 @@ public class MainActivity extends AppCompatActivity  {
         switch (A){
             case 2:
                 setCounter(getCounter()+0);
-                setList_2(getList_3()-1);
+               // setList_2(getList_3()-1);
                 break;
             case 3:
                 setCounter(getCounter()+1);
-                setList_3(getList_3()+1);
+               // setList_3(getList_3()+1);
                 break;
             case 4:
                 setCounter(getCounter()+2);
-                setList_4(getList_4()+1);
+               // setList_4(getList_4()+1);
                 break;
             case 5:
                 setCounter(getCounter()+3);
-                setList_5(getList_4()+1);
+               // setList_5(getList_4()+1);
                 break;
             case 6:
                 setCounter(getCounter()+4);
-                setList_6(getList_4()+1);
+               // setList_6(getList_4()+1);
                 break;
             case 7:
                 setCounter(getCounter()+4);
-                setList_7(getList_4()+1);
+               // setList_7(getList_4()+1);
                 break;
             case 8:
                 setCounter(getCounter()+4);
-                setList_8(getList_4()+1);
+              //  setList_8(getList_4()+1);
                 break;
             case 9:
                 setCounter(getCounter()+4);
-                setList_9(getList_4()+1);
+               // setList_9(getList_4()+1);
                 break;
             case 10:
                 setCounter(getCounter()+4);
-                setList_10(getList_10()+1);
+               // setList_10(getList_10()+1);
                 break;
         }
     }//подсчет очков
+
+    protected void HowLenght (int incom1){
+        switch (incom1){
+            case 2:
+                setList_2(getList_2()+1);
+                break;
+            case 3:
+                setList_3(getList_3()+1);
+                break;
+            case 4:
+                setList_4(getList_4()+1);
+                break;
+            case 5:
+                setList_5(getList_5()+1);
+                break;
+            case 6:
+                setList_6(getList_6()+1);
+                break;
+            case 7:
+                setList_7(getList_7()+1);
+                break;
+            case 8:
+                setList_8(getList_8()+1);
+                break;
+            case 9:
+                setList_9(getList_9()+1);
+                break;
+            case 10:
+                setList_10(getList_10()+1);
+                break;
+        }
+    }
+
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Chek_1(View v){
@@ -740,6 +830,7 @@ public class MainActivity extends AppCompatActivity  {
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length);
+            HowLenght(ArrayListWord.length);
             score.setText("Очков "+getCounter());
 //            textButton1.setBackgroundResource(R.drawable.textstyletrue);
             Quest.add(KeyWord);
@@ -750,7 +841,8 @@ public class MainActivity extends AppCompatActivity  {
             score.setText(""+getCounter());
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
 //            textButton1.setBackgroundResource(R.drawable.textstyle_false);
-            Quest2.add(KeyWord);
+          //  Quest2.add(KeyWord);
+
             textButton1.startAnimation(animation2);
         }  else  {
             ListXUpFull();
@@ -770,9 +862,9 @@ public class MainActivity extends AppCompatActivity  {
 //        textButton1.setEnabled(false);
 
 
-        lvlview.setText("Уровень: "+ Alfa.LVL_UP(getCounter())); // Увеличение уровня, подсчет
+        lvlview.setText("Уровень: "+ supportClass.LVL_UP(getCounter())); // Увеличение уровня, подсчет
 
-        switch (Alfa.LVL_UP(getCounter())){
+        switch (supportClass.LVL_UP(getCounter())){
             case 2:
             case 3:
             case 4:
@@ -783,7 +875,7 @@ public class MainActivity extends AppCompatActivity  {
                 break;
         }
 
-        setCounter(getCounter() + Alfa.countCorrectSeqLen(Quest));
+       // setCounter(getCounter() + supportClass.countCorrectSeqLen(Quest));
 
 
     }
@@ -1549,11 +1641,48 @@ public class MainActivity extends AppCompatActivity  {
 
     } //кнопка открытия заадний
     public void Dialogus(){
+        taskList.add("Слово из 3 букв собранно " + getList_3() + " раза");
+        taskList.add("Слово из 4 букв собранно " + getList_4() + " раза");
+        taskList.add("Слово из 5 букв собранно " + getList_5() + " раза");
+        taskList.add("Слово из 6 букв собранно " + getList_6() + " раза");
+        taskList.add("Слово из 7 букв собранно " + getList_7() + " раза");
+        taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
+        taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
+        taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
+        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Quest) + " слов");
+
+        LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View v = li.inflate(R.layout.stats_fragment, null, false);
+
+        taskDoneList = v.findViewById(R.id.taskDoneList);
 
         OptionDialog = new AlertDialog.Builder(this).create();
         OptionDialog.setTitle("Статистика");
-        LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = li.inflate(R.layout.stats_fragment, null, false);
+
+        adapterDone = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, supportClass.taskDone);
+        taskDoneList.setAdapter(adapterDone);
+
+
+        supportClass.ShowTaskWelDone(taskList);
+
+        setNumber_word_3(getList_3());
+        setNumber_word_4(getList_4());
+        setNumber_word_5(getList_5());
+        setNumber_word_6(getList_6());
+        setNumber_word_7(getList_7());
+        setNumber_word_8(getList_8());
+        setNumber_word_9(getList_9());
+        setNumber_word_10(getList_10());
+
+
+
+
+
+
+
+
+
+
         butClose =  v.findViewById(R.id.butClose);
         text_2_inner = v.findViewById(R.id.text_2_inner);
         text_3_inner = v.findViewById(R.id.text_3_inner);
