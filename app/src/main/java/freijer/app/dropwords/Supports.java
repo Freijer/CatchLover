@@ -13,9 +13,12 @@ public class Supports {
     static int pos_asd;
 
     ImageView img_nextlvl;
-    protected int next_lvl = 1;
+
     protected int tr = 0;
     protected int flag_1;
+    public int tryChenge = 10;
+
+
 
     ArrayList<String> Task = new ArrayList<>();
     static List<String> logQA = new ArrayList<>();
@@ -71,21 +74,21 @@ public class Supports {
         return maxLength;
     }// слов одинаковой длинны подряд
 
+    protected int next_lvl = 1;
     protected int LVL_UP(int income) {
-        if (income >= 3 && income <= 20) {
+        if (income >= 15 && income <= 20) {
             this.next_lvl = 2;
         } else if (income >= 21 && income <= 40) {
             this.next_lvl = 3;
         } else if (income >= 41 && income <= 60) {
             this.next_lvl = 4;
-        }  //увеличение уровня, подсчет
+        }
         return next_lvl;
     }
 
-    public void TaskListing(){
-        Task.add("Собрать слово из 3 букв 3 раза");
-        Task.add("Собрать слово из 4 букв 3 раза");
-    }
+
+
+
 
     public static int CountCorrectSeqLen(List<String> data) {
         double modifier_to_score = 1.5;
@@ -108,25 +111,27 @@ public class Supports {
     // последовательность +1 буква к следующему слову
     //Вводим число  =   длинна последовательности. И если правильная, то возвращаем количество очков в 1.5 раза больше нужной последовательности.
 
-
     public void ShowTaskWelDone(List<String> incom){
         for (String eachString : incom) {
             if (logQA.contains(eachString)) {
                 taskDone.add(eachString);
                 if (eachString.contains("Последовательность")){ // за послекдовательность 5 очков
+                  //  setTry_change_word(getTry_change_word()+1);
                     this.asd+= 3;
                 }
+              //  setTry_change_word(getTry_change_word()+1);
+                //tryChenge = tryChenge+ 1;
                 this.asd += 2; //за обычный квест 2 очка
                 logQA.remove(eachString);
+
             }
         }
         setTotalScore(asd+pos_asd);
+
 //        this.pos_asd = Supports.CountCorrectSeqLen(Words)*2; //очки за последовательность увеличиваются
 //        setTotalScore((Supports.CountCorrectSeqLen(Words)*2) + asd); //в два раза больше очков за последовательность
 
     }
-
-
 
     protected static void Gos(){
 
@@ -171,7 +176,10 @@ public class Supports {
         logQA.add("Последовательность из +1 буква длинной в 5 слов");
 
     }
-
+    public void TaskListing(){
+        Task.add("Собрать слово из 3 букв 3 раза");
+        Task.add("Собрать слово из 4 букв 3 раза");
+    }
 }
 
 

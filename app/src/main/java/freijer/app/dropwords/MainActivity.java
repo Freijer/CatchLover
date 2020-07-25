@@ -23,6 +23,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -62,6 +63,15 @@ public class MainActivity extends AppCompatActivity  {
     // каждое следующее слово длиннее на 1 букву
     // набоать как больше слов за меньшее время
 
+    protected int number_change_word = 5;
+
+    public int getNumber_change_word() {
+        return number_change_word;
+    }
+    public void setNumber_change_word(int number_change_word) {
+        this.number_change_word = number_change_word;
+    }
+
     int number_word_3 = 0;
     int number_word_4 = 0;
     int number_word_5 = 0;
@@ -72,7 +82,10 @@ public class MainActivity extends AppCompatActivity  {
     int number_word_10 = 0;
 
 
-
+    protected int upLVL_1 = 1;
+    protected int upLVL_2 = 2;
+    protected int upLVL_3 = 3;
+    protected int now_lvl = 0;
 
 
     public int getNumber_word_3() {
@@ -365,7 +378,7 @@ public class MainActivity extends AppCompatActivity  {
         img_nextlvl = findViewById(R.id.img_nextlvl);
 
 
-        clock = findViewById(R.id.clock);
+//        clock = findViewById(R.id.clock);
 
         textButton1 = findViewById(R.id.textButton1);
 
@@ -391,8 +404,8 @@ public class MainActivity extends AppCompatActivity  {
         SetLiteralsonButtons(); //установка букв на слова
         Creates(); //активация и движеение кнопок
         String gg = Integer.toString(numsofliteralsinword);
-        reset.setVisibility(GONE);
-        score.setText("" + aa.WORD_3(4));  //ТЕСТОВАЯ ОБРАБОТКА!!!!!
+       // reset.setVisibility(GONE);
+       // score.setText("" + aa.WORD_3(4));  //ТЕСТОВАЯ ОБРАБОТКА!!!!!
 
 
       QuestList = findViewById(R.id.QuestList);
@@ -401,16 +414,12 @@ public class MainActivity extends AppCompatActivity  {
         QuestList2 = findViewById(R.id.QuestList);
         Quest2 = new ArrayList<>();
 
-
-
-
     }
 
 //    private void SetSpeedFromSheredPref(SharedPreferences sharedPreferences){
 //        defaultinterval = sharedPreferences.getInt("speed", 0);
 //        setSpeed(defaultinterval);
 //    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -430,7 +439,6 @@ public class MainActivity extends AppCompatActivity  {
         }
         return super.onOptionsItemSelected(item);
     } // отработка нажтий на МЕНЮ элементе 2
-
 
     public void ListXUpFull(){
         ListCoordinateX_1.add(textButton1.getHeight()/8);
@@ -456,10 +464,9 @@ public class MainActivity extends AppCompatActivity  {
         pr13.setVisibility(GONE);
         pr14.setVisibility(GONE);
 
-        clock.setVisibility(GONE);
+//        clock.setVisibility(GONE);
 
 
-        textClock.setVisibility(GONE);
 
         textButton1.setEnabled(false);
 
@@ -529,9 +536,9 @@ public class MainActivity extends AppCompatActivity  {
                 break;
 
         }
-        clock.setVisibility(VISIBLE);
+//        clock.setVisibility(VISIBLE);
 
-        textClock.setVisibility(VISIBLE);
+
         starter.setVisibility(GONE);
         //--
         textButton1.setVisibility(VISIBLE);
@@ -627,13 +634,16 @@ public class MainActivity extends AppCompatActivity  {
     public void onClick(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("     Инструкция")
-                .setMessage("По экрану движутся кнопки, нажимая на них ВЫ собираете слова, которые выстраиваются по цветным линиям. Собрал слово - нажал на галочку." + "\n"  +
+                .setMessage("По экрану движутся кнопки, нажимая на них нужно собрать слово" + "\n"  +
                         "слово  меньше 3 букв - 1очко" + "\n"  +
                         "3 буквы +1" + "\n"  +
                         "4 буквы +2 " + "\n"  +
                         "5 букв +3" + "\n"  +
                         "6 букв +4" + "\n"  +
-                        "каждое не правильное слово так же -1 очко")
+                        "каждое не правильное слово так же -1 очко" + "\n"  +
+                         "Вы мсжете поменять  набор букв в любой момент. Это стоит -1 очко замены." + "\n"  +
+                                "Каждое очко замены дается при достижения уровня и новый ачивки"
+                        )
                 .setCancelable(false)
                 .setNegativeButton("Все понятно, создатель этого приложения гений!",
                         new DialogInterface.OnClickListener() {
@@ -670,17 +680,13 @@ public class MainActivity extends AppCompatActivity  {
 //        }
 //        score.setText(""+getSpeed());
 
-
+        textClock.setText("Очков смены слов: "+supportClass.tryChenge);
     }  // СТАРТ, часы
-
-
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
         starter.setVisibility(GONE);
-        reset.setVisibility(GONE);
+        //reset.setVisibility(GONE);
         ControlWordsfinFail(); // читаем проверочные слова
         ReadWords(); // читаем ключевык
         Randomizator(); // разиваем на буквы
@@ -690,33 +696,24 @@ public class MainActivity extends AppCompatActivity  {
         Creates(); //активация и движеение кнопок
         Clocks();
     } // следующее слово
-
     public void Clocks(){
 
-
-//        new CountDownTimer(120000, 1000) {
-//            @SuppressLint("SetTextI18n")
-//            public void onTick(long millisUntilFinished) {
-//                textClock.setText("Сек :" + millisUntilFinished / 1000);
-//            }
-//            public void onFinish() {
-//                textClock.setText("done!");
-//                GoneButnnons();
-////                Dialogus();
-//               reset.setVisibility(VISIBLE);
-////                ResetREesetr();
-////                setTextFlag(0);
-//
-//            }
-//        }.start();
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ResTart(View v){
-        NewWord();
-    }
+        if (supportClass.tryChenge> 0){
+            reset.setEnabled(true);
+            NewWord();
+            supportClass.tryChenge-=1;
+            Toast.makeText(this, "Слово сменилось", Toast.LENGTH_SHORT).show();
+        } else if (supportClass.tryChenge<1){
+            Toast.makeText(this, "Нет попыток, добудте еще ачивку", Toast.LENGTH_SHORT).show();
+        }
+        textClock.setText("Очков смены слов: "+supportClass.tryChenge);
+    }  //Включить новое слово
+
     @SuppressLint("SetTextI18n")
     protected void HowScore(int A){
         switch (A){
@@ -791,9 +788,10 @@ public class MainActivity extends AppCompatActivity  {
         }
     }
 
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Chek_1(View v){
+
+
 
 //анимация альфа канала (прозрачности от 0 до 1)
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
@@ -821,24 +819,20 @@ public class MainActivity extends AppCompatActivity  {
 //накладываем анимацию на TextView
 
 
-
-
-
-
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length);
             HowLenght(ArrayListWord.length);
-            score.setText("Очков "+getCounter());
+            score.setText("Очков: "+getCounter());
 //            textButton1.setBackgroundResource(R.drawable.textstyletrue);
             Quest.add(KeyWord);
             textButton1.startAnimation(animation);
         } else if (listBuffer.contains(KeyWord)){
             ListXUpFull();
             setCounter(getCounter()-1);
-            score.setText(""+getCounter());
+            score.setText("Очков: "+getCounter());
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
 //            textButton1.setBackgroundResource(R.drawable.textstyle_false);
           //  Quest2.add(KeyWord);
@@ -847,7 +841,7 @@ public class MainActivity extends AppCompatActivity  {
         }  else  {
             ListXUpFull();
             setCounter(getCounter()-1);
-            score.setText(""+getCounter());
+            score.setText("Очков: "+getCounter());
 //            textButton1.setBackgroundResource(R.drawable.textstyle_false);
             Quest2.add(KeyWord);
             textButton1.startAnimation(animation2);
@@ -861,22 +855,70 @@ public class MainActivity extends AppCompatActivity  {
           textButton1.setText("Собери слово");
 //        textButton1.setEnabled(false);
 
-
-        lvlview.setText("Уровень: "+ supportClass.LVL_UP(getCounter())); // Увеличение уровня, подсчет
-
         switch (supportClass.LVL_UP(getCounter())){
             case 2:
+                ShowNewLvl();
+                this.now_lvl = 2;
+                break;
             case 3:
+                ShowNewLvl();
+                this.now_lvl = 2;
+                break;
             case 4:
+                ShowNewLvl();
+                break;
             case 5:
+                ShowNewLvl();
+                break;
             case 6:
+                ShowNewLvl();
+                break;
             case 7:
                 ShowNewLvl();
                 break;
         }
+      //  lvlview.setText("Уровень: "+ supportClass.LVL_UP(getCounter())); // Увеличение уровня, подсчет
+        lvlview.setText("Уровень: "+ this.now_lvl); // Увеличение уровня, подсчет
 
-       // setCounter(getCounter() + supportClass.countCorrectSeqLen(Quest));
 
+
+        taskList.add("Слово из 3 букв собранно " + getList_3() + " раза");
+        taskList.add("Слово из 4 букв собранно " + getList_4() + " раза");
+        taskList.add("Слово из 5 букв собранно " + getList_5() + " раза");
+        taskList.add("Слово из 6 букв собранно " + getList_6() + " раза");
+        taskList.add("Слово из 7 букв собранно " + getList_7() + " раза");
+        taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
+        taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
+        taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
+        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Quest) + " слов");
+
+        supportClass.ShowTaskWelDone(taskList);
+       // textClock.setText(""+ supportClass.taskDone.size());
+
+
+        switch(supportClass.taskDone.size()){
+            case 1:
+                supportClass.tryChenge=supportClass.tryChenge+1;
+                break;
+            case 2:
+                supportClass.tryChenge=supportClass.tryChenge+1;
+                break;
+            case 3:
+                supportClass.tryChenge=supportClass.tryChenge+1;
+                break;
+            case 4:
+                supportClass.tryChenge=supportClass.tryChenge+1;
+                break;
+            case 5:
+                supportClass.tryChenge=supportClass.tryChenge+1;
+                break;
+            case 6:
+                supportClass.tryChenge=supportClass.tryChenge+1;
+                break;
+        }
+
+//        supportClass.SumSnahgeWord();
+        textClock.setText("Очков смены слов: "+supportClass.tryChenge);
 
     }
 
@@ -941,7 +983,7 @@ public class MainActivity extends AppCompatActivity  {
         } else if (melodyName.equals("fast")) {
             this.a = -2500;
         }
-        score.setText(""+this.a);
+        score.setText("Очков: "+this.a);
 
 
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
@@ -1629,16 +1671,12 @@ public class MainActivity extends AppCompatActivity  {
         ListXUpFull();
     } //кнопка 14
 
-
     public void ShowStats(View v){
        Dialogus();
 
     } //открытие статистики
     public void TaskShow(View v){
         TaskDialog();
-
-
-
     } //кнопка открытия заадний
     public void Dialogus(){
         taskList.add("Слово из 3 букв собранно " + getList_3() + " раза");
@@ -1673,13 +1711,6 @@ public class MainActivity extends AppCompatActivity  {
         setNumber_word_8(getList_8());
         setNumber_word_9(getList_9());
         setNumber_word_10(getList_10());
-
-
-
-
-
-
-
 
 
 
