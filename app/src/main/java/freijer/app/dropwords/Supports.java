@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Supports {
-    static int asd;
+    int asd;
     static int pos_asd;
+
 
     ImageView img_nextlvl;
 
@@ -19,14 +20,15 @@ public class Supports {
     public int tryChenge = 10;
 
 
-
     ArrayList<String> Task = new ArrayList<>();
     static List<String> logQA = new ArrayList<>();
     static List<String> taskDone = new ArrayList<>();
     private static int TotalScore;
+
     public static int getTotalScore() {
         return TotalScore;
     }
+
     public void setTotalScore(int totalScore) {
         TotalScore = totalScore;
     }
@@ -45,6 +47,7 @@ public class Supports {
         maxLength = Math.max(maxLength, currentLength);
         return maxLength;
     }// последовательность +1 буква к следующему слову
+
     public static int countStayWord(List<String> data) {
         int maxLength = 0;
         int currentLength = data.size() != 0 ? 1 : 0;
@@ -59,6 +62,7 @@ public class Supports {
         maxLength = Math.max(maxLength, currentLength);
         return maxLength;
     }// слов одинаковой длинны подряд
+
     public static int countWordMinus(List<String> data) {
         int maxLength = 0;
         int currentLength = data.size() != 0 ? 1 : 0;
@@ -75,7 +79,8 @@ public class Supports {
     }// слов одинаковой длинны подряд
 
     protected int next_lvl = 1;
-    protected int LVL_UP(int income) {
+
+    protected int LVL_UP1(int income) {
         if (income >= 15 && income <= 20) {
             this.next_lvl = 2;
         } else if (income >= 21 && income <= 40) {
@@ -85,8 +90,6 @@ public class Supports {
         }
         return next_lvl;
     }
-
-
 
 
 
@@ -104,36 +107,37 @@ public class Supports {
             }
         }
         maxLength = Math.max(maxLength, currentLength);
-        score = (int) (maxLength*modifier_to_score);
+        score = (int) (maxLength * modifier_to_score);
         //return score;
-        return  maxLength;
+        return maxLength;
     }
     // последовательность +1 буква к следующему слову
     //Вводим число  =   длинна последовательности. И если правильная, то возвращаем количество очков в 1.5 раза больше нужной последовательности.
 
-    public void ShowTaskWelDone(List<String> incom){
+    public void ShowTaskWelDone(List<String> incom) {
         for (String eachString : incom) {
             if (logQA.contains(eachString)) {
                 taskDone.add(eachString);
-                if (eachString.contains("Последовательность")){ // за послекдовательность 5 очков
-                  //  setTry_change_word(getTry_change_word()+1);
-                    this.asd+= 3;
+                if (eachString.contains("Последовательность")) { // за послекдовательность 5 очков
+                    //  setTry_change_word(getTry_change_word()+1);
+                   // this.asd += 3;
                 }
-              //  setTry_change_word(getTry_change_word()+1);
+                //  setTry_change_word(getTry_change_word()+1);
                 //tryChenge = tryChenge+ 1;
                 this.asd += 2; //за обычный квест 2 очка
                 logQA.remove(eachString);
 
             }
         }
-        setTotalScore(asd+pos_asd);
+
+
 
 //        this.pos_asd = Supports.CountCorrectSeqLen(Words)*2; //очки за последовательность увеличиваются
 //        setTotalScore((Supports.CountCorrectSeqLen(Words)*2) + asd); //в два раза больше очков за последовательность
 
     }
 
-    protected static void Gos(){
+    protected static void Gos() {
 
         logQA.add("Слово из 3 букв собранно 3 раза");
         logQA.add("Слово из 3 букв собранно 4 раза");
@@ -176,11 +180,42 @@ public class Supports {
         logQA.add("Последовательность из +1 буква длинной в 5 слов");
 
     }
-    public void TaskListing(){
+
+    public void TaskListing() {
         Task.add("Собрать слово из 3 букв 3 раза");
         Task.add("Собрать слово из 4 букв 3 раза");
     }
+
+
+
+
+    protected static int LVL_UP(int income) {
+        if (income >= 3 && income <= 7) {
+            return 2;
+        } else if (income >= 8 && income <= 15) {
+            return 3;
+        } else if (income >= 41 && income <= 60) {
+            return 4;
+        }
+        return 1;
+    }
+
+    void printIfLeveledUp(int income) {
+        int new_lvl = LVL_UP(income);
+        if (new_lvl > next_lvl) {
+            next_lvl = new_lvl;
+            System.out.println(next_lvl);
+        }
+    }
+
+
 }
+
+
+
+
+
+
 
 
 

@@ -49,16 +49,18 @@
             <TextView
                 android:id="@+id/text_2"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="2 Буквы  " />
+                android:text="2 Буквы  "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_2_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,16 +73,18 @@
             <TextView
                 android:id="@+id/text_3"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="3 Буквы  " />
+                android:text="3 Буквы  "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_3_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -92,16 +96,18 @@
             <TextView
                 android:id="@+id/text_4"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=" 4 Буквы " />
+                android:text=" 4 Буквы "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_4_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -114,16 +120,18 @@
             <TextView
                 android:id="@+id/text_5"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=" 5 Букв    " />
+                android:text=" 5 Букв    "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_5_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -135,16 +143,18 @@
             <TextView
                 android:id="@+id/text_6"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=" 6 Букв    " />
+                android:text=" 6 Букв    "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_6_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -156,16 +166,18 @@
             <TextView
                 android:id="@+id/text_7"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=" 7 Букв    " />
+                android:text=" 7 Букв    "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_7_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -177,16 +189,18 @@
             <TextView
                 android:id="@+id/text_8"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=" 8 Букв    " />
+                android:text=" 8 Букв    "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_8_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -198,16 +212,18 @@
             <TextView
                 android:id="@+id/text_9"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=" 9 Букв    " />
+                android:text=" 9 Букв    "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_9_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -218,17 +234,19 @@
 
             <TextView
                 android:id="@+id/text_10"
-                android:layout_width="50dp"
-                android:layout_height="29dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text=" 10 Букв  " />
+                android:text=" 10 Букв  "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_10_inner"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="" />
+                android:text=""
+                android:textSize="16sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -237,6 +255,7 @@
         android:layout_width="344dp"
         android:layout_height="196dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
         android:background="@android:color/holo_blue_light"
         app:layout_constraintBottom_toTopOf="@+id/butClose"
@@ -245,5 +264,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/allLists"
         app:layout_constraintVertical_bias="0.881" />
+
+    <TextView
+        android:id="@+id/achives"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/textstyletrue"
+        android:padding="10dp"
+        android:text="Достижения"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/taskDoneList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allLists"
+        app:layout_constraintVertical_bias="0.684" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
