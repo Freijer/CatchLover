@@ -81,7 +81,7 @@ public class Supports {
     protected int next_lvl = 1;
 
     protected int LVL_UP1(int income) {
-        if (income >= 15 && income <= 20) {
+        if (income >= 5 && income <= 20) {
             this.next_lvl = 2;
         } else if (income >= 21 && income <= 40) {
             this.next_lvl = 3;
@@ -190,7 +190,9 @@ public class Supports {
 
 
     protected static int LVL_UP(int income) {
-        if (income >= 3 && income <= 7) {
+        if (income >= 0 && income <= 3) {
+            return 1;
+        } else if (income >= 4 && income <= 7) {
             return 2;
         } else if (income >= 8 && income <= 15) {
             return 3;
