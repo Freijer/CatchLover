@@ -15,11 +15,6 @@ import java.util.Random;
 
 
 public class TaskListing  {
-
-
-
-
-
     Random rand = new Random();
     private int indexWord;
     protected String word;
@@ -66,8 +61,6 @@ public class TaskListing  {
     }
 
     protected void Goze() {
-
-
 
 //        AlertDialog.Builder builder1 = new AlertDialog.Builder(TaskListing);
 //        builder1.setMessage("Write your message here.");
