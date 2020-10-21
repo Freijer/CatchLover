@@ -53,7 +53,7 @@
             android:textSize="16sp" />
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="500dp"
@@ -70,28 +70,137 @@
         app:layout_constraintVertical_bias="0.068">
 
         <ListView
-            android:id="@+id/QuestList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="60dp"
-            android:layout_weight="2"
-            android:visibility="visible" />
+            android:id="@+id/Thru_answer_1"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.024"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp" />
 
         <ListView
-            android:id="@+id/QuestList2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="60dp"
-            android:layout_weight="2"
-            android:visibility="visible">
-
+            android:id="@+id/Wrong_answer_1"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.975"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp">
         </ListView>
-    </LinearLayout>
+
+        <ListView
+            android:id="@+id/Wrong_answer_2"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.975"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp">
+        </ListView>
+
+        <ListView
+            android:id="@+id/Wrong_answer_3"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.975"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp">
+        </ListView>
+
+        <ListView
+            android:id="@+id/Wrong_answer_4"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.975"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp">
+        </ListView>
+
+        <ListView
+            android:id="@+id/Thru_answer_2"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.024"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp" />
+
+        <ListView
+            android:id="@+id/Thru_answer_3"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.024"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp" />
+
+        <ListView
+            android:id="@+id/Thru_answer_4"
+            android:layout_width="120dp"
+            android:layout_height="300dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="50dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.024"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_conversion_absoluteHeight="380dp"
+            tools:layout_conversion_absoluteWidth="155dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
