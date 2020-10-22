@@ -1,4 +1,4 @@
-package freijer.app.dropwords.Data;
+package freijer.app.dropwords.DataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,49 +7,48 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class Data extends SQLiteOpenHelper {
+public class DataHelper extends SQLiteOpenHelper {
 
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "contactDb";
-    public static final String TABLE_NAME = "contacts";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "saveStats";
+    private static final String TABLE_NAME = "stats";
 
-    public static final String KEY_ID = "_id";
-    public static final String KEY_SCORE = "scores";
-    public static final String KEY_LVL = "lvls";
-    public static final String KEY_TRYS = "tryss";
+    private static final String KEY_ID = "_id";
+    private static final String KEY_SCORE = "scores";
+    private static final String KEY_LVL = "lvl";
+    private static final String KEY_TRYS = "tryChange";
 
     SQLiteDatabase database;
     ContentValues contentValues = new ContentValues();
 
-    String valueScore;
-    String valueLvl;
-    String valueTrys;
-
-    public Data(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
+    private String valueScore;
+    private String valueLvl;
+    private String valueTrys;
 
     public String getValueScore() {
         return valueScore;
     }
-    public void setValueScore(String valueScore) {
+    private void setValueScore(String valueScore) {
         this.valueScore = valueScore;
     }
     public String getValueLvl() {
         return valueLvl;
     }
-    public void setValueLvl(String valueLvl) {
+    private void setValueLvl(String valueLvl) {
         this.valueLvl = valueLvl;
     }
     public String getValueTrys() {
         return valueTrys;
     }
-    public void setValueTrys(String valueTrys) {
+    private void setValueTrys(String valueTrys) {
         this.valueTrys = valueTrys;
     }
 
 
+    public DataHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

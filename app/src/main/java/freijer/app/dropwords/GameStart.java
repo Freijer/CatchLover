@@ -2,7 +2,6 @@ package freijer.app.dropwords;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.app.AlertDialog;
@@ -13,10 +12,8 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.preference.PreferenceManager;
-
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
@@ -50,10 +47,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import freijer.app.dropwords.Data.Data;
+import freijer.app.dropwords.DataBase.DataHelper;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+
+
+
+
+
+
+//** АВТОЧТЕНИЕ из БАЗЫ ДАННЫХ в кноаку СТАРТ ИГРЫ
+
+
+
+
 
 public class GameStart extends AppCompatActivity  {
 
@@ -65,12 +73,8 @@ public class GameStart extends AppCompatActivity  {
     // каждое следующее слово длиннее на 1 букву
     // набоать как больше слов за меньшее время
 
-
-
-
     //ачивки выводить не текстом, а "иконками" или не все, а только часть. Например за каждую 10 ачивку.
-
-    Data dbHelper;
+    DataHelper dbHelper;
 
     protected int flag = 0;
     protected int exp = 0;
@@ -105,11 +109,6 @@ public class GameStart extends AppCompatActivity  {
     int number_word_8 = 0;
     int number_word_9 = 0;
     int number_word_10 = 0;
-
-    String addsc;
-    String addlvl;
-    String addtryss;
-
 
     public int getNumber_word_3() {
         return number_word_3;
@@ -165,7 +164,6 @@ public class GameStart extends AppCompatActivity  {
 
     ListView Thru_answer_1, Thru_answer_2, Thru_answer_3, Thru_answer_4;
     ListView Wrong_answer_1, Wrong_answer_2, Wrong_answer_3, Wrong_answer_4;
-    boolean isNextLvl = true;
 
     ArrayList<String> Thru_list_1;
     ArrayList<String> Thru_list_2;
@@ -190,16 +188,7 @@ public class GameStart extends AppCompatActivity  {
     ArrayAdapter<String> adapter_wrong_3;
     ArrayAdapter<String> adapter_wrong_4;
 
-
-
-    TaskListing tasker = new TaskListing();
-    Random rand = new Random();
-    private int indexTask;
-    protected String wordTask;
-    protected ArrayList <String> listTask = new ArrayList <String>();
-
-
-    protected Button butClose, butCloseTask, but2, but3;
+    protected Button butClose, butCloseTask;
     private AlertDialog OptionDialog;
     private AlertDialog TaskDialog;
 
@@ -212,19 +201,8 @@ public class GameStart extends AppCompatActivity  {
         this.textFlag = textFlag;
     }
 
-
-    private int TestFlag = 1;
-
-    public int getTestFlag() {
-        return TestFlag;
-    }
-
-    public void setTestFlag(int testFlag) {
-        TestFlag = testFlag;
-    }
-
     protected int f001;
-    protected int x002;
+
 
     ObjectAnimator  button1;
     ObjectAnimator  button2;
@@ -250,7 +228,6 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
     protected ArrayList<Integer> LineY_1 = new ArrayList<Integer>();
-    protected ArrayList<Integer> MooveToEdgeDropLayout = new ArrayList<Integer>();
     private ArrayList<String> list;
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();;
@@ -258,13 +235,7 @@ public class GameStart extends AppCompatActivity  {
     protected Chronometer mChronometer;
     ListView taskDoneList;
 
-    int counter;
-    public int getCounter() {
-        return counter;
-    }
-    public void setCounter(int counter) {
-        this.counter = counter;
-    }
+
 
 
     private int indexWord;
@@ -279,22 +250,6 @@ public class GameStart extends AppCompatActivity  {
     private int countID;
     protected int numsofliteralsinword;
 
-    private int speed;
-    public int getSpeed() {
-        return speed;
-    }
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    SharedPreferences sharedPreferences;
-
-    protected int shiftLiterals =60;//миещние букв в лево
-    private int defaultinterval;
-
-
-    protected int lvl;
-
     protected int list_2;
     protected int list_3;
     protected int list_4;
@@ -305,6 +260,23 @@ public class GameStart extends AppCompatActivity  {
     protected int list_9;
     protected int list_10;
     protected int worrdcount_1;
+
+                        protected int stepOnNextLvl = 0; // ЧТЕНИЕ и ЗАПИСЬ В БД сохрание Уровня
+                        public int getStepOnNextLvl() {
+        return stepOnNextLvl;
+    }
+                        public void setStepOnNextLvl(int stepOnNextLvl) {
+        this.stepOnNextLvl = stepOnNextLvl;
+    }
+
+    int counter = 0; // ЧТЕНИЕ и ЗАПИСЬ В БД сохрание Очков
+    public int getCounter() {
+        return counter;
+    }
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
 
 
     public int getList_2() {
@@ -373,7 +345,7 @@ public class GameStart extends AppCompatActivity  {
     SharedPreferences sPref;
 
 
-    protected int tryChenge;
+    protected int tryChenge = 0;
 
     public int getTryChenge() {
         return tryChenge;
@@ -409,6 +381,8 @@ public class GameStart extends AppCompatActivity  {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        dbHelper = new DataHelper(this);
         setTextFlag(1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_start);
@@ -465,13 +439,10 @@ public class GameStart extends AppCompatActivity  {
 
       Alfas = new ArrayList<>();
       WrongSwitch= new ArrayList<>();
-
-//        ExpCounting(getCounter());
-        setTryChenge(10);
+       setTryChenge(10);
        // Load();
         score.setText(""+getCounter());
-//        lvlview.setText("Уровень: "+ 0);
-        textClock.setText("Очков смены слов: "+getTryChenge()); //1
+        textClock.setText(""+getTryChenge()); //1
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(5);
@@ -717,6 +688,17 @@ public class GameStart extends AppCompatActivity  {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void LetsGo(View v){
 
+
+//        setCounter(123);   //чтение и запись БД очки
+//        setStepOnNextLvl(123); //чтение и запись БД уровень
+//        setTryChenge(123); //чтение и запись БД попыток смены слов
+
+        //добавить чтение из БД
+        lvlview.setText(""+getStepOnNextLvl());
+        score.setText(""+getCounter());
+        textClock.setText(""+getTryChenge());
+
+        //
         score.setVisibility(VISIBLE);
         lvlview.setVisibility(VISIBLE);
         textClock.setVisibility(VISIBLE);
@@ -740,9 +722,6 @@ public class GameStart extends AppCompatActivity  {
                 LineY_1.add(f001);
             }
         }, 500);
-
-
-       // textClock.setText("Очков смены слов: "+getTryChenge());
     }  // СТАРТ, часы
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
@@ -766,7 +745,7 @@ public class GameStart extends AppCompatActivity  {
         } else if (getTryChenge()<1){
             Toast.makeText(this, "Нет попыток, добудте еще ачивку", Toast.LENGTH_SHORT).show();
         }
-        textClock.setText("Очков смены слов: "+getTryChenge());//2
+        textClock.setText(""+getTryChenge());//2
 
 
 //        if (Control.equalsIgnoreCase("котлисаслон")) {
@@ -887,23 +866,18 @@ public class GameStart extends AppCompatActivity  {
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
             ListXUpFull();
             score.setText("Очков: "+getCounter());
-//            textButton1.setBackgroundResource(R.drawable.textstyletrue);
-         //  Quest.add(KeyWord);
-            HowScore(ArrayListWord.length);
+            HowScore(ArrayListWord.length); // Передача ОЧКОВ
             HowLenght(ArrayListWord.length);
-
            Switch_answer().add(KeyWord);
-            //setCounter(getCounter()+1);
             setExp(getExp()+4);
             if (progressBar.getProgress() >= progressBar.getMax()) {
-                //edit.setText("Новый уровень");
                 ShowNewLvl();
                 setFlag(1);
                 int newlvls =0;
                 newlvls = newlvls+1;
-//            lvlview.setText("Уровень: "+ newlvl);
+
                 setNextLvl(newlvls);
-             //   lvlview.setText("Уровень: "+ getNextLvl());
+
 
                 switch(progressBar.getMax()) {
                     case 5:
@@ -964,12 +938,8 @@ public class GameStart extends AppCompatActivity  {
         taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
         taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
         taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
-       //taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Quest) + " слов");
         taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
-
         supportClass.ShowTaskWelDone(taskList);
-       // textClock.setText(""+ supportClass.taskDone.size());
-//        setCounter(getCounter()+supportClass.getTotalScore());
 
 
         switch(supportClass.taskDone.size()){
@@ -998,36 +968,20 @@ public class GameStart extends AppCompatActivity  {
                 setCounter(getCounter()+2);
                 break;
         }
-//        switch(getCounter()){
-//        }
         score.setText("Очков: "+getCounter());
-        textClock.setText("Очков смены слов: "+getTryChenge());//3
+        textClock.setText(""+getTryChenge());// финальные данные
 
-       // progressBar.setProgress(getCounter());
-//        setExp(getExp()+4);
-//        if (progressBar.getProgress() >= progressBar.getMax()) {
-//            //edit.setText("Новый уровень");
-//            ShowNewLvl();
-//            setFlag(1);
-//            int newlvls =0;
-//            newlvls = newlvls+1;
-////            lvlview.setText("Уровень: "+ newlvl);
-//            setNextLvl(newlvls);
-//            lvlview.setText("Уровень: "+ getNextLvl());
-//        }
-//        ActivatePrBar();
-        lvlview.setText("Уровень: "+ stepOnNextLvl);
+        lvlview.setText(""+ getStepOnNextLvl()); // данные беруться отюсда
+
 
     } //проверка
 
-    public int stepOnNextLvl = 0;
+
 
     protected void ActivatePrBar () {
 
         if (getFlag()==1){
             setFlag(0);
-//            ProgressBarNextLvl();
-//            lvlview.setText("Уровень: "+ stepOnNextLvl);
         }
     } //работа с прогрессбаром
 
@@ -1039,24 +993,24 @@ public class GameStart extends AppCompatActivity  {
         if (progressBar.getProgress() == progressBar.getMax()){
             switch (progressBar.getMax()){
                 case 5:
-                    this.stepOnNextLvl = 1;
+                    setStepOnNextLvl(1);
                     progressBar.setMax(8);
                     break;
                 case 8:
-                    this.stepOnNextLvl = 2;
+                    setStepOnNextLvl(2);
                     progressBar.setMax(15);
                     break;
                 case 15:
                     progressBar.setMax(21);
-                    this.stepOnNextLvl = 3;
+                    setStepOnNextLvl(3);
                     break;
                 case 21:
                     progressBar.setMax(32);
-                    this.stepOnNextLvl = 3;
+                    setStepOnNextLvl(4);
                     break;
                 case 32:
                     progressBar.setMax(40);
-                    this.stepOnNextLvl = 4;
+                    setStepOnNextLvl(5);
                     break;
             }
             ShowNewLvl();
@@ -1989,34 +1943,17 @@ public class GameStart extends AppCompatActivity  {
 
     }  // список собранных слов
 
-
-
-    protected void Save(){ //сохранение
-        addsc = String.valueOf(getCounter());
-        addlvl = String.valueOf(getNextLvl());
-        addtryss = String.valueOf(getTryChenge());
-
-        dbHelper.WriteDB(addsc, addlvl, addtryss);
-    }
-
-
-    protected void Load(){ //загрузка
-
-    }
- // слова из списка правильно и неправильно писать в два файла .тхт
-
-
     public List<String> Switch_answer() {
         if (Control.equalsIgnoreCase("котлисаслон")) {
 //            Quest.add(Control);
             this.Alfas = Thru_list_1;
             this.WrongSwitch = Wrong_list_1;
 //            Thru_answer_1.setVisibility(View.VISIBLE);
-          //  Thru_answer_2.setVisibility(View.GONE);
+            //  Thru_answer_2.setVisibility(View.GONE);
         } else if (Control.equalsIgnoreCase("распределитель")) {
-           // Quest2.add(Control);
-           // Thru_answer_1.setVisibility(View.GONE);
-          //  Thru_answer_2.setVisibility(View.VISIBLE);
+            // Quest2.add(Control);
+            // Thru_answer_1.setVisibility(View.GONE);
+            //  Thru_answer_2.setVisibility(View.VISIBLE);
             this.Alfas = Thru_list_2;
             this.WrongSwitch = Wrong_list_2;
         } else if (Control.equalsIgnoreCase("стенографистка")) {
@@ -2028,7 +1965,6 @@ public class GameStart extends AppCompatActivity  {
         }
         return Alfas;
     }
-
     public List<String> Wrong_Switch_answer() {
         if (Control.equalsIgnoreCase("котлисаслон")) {
             this.WrongSwitch = Wrong_list_1;
@@ -2041,6 +1977,8 @@ public class GameStart extends AppCompatActivity  {
         }
         return WrongSwitch;
     }
+
+
 
 
 
