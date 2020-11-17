@@ -11,8 +11,6 @@ import java.util.List;
 public class Supports {
     int asd;
     static int pos_asd;
-
-
     ImageView img_nextlvl;
 
     protected int tr = 0;
@@ -192,7 +190,10 @@ public class Supports {
         return  nextLvl;
     }
 
-
+    public String TESTER(){
+        String a1 = "111";
+        return a1;
+    }
 
 }
 

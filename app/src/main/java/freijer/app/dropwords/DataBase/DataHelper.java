@@ -113,4 +113,5 @@ public class DataHelper extends SQLiteOpenHelper {
         Log.d("myLogs", "updated rows count = " + updCount);
     }
 
+
 }

@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -39,7 +40,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,8 +67,18 @@ import static android.view.View.VISIBLE;
 
 
 
+//public class GameStart extends AppCompatActivity  {
+public class GameStart extends MainActivity  {
 
-public class GameStart extends AppCompatActivity  {
+    Supports supportClass = new Supports();
+
+    protected String login_name = "getNewLogin()";
+    protected String version_name = "a";
+    protected String version_number = "3";
+
+    protected String filename = login_name+version_name+version_number+"truth"+".txt";
+    protected String filenameWrong = login_name+version_name+version_number+"wrong"+".txt";
+
 
     //на кард лайоут перемещаем, кнопка исчезает и появялется буква на текстовом поле,  и можно перемещать перелистывать
 
@@ -76,6 +91,7 @@ public class GameStart extends AppCompatActivity  {
     //ачивки выводить не текстом, а "иконками" или не все, а только часть. Например за каждую 10 ачивку.
     DataHelper dbHelper;
 
+    String saveTofile;
     protected int flag = 0;
     protected int exp = 0;
 
@@ -109,6 +125,30 @@ public class GameStart extends AppCompatActivity  {
     int number_word_8 = 0;
     int number_word_9 = 0;
     int number_word_10 = 0;
+
+
+    String addsc;
+    String addlvl;
+    String addtryss;
+
+    public String getAddsc() {
+        return addsc;
+    }
+    public void setAddsc(String addsc) {
+        this.addsc = addsc;
+    }
+    public String getAddlvl() {
+        return addlvl;
+    }
+    public void setAddlvl(String addlvl) {
+        this.addlvl = addlvl;
+    }
+    public String getAddtryss() {
+        return addtryss;
+    }
+    public void setAddtryss(String addtryss) {
+        this.addtryss = addtryss;
+    }
 
     public int getNumber_word_3() {
         return number_word_3;
@@ -161,32 +201,28 @@ public class GameStart extends AppCompatActivity  {
 
 
     ArrayAdapter<String> adapterDone;
+    ArrayAdapter<String> adapterSwitch;
 
-    ListView Thru_answer_1, Thru_answer_2, Thru_answer_3, Thru_answer_4;
-    ListView Wrong_answer_1, Wrong_answer_2, Wrong_answer_3, Wrong_answer_4;
+    ListView Thru_answer_1;
+    ListView Wrong_answer_1;
 
-    ArrayList<String> Thru_list_1;
-    ArrayList<String> Thru_list_2;
-    ArrayList<String> Thru_list_3;
-    ArrayList<String> Thru_list_4;
+    ArrayList<String> thru_list_1;
+    ArrayList<String> bufferReadList;
 
     ArrayList<String> Wrong_list_1;
-    ArrayList<String> Wrong_list_2;
-    ArrayList<String> Wrong_list_3;
-    ArrayList<String> Wrong_list_4;
+
 
     List<String> Alfas;
     List<String> WrongSwitch;
+    ArrayList<String> TYU;
+    ArrayList<String> ListBuffer;
+    ArrayList<String> ListReadBuffer;
 
     ArrayAdapter<String> adapter_thru_1;
-    ArrayAdapter<String> adapter_thru_2;
-    ArrayAdapter<String> adapter_thru_3;
-    ArrayAdapter<String> adapter_thru_4;
-
     ArrayAdapter<String> adapter_wrong_1;
-    ArrayAdapter<String> adapter_wrong_2;
-    ArrayAdapter<String> adapter_wrong_3;
-    ArrayAdapter<String> adapter_wrong_4;
+
+    FileOutputStream outputStream;
+    String  myText;
 
     protected Button butClose, butCloseTask;
     private AlertDialog OptionDialog;
@@ -230,7 +266,7 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<Integer> LineY_1 = new ArrayList<Integer>();
     private ArrayList<String> list;
     protected ArrayList<String> listControl;
-    protected ArrayList<String> listBuffer = new ArrayList<String>();;
+    protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected ConstraintLayout dropLayout;
     protected Chronometer mChronometer;
     ListView taskDoneList;
@@ -269,7 +305,7 @@ public class GameStart extends AppCompatActivity  {
         this.stepOnNextLvl = stepOnNextLvl;
     }
 
-    int counter = 0; // ЧТЕНИЕ и ЗАПИСЬ В БД сохрание Очков
+    int counter; // ЧТЕНИЕ и ЗАПИСЬ В БД сохрание Очков
     public int getCounter() {
         return counter;
     }
@@ -375,8 +411,6 @@ public class GameStart extends AppCompatActivity  {
         this.nextLvl = nextLvl;
     }
 
-    Supports supportClass = new Supports();
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -419,30 +453,20 @@ public class GameStart extends AppCompatActivity  {
         String gg = Integer.toString(numsofliteralsinword);
 
       Thru_answer_1 = findViewById(R.id.Thru_answer_1);
-      Thru_answer_2 = findViewById(R.id.Thru_answer_2);
-      Thru_answer_3 = findViewById(R.id.Thru_answer_3);
-      Thru_answer_4 = findViewById(R.id.Thru_answer_4);
       Wrong_answer_1 = findViewById(R.id.Wrong_answer_1);
-      Wrong_answer_2 = findViewById(R.id.Wrong_answer_2);
-      Wrong_answer_3 = findViewById(R.id.Wrong_answer_3);
-      Wrong_answer_4 = findViewById(R.id.Wrong_answer_4);
 
-      Thru_list_1 = new ArrayList<>();
-      Thru_list_2 = new ArrayList<>();
-      Thru_list_3 = new ArrayList<>();
-      Thru_list_4 = new ArrayList<>();
-
+      thru_list_1 = new ArrayList<>();
       Wrong_list_1 = new ArrayList<>();
-      Wrong_list_2 = new ArrayList<>();
-      Wrong_list_3 = new ArrayList<>();
-      Wrong_list_4 = new ArrayList<>();
+      bufferReadList = new ArrayList<>();
 
       Alfas = new ArrayList<>();
       WrongSwitch= new ArrayList<>();
-       setTryChenge(10);
-       // Load();
-        score.setText(""+getCounter());
-        textClock.setText(""+getTryChenge()); //1
+
+        TYU = new ArrayList<>();
+        ListReadBuffer = new ArrayList<>();
+        ListBuffer = new ArrayList<>();
+
+
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(5);
@@ -687,21 +711,26 @@ public class GameStart extends AppCompatActivity  {
     } //Всплывающая инструкция
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void LetsGo(View v){
+        Toast.makeText(this, login_name, Toast.LENGTH_SHORT).show();
 
+        setCounter(0);   //чтение и запись БД очки
+        setStepOnNextLvl(0); //чтение и запись БД уровень
+        setTryChenge(10); //чтение и запись БД попыток смены слов
 
-//        setCounter(123);   //чтение и запись БД очки
-//        setStepOnNextLvl(123); //чтение и запись БД уровень
-//        setTryChenge(123); //чтение и запись БД попыток смены слов
+        ReadfromDB();
 
-        //добавить чтение из БД
-        lvlview.setText(""+getStepOnNextLvl());
-        score.setText(""+getCounter());
-        textClock.setText(""+getTryChenge());
+        thru_list_1.clear();
+        LoadText();
+        ReadFromTxtWrong();
 
-        //
         score.setVisibility(VISIBLE);
         lvlview.setVisibility(VISIBLE);
         textClock.setVisibility(VISIBLE);
+
+        score.setText(""+getCounter());
+        textClock.setText(""+getTryChenge());
+        lvlview.setText(""+getStepOnNextLvl());
+
         ListXUpFull(); // заполняем листы координат
         ControlWordsfinFail(); // читаем проверочные слова
         ReadWords(); // читаем ключевык
@@ -722,6 +751,26 @@ public class GameStart extends AppCompatActivity  {
                 LineY_1.add(f001);
             }
         }, 500);
+
+//        Thru_list_1.clear();
+//        adapter_thru_1.notifyDataSetChanged();
+//            Thru_list_2.clear();
+//            adapter_thru_2.notifyDataSetChanged();
+//                Thru_list_3.clear();
+//                adapter_thru_3.notifyDataSetChanged();
+//                    Thru_list_4.clear();
+//                    adapter_thru_4.notifyDataSetChanged();
+//
+//        Wrong_list_1.clear();
+//        adapter_wrong_1.notifyDataSetChanged();
+//            Thru_list_2.clear();
+//            adapter_wrong_2.notifyDataSetChanged();
+//                Thru_list_3.clear();
+//                adapter_wrong_3.notifyDataSetChanged();
+//                    Thru_list_4.clear();
+//                    adapter_wrong_4.notifyDataSetChanged();
+
+
     }  // СТАРТ, часы
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
@@ -835,6 +884,7 @@ public class GameStart extends AppCompatActivity  {
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Chek_1(View v){
+
 //анимация альфа канала (прозрачности от 0 до 1)
         Animation animation = new AlphaAnimation(0.0f, 1.0f);
 //длительность анимации 1/10 секунды
@@ -860,25 +910,23 @@ public class GameStart extends AppCompatActivity  {
         animation2.setRepeatCount(1);
 //накладываем анимацию на TextView
 
+        this.bufferReadList = thru_list_1;
 
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord)) {
+        Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
+        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord) && !thru_list_1.contains(KeyWord)) {
             ListXUpFull();
-            score.setText("Очков: "+getCounter());
             HowScore(ArrayListWord.length); // Передача ОЧКОВ
             HowLenght(ArrayListWord.length);
-           Switch_answer().add(KeyWord);
+            thru_list_1.add(KeyWord);
             setExp(getExp()+4);
             if (progressBar.getProgress() >= progressBar.getMax()) {
                 ShowNewLvl();
                 setFlag(1);
                 int newlvls =0;
                 newlvls = newlvls+1;
-
                 setNextLvl(newlvls);
-
-
                 switch(progressBar.getMax()) {
                     case 5:
                         this.nextLvl = 1;
@@ -908,20 +956,26 @@ public class GameStart extends AppCompatActivity  {
             setCounter(getCounter()-1);
             ActivatePrBar();
             ProgressBarNextLvl();
-            score.setText("Очков: "+getCounter());
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            Wrong_Switch_answer().add(KeyWord);
-//            Wrong_list_1.add(KeyWord);
+            Wrong_list_1.add(KeyWord);
             textButton1.startAnimation(animation2);
-        }  else  {
+        }
+//        else if (thru_list_1.contains(KeyWord)){
+//            Wrong_list_1.add(KeyWord);
+//            ListXUpFull();
+//            setCounter(getCounter()-1);
+//            ActivatePrBar();
+//            ProgressBarNextLvl();
+//            Toast.makeText(this, "НЭВЕРНО!", Toast.LENGTH_SHORT).show();
+//            Wrong_list_1.add(KeyWord);
+//            textButton1.startAnimation(animation2);
+//        }
+        else{
             ListXUpFull();
             setCounter(getCounter()-1);
             ActivatePrBar();
             ProgressBarNextLvl();
-            score.setText("Очков: "+getCounter());
-            //Quest2.add(KeyWord);
-//            Wrong_list_1.add(KeyWord);
-            Wrong_Switch_answer().add(KeyWord);
+            Wrong_list_1.add(KeyWord);
             textButton1.startAnimation(animation2);
         }
         EneblendButtonsAffterPress();
@@ -938,7 +992,7 @@ public class GameStart extends AppCompatActivity  {
         taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
         taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
         taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
-        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
+        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(thru_list_1) + " слов");
         supportClass.ShowTaskWelDone(taskList);
 
 
@@ -968,11 +1022,14 @@ public class GameStart extends AppCompatActivity  {
                 setCounter(getCounter()+2);
                 break;
         }
-        score.setText("Очков: "+getCounter());
-        textClock.setText(""+getTryChenge());// финальные данные
 
-        lvlview.setText(""+ getStepOnNextLvl()); // данные беруться отюсда
+        score.setText(""+getCounter()); // ФИНАЛЬНЫЕ данные очки
+        textClock.setText(""+getTryChenge());// ФИНАЛЬНЫЕ данные попыток смены
+        lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
 
+        AddDB();
+        SaveText();
+        WriteWrong();
 
     } //проверка
 
@@ -1231,7 +1288,7 @@ public class GameStart extends AppCompatActivity  {
 
         copy_pr1 = new Button(getApplicationContext());
         copy_pr1.setBackgroundResource(R.drawable.newpate);
-        copy_pr1.setText(pr1.getText().toString() );
+        copy_pr1.setText(pr1.getText().toString());
         copy_pr1.setId(USERID + countID);
         Colo.addView(copy_pr1);
         countID++;
@@ -1790,7 +1847,7 @@ public class GameStart extends AppCompatActivity  {
         taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
         taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
 //        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Quest) + " слов");
-        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
+        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(thru_list_1) + " слов");
 
         LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = li.inflate(R.layout.stats_fragment, null, false);
@@ -1858,6 +1915,8 @@ public class GameStart extends AppCompatActivity  {
     }  // окно статистика
     public void TaskDialog(){
 
+
+
         TaskDialog = new AlertDialog.Builder(this).create();
         LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -1865,30 +1924,13 @@ public class GameStart extends AppCompatActivity  {
         butCloseTask =  v.findViewById(R.id.butCloseTask);
 
         Thru_answer_1 = v.findViewById(R.id.Thru_answer_1);
-        Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
-        Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
-        Thru_answer_4 = v.findViewById(R.id.Thru_answer_4);
-        adapter_thru_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Thru_list_1);
-        adapter_thru_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Thru_list_2);
-        adapter_thru_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Thru_list_3);
-        adapter_thru_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Thru_list_4);
+        adapter_thru_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_1);
         Thru_answer_1.setAdapter(adapter_thru_1);
-        Thru_answer_2.setAdapter(adapter_thru_2);
-        Thru_answer_3.setAdapter(adapter_thru_3);
-        Thru_answer_4.setAdapter(adapter_thru_4);
 
         Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
-        Wrong_answer_2 = v.findViewById(R.id.Wrong_answer_2);
-        Wrong_answer_3 = v.findViewById(R.id.Wrong_answer_3);
-        Wrong_answer_4 = v.findViewById(R.id.Wrong_answer_4);
         adapter_wrong_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_1);
-        adapter_wrong_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_2);
-        adapter_wrong_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_3);
-        adapter_wrong_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_4);
         Wrong_answer_1.setAdapter(adapter_wrong_1);
-        Wrong_answer_2.setAdapter(adapter_wrong_2);
-        Wrong_answer_3.setAdapter(adapter_wrong_3);
-        Wrong_answer_4.setAdapter(adapter_wrong_4);
+
 
         TaskDialog.setView(v);
         TaskDialog.setCancelable(true);
@@ -1897,96 +1939,152 @@ public class GameStart extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 TaskDialog.dismiss();
-//                Quest.clear();
             }
         });
 
-        if (Control.equalsIgnoreCase("котлисаслон")) {
             Thru_answer_1.setVisibility(View.VISIBLE);
-            Thru_answer_2.setVisibility(View.GONE);
-            Thru_answer_3.setVisibility(View.GONE);
-            Thru_answer_4.setVisibility(View.GONE);
             Wrong_answer_1.setVisibility(View.VISIBLE);
-            Wrong_answer_2.setVisibility(View.GONE);
-            Wrong_answer_3.setVisibility(View.GONE);
-            Wrong_answer_4.setVisibility(View.GONE);
-        } else if (Control.equalsIgnoreCase("распределитель")) {
-            Thru_answer_1.setVisibility(View.GONE);
-            Thru_answer_2.setVisibility(View.VISIBLE);
-            Thru_answer_3.setVisibility(View.GONE);
-            Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.GONE);
-            Wrong_answer_2.setVisibility(View.VISIBLE);
-            Wrong_answer_3.setVisibility(View.GONE);
-            Wrong_answer_4.setVisibility(View.GONE);
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
-            Thru_answer_1.setVisibility(View.GONE);
-            Thru_answer_2.setVisibility(View.GONE);
-            Thru_answer_3.setVisibility(View.VISIBLE);
-            Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.GONE);
-            Wrong_answer_2.setVisibility(View.GONE);
-            Wrong_answer_3.setVisibility(View.VISIBLE);
-            Wrong_answer_4.setVisibility(View.GONE);
-        } else if (Control.equalsIgnoreCase("простокваша")) {
-            Thru_answer_1.setVisibility(View.GONE);
-            Thru_answer_2.setVisibility(View.GONE);
-            Thru_answer_3.setVisibility(View.GONE);
-            Thru_answer_4.setVisibility(View.VISIBLE);
-            Wrong_answer_1.setVisibility(View.GONE);
-            Wrong_answer_2.setVisibility(View.GONE);
-            Wrong_answer_3.setVisibility(View.GONE);
-            Wrong_answer_4.setVisibility(View.VISIBLE);
-        }
 
         TaskDialog.show();
 
     }  // список собранных слов
 
-    public List<String> Switch_answer() {
-        if (Control.equalsIgnoreCase("котлисаслон")) {
-//            Quest.add(Control);
-            this.Alfas = Thru_list_1;
-            this.WrongSwitch = Wrong_list_1;
-//            Thru_answer_1.setVisibility(View.VISIBLE);
-            //  Thru_answer_2.setVisibility(View.GONE);
-        } else if (Control.equalsIgnoreCase("распределитель")) {
-            // Quest2.add(Control);
-            // Thru_answer_1.setVisibility(View.GONE);
-            //  Thru_answer_2.setVisibility(View.VISIBLE);
-            this.Alfas = Thru_list_2;
-            this.WrongSwitch = Wrong_list_2;
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
-            this.Alfas = Thru_list_3;
-            this.WrongSwitch = Wrong_list_3;
-        } else if (Control.equalsIgnoreCase("простокваша")) {
-            this.Alfas = Thru_list_4;
-            this.WrongSwitch = Wrong_list_4;
-        }
-        return Alfas;
-    }
+
     public List<String> Wrong_Switch_answer() {
-        if (Control.equalsIgnoreCase("котлисаслон")) {
             this.WrongSwitch = Wrong_list_1;
-        } else if (Control.equalsIgnoreCase("распределитель")) {
-            this.WrongSwitch = Wrong_list_2;
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
-            this.WrongSwitch = Wrong_list_3;
-        } else if (Control.equalsIgnoreCase("простокваша")) {
-            this.WrongSwitch = Wrong_list_4;
-        }
         return WrongSwitch;
     }
 
 
+    public void AddDB()   {
+        String a1, a2, a3;
+        a1 = String.valueOf(getCounter()); // очки
+        a2 = String.valueOf(getStepOnNextLvl()); // уровень
+        a3 = String.valueOf(getTryChenge()); // попыток смены
+        dbHelper.WriteDB(a1, a2, a3);
+
+    } // добавить запись
+
+    public void ReadfromDB() {
+        dbHelper.ReadDB();
+
+        String b1, b2, b3;
+        b1 = dbHelper.getValueScore();
+                b2 = dbHelper.getValueLvl();
+                        b3 = dbHelper.getValueTrys();
+//          setCounter(Integer.parseInt(b1));
+//          setStepOnNextLvl(Integer.parseInt(b2));
+//          setTryChenge(Integer.parseInt(b3));
+//        Toast.makeText(this, getCounter()+getStepOnNextLvl()+getTryChenge(), Toast.LENGTH_SHORT).show();
+        Log.d("prob", String.valueOf(getCounter()+getStepOnNextLvl()+getTryChenge()));
+
+    } // прочесть последнюю запись
+
+
+//    public void DeleteDB() {
+//        dbHelper.DeleteDB();
+//        setCounter(0);   //чтение и запись БД очки
+//        setStepOnNextLvl(0); //чтение и запись БД уровень
+//        setTryChenge(0); //чтение и запись БД попыток смены слов
+//
+//        setAddsc(""+0);
+//        setAddlvl(""+0);
+//        setAddtryss(""+0);
+//    }// удалить
+
+    private String array2str(List<String> strings){
+        StringBuilder sb = new StringBuilder();
+        for (String s : strings){
+            sb.append(s+ "\n");
+        }
+        return sb.toString();
+    } //запись в тхт
+
+    public void SaveText()  {
+        myText = array2str(thru_list_1);
+        try {
+            outputStream = openFileOutput(filename, MODE_PRIVATE);
+            outputStream.write(myText.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } //запись в тхт
+
+    public void LoadText() {
+        try {
+            InputStream inputStream = openFileInput(filename);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    thru_list_1.add(receiveString);
+                    //listBuffer.add(receiveString);
+                    Log.e("login", String.valueOf(thru_list_1));
+                }
+                inputStream.close();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("logme", "File is in ass: " + e.toString());
+        } catch (IOException e) {
+            Log.e("logmetwice", "do not read, bos: " + e.toString());
+        }
+    } //чтение из тхт
+
+
+    private String array2strWrong(List<String> strings){
+        StringBuilder sb = new StringBuilder();
+        for (String s : strings){
+            sb.append(s+ "\n");
+        }
+        return sb.toString();
+    } //запись в тхт НЕ ВЕРНО
+
+    public void WriteWrong(){
+        myText = array2strWrong(Wrong_list_1);
+        try {
+            outputStream = openFileOutput(filenameWrong, MODE_PRIVATE);
+            outputStream.write(myText.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    } //запись в тхт НЕ ВЕРНО
+
+
+    public void ReadFromTxtWrong(){
+        try {
+            InputStream inputStream = openFileInput(filenameWrong);
+
+            if ( inputStream != null ) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                String receiveString = "";
+                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                    Wrong_list_1.add(receiveString);
+                    Log.e("login", String.valueOf(Wrong_list_1));
+                }
+                inputStream.close();
+            }
+        }
+        catch (FileNotFoundException e) {
+            Log.e("logme", "File is in ass: " + e.toString());
+        } catch (IOException e) {
+            Log.e("logmetwice", "do not read, bos: " + e.toString());
+        }
+    } //чтение из тхт НЕ ВЕРНО
 
 
 
-    @Override
-    protected void onDestroy() { //выполнятся при закрытии приложения
-        super.onDestroy();
+    public String WichTextSave(){
+            this.saveTofile = "save1.txt";
+        return saveTofile;
+    }  // с каким файлом работа - куда сохранять и откуда читать
 
-    }
+
 
     }
 
