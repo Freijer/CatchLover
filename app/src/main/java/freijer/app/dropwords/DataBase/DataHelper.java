@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.sql.DatabaseMetaData;
+
+
 public class DataHelper extends SQLiteOpenHelper {
 
 
@@ -18,30 +21,35 @@ public class DataHelper extends SQLiteOpenHelper {
     private static final String KEY_SCORE = "scores";
     private static final String KEY_LVL = "lvl";
     private static final String KEY_TRYS = "tryChange";
-
+    Cursor cursor;
     SQLiteDatabase database;
     ContentValues contentValues = new ContentValues();
 
-    private String valueScore;
-    private String valueLvl;
-    private String valueTrys;
+    private int valueScore;
+    private int valueLvl;
+    private int valueTrys;
 
-    public String getValueScore() {
+    public int getValueScore() {
         return valueScore;
     }
-    private void setValueScore(String valueScore) {
+
+    private void setValueScore(int valueScore) {
         this.valueScore = valueScore;
     }
-    public String getValueLvl() {
+
+    public int getValueLvl() {
         return valueLvl;
     }
-    private void setValueLvl(String valueLvl) {
+
+    private void setValueLvl(int valueLvl) {
         this.valueLvl = valueLvl;
     }
-    public String getValueTrys() {
+
+    public int getValueTrys() {
         return valueTrys;
     }
-    private void setValueTrys(String valueTrys) {
+
+    private void setValueTrys(int valueTrys) {
         this.valueTrys = valueTrys;
     }
 
@@ -53,7 +61,7 @@ public class DataHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + "(" + KEY_ID
-                + " integer primary key," + KEY_SCORE + " text," +  KEY_LVL+ " text," +  KEY_TRYS + " text" +  ");");
+                + " integer primary key," + KEY_SCORE + " text," + KEY_LVL + " text," + KEY_TRYS + " text" + ");");
     }
 
     @Override
@@ -62,7 +70,7 @@ public class DataHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void WriteDB(String score, String lvl, String tryss){
+    public void WriteDB(String score, String lvl, String tryss) {
         database = this.getWritableDatabase();
         contentValues.put(KEY_SCORE, score);
         contentValues.put(KEY_LVL, lvl);
@@ -73,9 +81,9 @@ public class DataHelper extends SQLiteOpenHelper {
     }
 
 
-    public void ReadDB(){
+    public void ReadDB() {
         database = this.getWritableDatabase();
-        Cursor cursor = database.query(TABLE_NAME, null, null, null, null, null, null);
+       cursor = database.query(TABLE_NAME, null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(KEY_ID);
             int scoreIndex = cursor.getColumnIndex(KEY_SCORE);
@@ -85,33 +93,32 @@ public class DataHelper extends SQLiteOpenHelper {
                 Log.d("myLogs", "ID = " + cursor.getInt(idIndex) +
                         ", очки = " + cursor.getString(scoreIndex) +
                         ", уровень = " + cursor.getString(lvlIndex) +
-                        ", попыток = " + cursor.getString(tryslIndex) );
-                setValueScore(cursor.getString(cursor.getColumnIndex(KEY_SCORE)));
-                setValueLvl(cursor.getString(cursor.getColumnIndex(KEY_LVL)));
-                setValueTrys(cursor.getString(cursor.getColumnIndex(KEY_TRYS)));
+                        ", попыток = " + cursor.getString(tryslIndex));
+                setValueScore(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_SCORE))));
+                setValueLvl(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_LVL))));
+                setValueTrys(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_TRYS))));
 
             } while (cursor.moveToNext());
         } else
-            Log.d("myLogs","0 rows");
+            Log.d("myLogs", "0 rows");
         cursor.close();
     }
 
-    public void DeleteDB(){
+    public void DeleteDB() {
         database = this.getWritableDatabase();
         database.delete(TABLE_NAME, null, null);
         database.close();
     }
 
-    public void UpdateDB(String score, String lvl, String tryss){
+    public void UpdateDB(String score, String lvl, String tryss) {
         database = this.getWritableDatabase();
         contentValues.put(KEY_SCORE, score);
         contentValues.put(KEY_LVL, lvl);
         contentValues.put(KEY_TRYS, tryss);
 
         String id = "1";
-        int updCount  = database.update(TABLE_NAME, contentValues, KEY_ID + "= ?" , new String[] {id});
+        int updCount = database.update(TABLE_NAME, contentValues, KEY_ID + "= ?", new String[]{id});
         Log.d("myLogs", "updated rows count = " + updCount);
     }
-
 
 }

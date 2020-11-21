@@ -67,19 +67,24 @@ import static android.view.View.VISIBLE;
 
 
 
-//public class GameStart extends AppCompatActivity  {
-public class GameStart extends MainActivity  {
+public class GameStart extends AppCompatActivity  {
+
+
 
     Supports supportClass = new Supports();
 
-    protected String login_name = "getNewLogin()";
+    protected String login_name;
     protected String version_name = "a";
-    protected String version_number = "3";
+    protected String version_number = "7";
 
-    protected String filename = login_name+version_name+version_number+"truth"+".txt";
-    protected String filenameWrong = login_name+version_name+version_number+"wrong"+".txt";
+//    protected String filename = login_name+version_name+version_number+"truth"+".txt";
+//    protected String filenameWrong = login_name+version_name+version_number+"wrong"+".txt";
 
+    protected String filename;
+    protected String filenameWrong;
 
+    private static final String firstStartApp = "first_start";
+    private boolean firstStart;
     //на кард лайоут перемещаем, кнопка исчезает и появялется буква на текстовом поле,  и можно перемещать перелистывать
 
     //ctrl+shift+ - все свернуть
@@ -258,7 +263,8 @@ public class GameStart extends MainActivity  {
     protected ProgressBar progressBar;
     protected TextView lvlview, QAWord, textClock, score;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
-    protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
+    TextView textLvl, textScore, textView5, loginText, loginTextViw;
+    protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14, DELDB;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
     private ImageView img_nextlvl;
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
@@ -410,7 +416,7 @@ public class GameStart extends MainActivity  {
     public void setNextLvl(int nextLvl) {
         this.nextLvl = nextLvl;
     }
-
+    SharedPreferences prefs = null;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -448,6 +454,14 @@ public class GameStart extends MainActivity  {
         dropLayout = findViewById(R.id.dropLayout);
         QAWord = findViewById(R.id.textButton1);
         mChronometer = findViewById(R.id.chronometer);
+        loginText = findViewById(R.id. loginText);
+        loginTextViw = findViewById(R.id.loginTextViw);
+        DELDB = findViewById(R.id.DELDB);
+
+        textLvl = findViewById(R.id.textLvl);
+        textScore = findViewById(R.id.textScore);
+        textView5 = findViewById(R.id.textView5);
+
         GoneButnnons(); //все кнопки изначально не видимы
 
         String gg = Integer.toString(numsofliteralsinword);
@@ -471,7 +485,71 @@ public class GameStart extends MainActivity  {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setMax(5);
 
+        score.setVisibility(GONE);
+        lvlview.setVisibility(GONE);
+        textClock.setVisibility(GONE);
+        textLvl.setVisibility(GONE);
+        textScore.setVisibility(GONE);
+        textView5.setVisibility(GONE);
+        loginTextViw.setVisibility(GONE);
+        loginText.setVisibility(GONE);
+
+        Bundle arguments = getIntent().getExtras();
+       // String ff = getIntent().getStringExtra("login");
+        login_name = getIntent().getStringExtra("login");;
+
+        firstStart = true;
+
+        prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
+        //Получаем значение флага.
+        //Если ни разу не запускалось, то такой записи нет
+        // значение по дефолту false
+
+        boolean isAgain = prefs.getBoolean(login_name, false);
+        if (isAgain) {
+            // действия, когда приложение запускалось повторно.
+
+            thru_list_1.clear();
+            ReadfromDB();
+
+        }
+        // Записываем `true` - первый запуск прошел
+        SharedPreferences.Editor e = prefs.edit();
+        e.putBoolean(login_name, true);
+        e.apply();
+
+
+
+        loginText.setText(login_name);
+        filename = login_name+version_name+version_number+"truth"+".txt";
+        filenameWrong = login_name+version_name+version_number+"wrong"+".txt";
+
+        Log.d("FILE", "Список_1: "+filename + " Список_2: " + filenameWrong);
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String key = login_name+"start";
+
+        if (prefs.getBoolean(key, true)) {
+            setCounter(0);
+            setStepOnNextLvl(0);
+            setTryChenge(10);
+
+            score.setText(""+getCounter());
+            textClock.setText(""+getTryChenge());
+            lvlview.setText(""+getStepOnNextLvl());
+//            AddDB();
+            // При первом запуске (или если юзер удалял все данные приложения)
+            // мы попадаем сюда. Делаем что-то
+//и после действия записывам false в переменную firstrun
+//Итого при следующих запусках этот код не вызывается.
+            prefs.edit().putBoolean(key, false).apply();
+        }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -709,15 +787,26 @@ public class GameStart extends MainActivity  {
         AlertDialog alert = builder.create();
         alert.show();
     } //Всплывающая инструкция
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void LetsGo(View v){
         Toast.makeText(this, login_name, Toast.LENGTH_SHORT).show();
+//        dbHelper.DeleteDB();
 
-        setCounter(0);   //чтение и запись БД очки
-        setStepOnNextLvl(0); //чтение и запись БД уровень
-        setTryChenge(10); //чтение и запись БД попыток смены слов
+//        setCounter(0);   //чтение и запись БД очки
+//        setStepOnNextLvl(0); //чтение и запись БД уровень
+
+        //setTryChenge(10); //чтение и запись БД попыток смены слов
+
+        score.setText(""+getCounter());
+        textClock.setText(""+getTryChenge());
+        lvlview.setText(""+getStepOnNextLvl());
 
         ReadfromDB();
+
+        score.setText(""+getCounter());
+        textClock.setText(""+getTryChenge());
+        lvlview.setText(""+getStepOnNextLvl());
 
         thru_list_1.clear();
         LoadText();
@@ -726,10 +815,15 @@ public class GameStart extends MainActivity  {
         score.setVisibility(VISIBLE);
         lvlview.setVisibility(VISIBLE);
         textClock.setVisibility(VISIBLE);
+        textLvl.setVisibility(VISIBLE);
+        textScore.setVisibility(VISIBLE);
+        textView5.setVisibility(VISIBLE);
+        loginTextViw.setVisibility(VISIBLE);
+        loginText.setVisibility(VISIBLE);
 
-        score.setText(""+getCounter());
-        textClock.setText(""+getTryChenge());
-        lvlview.setText(""+getStepOnNextLvl());
+//        score.setText(""+getCounter());
+//        textClock.setText(""+getTryChenge());
+//        lvlview.setText(""+getStepOnNextLvl());
 
         ListXUpFull(); // заполняем листы координат
         ControlWordsfinFail(); // читаем проверочные слова
@@ -770,7 +864,7 @@ public class GameStart extends MainActivity  {
 //                    Thru_list_4.clear();
 //                    adapter_wrong_4.notifyDataSetChanged();
 
-
+        progressBar.setProgress(getCounter());
     }  // СТАРТ, часы
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
@@ -927,6 +1021,7 @@ public class GameStart extends MainActivity  {
                 int newlvls =0;
                 newlvls = newlvls+1;
                 setNextLvl(newlvls);
+                setExp(getExp()-2);
                 switch(progressBar.getMax()) {
                     case 5:
                         this.nextLvl = 1;
@@ -954,25 +1049,16 @@ public class GameStart extends MainActivity  {
         } else if (listBuffer.contains(KeyWord)){
             ListXUpFull();
             setCounter(getCounter()-1);
+            setExp(getExp()-2);
             ActivatePrBar();
             ProgressBarNextLvl();
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
             Wrong_list_1.add(KeyWord);
             textButton1.startAnimation(animation2);
-        }
-//        else if (thru_list_1.contains(KeyWord)){
-//            Wrong_list_1.add(KeyWord);
-//            ListXUpFull();
-//            setCounter(getCounter()-1);
-//            ActivatePrBar();
-//            ProgressBarNextLvl();
-//            Toast.makeText(this, "НЭВЕРНО!", Toast.LENGTH_SHORT).show();
-//            Wrong_list_1.add(KeyWord);
-//            textButton1.startAnimation(animation2);
-//        }
-        else{
+        } else{
             ListXUpFull();
             setCounter(getCounter()-1);
+            setExp(getExp()-1);
             ActivatePrBar();
             ProgressBarNextLvl();
             Wrong_list_1.add(KeyWord);
@@ -994,7 +1080,6 @@ public class GameStart extends MainActivity  {
         taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
         taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(thru_list_1) + " слов");
         supportClass.ShowTaskWelDone(taskList);
-
 
         switch(supportClass.taskDone.size()){
             case 1:
@@ -1046,7 +1131,7 @@ public class GameStart extends MainActivity  {
     public void ProgressBarNextLvl(){
 
         inProgressWeaTrust = getCounter();
-        progressBar.setProgress( inProgressWeaTrust);
+        progressBar.setProgress(inProgressWeaTrust);
         if (progressBar.getProgress() == progressBar.getMax()){
             switch (progressBar.getMax()){
                 case 5:
@@ -1949,12 +2034,10 @@ public class GameStart extends MainActivity  {
 
     }  // список собранных слов
 
-
     public List<String> Wrong_Switch_answer() {
             this.WrongSwitch = Wrong_list_1;
         return WrongSwitch;
     }
-
 
     public void AddDB()   {
         String a1, a2, a3;
@@ -1962,35 +2045,49 @@ public class GameStart extends MainActivity  {
         a2 = String.valueOf(getStepOnNextLvl()); // уровень
         a3 = String.valueOf(getTryChenge()); // попыток смены
         dbHelper.WriteDB(a1, a2, a3);
-
+        //dbHelper.UpdateDB(a1, a2, a3);
+        Toast.makeText(this, a1+" "+a2+" "+a3, Toast.LENGTH_SHORT).show();
     } // добавить запись
+
+
 
     public void ReadfromDB() {
         dbHelper.ReadDB();
 
-        String b1, b2, b3;
-        b1 = dbHelper.getValueScore();
-                b2 = dbHelper.getValueLvl();
-                        b3 = dbHelper.getValueTrys();
-//          setCounter(Integer.parseInt(b1));
-//          setStepOnNextLvl(Integer.parseInt(b2));
-//          setTryChenge(Integer.parseInt(b3));
-//        Toast.makeText(this, getCounter()+getStepOnNextLvl()+getTryChenge(), Toast.LENGTH_SHORT).show();
-        Log.d("prob", String.valueOf(getCounter()+getStepOnNextLvl()+getTryChenge()));
+//          setCounter(Integer.parseInt(dbHelper.getValueScore()));
+//          setStepOnNextLvl(Integer.parseInt(dbHelper.getValueLvl()));
+//          setTryChenge(Integer.parseInt(dbHelper.getValueTrys()));
+
+//        score.setText(""+getCounter());
+//        textClock.setText(""+getTryChenge());
+//        lvlview.setText(""+getStepOnNextLvl());
+
+        setCounter(dbHelper.getValueScore());
+        setStepOnNextLvl(dbHelper.getValueLvl());
+        setTryChenge(dbHelper.getValueTrys());
+
+
+//        score.setText(""+getCounter());
+//        textClock.setText(""+getTryChenge());
+//        lvlview.setText(""+getStepOnNextLvl());
+
+
+        Toast.makeText(this, ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl(), Toast.LENGTH_SHORT).show();
+        Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
 
     } // прочесть последнюю запись
 
 
-//    public void DeleteDB() {
-//        dbHelper.DeleteDB();
-//        setCounter(0);   //чтение и запись БД очки
-//        setStepOnNextLvl(0); //чтение и запись БД уровень
-//        setTryChenge(0); //чтение и запись БД попыток смены слов
-//
-//        setAddsc(""+0);
-//        setAddlvl(""+0);
-//        setAddtryss(""+0);
-//    }// удалить
+    public void DeleteDB(View v) {
+        dbHelper.DeleteDB();
+        setCounter(0);   //чтение и запись БД очки
+        setStepOnNextLvl(0); //чтение и запись БД уровень
+        setTryChenge(0); //чтение и запись БД попыток смены слов
+
+        setAddsc(""+0);
+        setAddlvl(""+0);
+        setAddtryss(""+0);
+    }// удалить
 
     private String array2str(List<String> strings){
         StringBuilder sb = new StringBuilder();
@@ -2085,8 +2182,13 @@ public class GameStart extends MainActivity  {
     }  // с каким файлом работа - куда сохранять и откуда читать
 
 
-
+    @Override
+    protected void onDestroy() {
+        SaveText();
+        AddDB();
+        super.onDestroy();
     }
+}
 
     //Ачивка за сбор  слова (3 раза словао из 3 букв ,только если они верные) сделать. сейчас все слова в зачет идут.
 
