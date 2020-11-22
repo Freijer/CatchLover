@@ -13,13 +13,13 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.preference.PreferenceManager;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -206,25 +206,49 @@ public class GameStart extends AppCompatActivity  {
 
 
     ArrayAdapter<String> adapterDone;
-    ArrayAdapter<String> adapterSwitch;
 
+
+    //Правильные ответы
     ListView Thru_answer_1;
-    ListView Wrong_answer_1;
+    ListView Thru_answer_2;
+    ListView Thru_answer_3;
+    ListView Thru_answer_4;
 
     ArrayList<String> thru_list_1;
-    ArrayList<String> bufferReadList;
+    ArrayList<String> thru_list_2;
+    ArrayList<String> thru_list_3;
+    ArrayList<String> thru_list_4;
+
+    ArrayAdapter<String> adapter_thru_1;
+    ArrayAdapter<String> adapter_thru_2;
+    ArrayAdapter<String> adapter_thru_3;
+    ArrayAdapter<String> adapter_thru_4;
+    //
+
+    //Не правильные ответы
+    ListView Wrong_answer_1;
+    ListView Wrong_answer_2;
+    ListView Wrong_answer_3;
+    ListView Wrong_answer_4;
 
     ArrayList<String> Wrong_list_1;
+    ArrayList<String> Wrong_list_2;
+    ArrayList<String> Wrong_list_3;
+    ArrayList<String> Wrong_list_4;
 
+    ArrayAdapter<String> adapter_wrong_1;
+    ArrayAdapter<String> adapter_wrong_2;
+    ArrayAdapter<String> adapter_wrong_3;
+    ArrayAdapter<String> adapter_wrong_4;
+    //
+
+    ArrayList<String> bufferReadList;
 
     List<String> Alfas;
     List<String> WrongSwitch;
     ArrayList<String> TYU;
     ArrayList<String> ListBuffer;
     ArrayList<String> ListReadBuffer;
-
-    ArrayAdapter<String> adapter_thru_1;
-    ArrayAdapter<String> adapter_wrong_1;
 
     FileOutputStream outputStream;
     String  myText;
@@ -466,11 +490,18 @@ public class GameStart extends AppCompatActivity  {
 
         String gg = Integer.toString(numsofliteralsinword);
 
-      Thru_answer_1 = findViewById(R.id.Thru_answer_1);
-      Wrong_answer_1 = findViewById(R.id.Wrong_answer_1);
 
-      thru_list_1 = new ArrayList<>();
-      Wrong_list_1 = new ArrayList<>();
+        thru_list_1 = new ArrayList<>();
+        thru_list_2 = new ArrayList<>();
+        thru_list_3 = new ArrayList<>();
+        thru_list_4 = new ArrayList<>();
+
+        Wrong_list_1 = new ArrayList<>();
+        Wrong_list_2 = new ArrayList<>();
+        Wrong_list_3 = new ArrayList<>();
+        Wrong_list_4 = new ArrayList<>();
+
+
       bufferReadList = new ArrayList<>();
 
       Alfas = new ArrayList<>();
@@ -495,7 +526,6 @@ public class GameStart extends AppCompatActivity  {
         loginText.setVisibility(GONE);
 
         Bundle arguments = getIntent().getExtras();
-       // String ff = getIntent().getStringExtra("login");
         login_name = getIntent().getStringExtra("login");;
 
         firstStart = true;
@@ -509,7 +539,8 @@ public class GameStart extends AppCompatActivity  {
         if (isAgain) {
             // действия, когда приложение запускалось повторно.
 
-            thru_list_1.clear();
+            Switch_answer().clear();
+            Wrong_Switch_answer().clear();
             ReadfromDB();
 
         }
@@ -534,13 +565,15 @@ public class GameStart extends AppCompatActivity  {
         String key = login_name+"start";
 
         if (prefs.getBoolean(key, true)) {
-            setCounter(0);
-            setStepOnNextLvl(0);
-            setTryChenge(10);
+            CleareDB();
+//            setCounter(0);
+//            setStepOnNextLvl(0);
+//            setTryChenge(10);
+//
+//            score.setText(""+getCounter());
+//            textClock.setText(""+getTryChenge());
+//            lvlview.setText(""+getStepOnNextLvl());
 
-            score.setText(""+getCounter());
-            textClock.setText(""+getTryChenge());
-            lvlview.setText(""+getStepOnNextLvl());
 //            AddDB();
             // При первом запуске (или если юзер удалял все данные приложения)
             // мы попадаем сюда. Делаем что-то
@@ -808,7 +841,6 @@ public class GameStart extends AppCompatActivity  {
         textClock.setText(""+getTryChenge());
         lvlview.setText(""+getStepOnNextLvl());
 
-        thru_list_1.clear();
         LoadText();
         ReadFromTxtWrong();
 
@@ -846,26 +878,56 @@ public class GameStart extends AppCompatActivity  {
             }
         }, 500);
 
-//        Thru_list_1.clear();
-//        adapter_thru_1.notifyDataSetChanged();
-//            Thru_list_2.clear();
-//            adapter_thru_2.notifyDataSetChanged();
-//                Thru_list_3.clear();
-//                adapter_thru_3.notifyDataSetChanged();
-//                    Thru_list_4.clear();
-//                    adapter_thru_4.notifyDataSetChanged();
-//
-//        Wrong_list_1.clear();
-//        adapter_wrong_1.notifyDataSetChanged();
-//            Thru_list_2.clear();
-//            adapter_wrong_2.notifyDataSetChanged();
-//                Thru_list_3.clear();
-//                adapter_wrong_3.notifyDataSetChanged();
-//                    Thru_list_4.clear();
-//                    adapter_wrong_4.notifyDataSetChanged();
+        thru_list_1.clear();
+        adapter_thru_1.notifyDataSetChanged();
+        thru_list_2.clear();
+        adapter_thru_2.notifyDataSetChanged();
+        thru_list_3.clear();
+        adapter_thru_3.notifyDataSetChanged();
+        thru_list_4.clear();
+        adapter_thru_4.notifyDataSetChanged();
+
+        Wrong_list_1.clear();
+        adapter_wrong_1.notifyDataSetChanged();
+        thru_list_2.clear();
+        adapter_wrong_2.notifyDataSetChanged();
+        thru_list_3.clear();
+        adapter_wrong_3.notifyDataSetChanged();
+        thru_list_4.clear();
+        adapter_wrong_4.notifyDataSetChanged();
 
         progressBar.setProgress(getCounter());
     }  // СТАРТ, часы
+
+
+    public List<String> Switch_answer() {
+        if (Control.equalsIgnoreCase("котлисаслон")) {
+            this.Alfas = thru_list_1;
+        } else if (Control.equalsIgnoreCase("распределитель")) {
+            this.Alfas = thru_list_2;
+        } else if (Control.equalsIgnoreCase("стенографистка")) {
+            this.Alfas = thru_list_3;
+        } else if (Control.equalsIgnoreCase("простокваша")) {
+            this.Alfas = thru_list_4;
+        }
+        return Alfas;
+    }
+    public List<String> Wrong_Switch_answer() {
+        if (Control.equalsIgnoreCase("котлисаслон")) {
+            this.WrongSwitch = Wrong_list_1;
+        } else if (Control.equalsIgnoreCase("распределитель")) {
+            this.WrongSwitch = Wrong_list_2;
+        } else if (Control.equalsIgnoreCase("стенографистка")) {
+            this.WrongSwitch = Wrong_list_3;
+        } else if (Control.equalsIgnoreCase("простокваша")) {
+            this.WrongSwitch = Wrong_list_4;
+        }
+        return WrongSwitch;
+    }
+
+
+
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
         starter.setVisibility(GONE);
@@ -1004,16 +1066,16 @@ public class GameStart extends AppCompatActivity  {
         animation2.setRepeatCount(1);
 //накладываем анимацию на TextView
 
-        this.bufferReadList = thru_list_1;
+//        this.bufferReadList = thru_list_1;
 
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
         Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
-        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord) && !thru_list_1.contains(KeyWord)) {
+        if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord) && !Switch_answer().contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length); // Передача ОЧКОВ
             HowLenght(ArrayListWord.length);
-            thru_list_1.add(KeyWord);
+            Switch_answer().add(KeyWord);
             setExp(getExp()+4);
             if (progressBar.getProgress() >= progressBar.getMax()) {
                 ShowNewLvl();
@@ -1053,7 +1115,7 @@ public class GameStart extends AppCompatActivity  {
             ActivatePrBar();
             ProgressBarNextLvl();
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
-            Wrong_list_1.add(KeyWord);
+            Wrong_Switch_answer().add(KeyWord);
             textButton1.startAnimation(animation2);
         } else{
             ListXUpFull();
@@ -1061,7 +1123,7 @@ public class GameStart extends AppCompatActivity  {
             setExp(getExp()-1);
             ActivatePrBar();
             ProgressBarNextLvl();
-            Wrong_list_1.add(KeyWord);
+            Wrong_Switch_answer().add(KeyWord);
             textButton1.startAnimation(animation2);
         }
         EneblendButtonsAffterPress();
@@ -1078,7 +1140,7 @@ public class GameStart extends AppCompatActivity  {
         taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
         taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
         taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
-        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(thru_list_1) + " слов");
+        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
         supportClass.ShowTaskWelDone(taskList);
 
         switch(supportClass.taskDone.size()){
@@ -1932,7 +1994,7 @@ public class GameStart extends AppCompatActivity  {
         taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
         taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
 //        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Quest) + " слов");
-        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(thru_list_1) + " слов");
+        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
 
         LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = li.inflate(R.layout.stats_fragment, null, false);
@@ -2009,12 +2071,30 @@ public class GameStart extends AppCompatActivity  {
         butCloseTask =  v.findViewById(R.id.butCloseTask);
 
         Thru_answer_1 = v.findViewById(R.id.Thru_answer_1);
+        Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
+        Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
+        Thru_answer_4 = v.findViewById(R.id.Thru_answer_4);
         adapter_thru_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_1);
+        adapter_thru_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_2);
+        adapter_thru_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_3);
+        adapter_thru_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_4);
         Thru_answer_1.setAdapter(adapter_thru_1);
+        Thru_answer_2.setAdapter(adapter_thru_2);
+        Thru_answer_3.setAdapter(adapter_thru_3);
+        Thru_answer_4.setAdapter(adapter_thru_4);
 
         Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
+        Wrong_answer_2 = v.findViewById(R.id.Wrong_answer_2);
+        Wrong_answer_3 = v.findViewById(R.id.Wrong_answer_3);
+        Wrong_answer_4 = v.findViewById(R.id.Wrong_answer_4);
         adapter_wrong_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_1);
+        adapter_wrong_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_2);
+        adapter_wrong_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_3);
+        adapter_wrong_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_4);
         Wrong_answer_1.setAdapter(adapter_wrong_1);
+        Wrong_answer_2.setAdapter(adapter_wrong_2);
+        Wrong_answer_3.setAdapter(adapter_wrong_3);
+        Wrong_answer_4.setAdapter(adapter_wrong_4);
 
 
         TaskDialog.setView(v);
@@ -2034,10 +2114,6 @@ public class GameStart extends AppCompatActivity  {
 
     }  // список собранных слов
 
-    public List<String> Wrong_Switch_answer() {
-            this.WrongSwitch = Wrong_list_1;
-        return WrongSwitch;
-    }
 
     public void AddDB()   {
         String a1, a2, a3;
@@ -2079,6 +2155,9 @@ public class GameStart extends AppCompatActivity  {
 
 
     public void DeleteDB(View v) {
+        CleareDB();
+    }
+    public void CleareDB() {
         dbHelper.DeleteDB();
         setCounter(0);   //чтение и запись БД очки
         setStepOnNextLvl(0); //чтение и запись БД уровень
@@ -2098,7 +2177,7 @@ public class GameStart extends AppCompatActivity  {
     } //запись в тхт
 
     public void SaveText()  {
-        myText = array2str(thru_list_1);
+        myText = array2str(Switch_answer());
         try {
             outputStream = openFileOutput(filename, MODE_PRIVATE);
             outputStream.write(myText.getBytes());
@@ -2117,9 +2196,9 @@ public class GameStart extends AppCompatActivity  {
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
                 while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    thru_list_1.add(receiveString);
+                    Switch_answer().add(receiveString);
                     //listBuffer.add(receiveString);
-                    Log.e("login", String.valueOf(thru_list_1));
+                    Log.e("login", String.valueOf(Switch_answer()));
                 }
                 inputStream.close();
             }
@@ -2141,7 +2220,7 @@ public class GameStart extends AppCompatActivity  {
     } //запись в тхт НЕ ВЕРНО
 
     public void WriteWrong(){
-        myText = array2strWrong(Wrong_list_1);
+        myText = array2strWrong( Wrong_Switch_answer());
         try {
             outputStream = openFileOutput(filenameWrong, MODE_PRIVATE);
             outputStream.write(myText.getBytes());
@@ -2161,8 +2240,8 @@ public class GameStart extends AppCompatActivity  {
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
                 String receiveString = "";
                 while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    Wrong_list_1.add(receiveString);
-                    Log.e("login", String.valueOf(Wrong_list_1));
+                    Wrong_Switch_answer().add(receiveString);
+                    Log.e("login", String.valueOf( Wrong_Switch_answer()));
                 }
                 inputStream.close();
             }
