@@ -302,8 +302,6 @@ public class GameStart extends AppCompatActivity  {
     ListView taskDoneList;
 
 
-
-
     private int indexWord;
     private String word;
     private Random r = new Random();
@@ -539,8 +537,8 @@ public class GameStart extends AppCompatActivity  {
         if (isAgain) {
             // действия, когда приложение запускалось повторно.
 
-            Switch_answer().clear();
-            Wrong_Switch_answer().clear();
+//            Switch_answer().clear();
+           // Wrong_Switch_answer().clear();
             ReadfromDB();
 
         }
@@ -552,8 +550,9 @@ public class GameStart extends AppCompatActivity  {
 
 
         loginText.setText(login_name);
-        filename = login_name+version_name+version_number+"truth"+".txt";
-        filenameWrong = login_name+version_name+version_number+"wrong"+".txt";
+
+            filename = login_name+version_name+version_number+"truth"+".txt";
+            filenameWrong = login_name+version_name+version_number+Control+"wrong"+".txt";
 
         Log.d("FILE", "Список_1: "+filename + " Список_2: " + filenameWrong);
 
@@ -879,22 +878,14 @@ public class GameStart extends AppCompatActivity  {
         }, 500);
 
         thru_list_1.clear();
-        adapter_thru_1.notifyDataSetChanged();
         thru_list_2.clear();
-        adapter_thru_2.notifyDataSetChanged();
         thru_list_3.clear();
-        adapter_thru_3.notifyDataSetChanged();
         thru_list_4.clear();
-        adapter_thru_4.notifyDataSetChanged();
 
         Wrong_list_1.clear();
-        adapter_wrong_1.notifyDataSetChanged();
         thru_list_2.clear();
-        adapter_wrong_2.notifyDataSetChanged();
         thru_list_3.clear();
-        adapter_wrong_3.notifyDataSetChanged();
         thru_list_4.clear();
-        adapter_wrong_4.notifyDataSetChanged();
 
         progressBar.setProgress(getCounter());
     }  // СТАРТ, часы
@@ -905,10 +896,6 @@ public class GameStart extends AppCompatActivity  {
             this.Alfas = thru_list_1;
         } else if (Control.equalsIgnoreCase("распределитель")) {
             this.Alfas = thru_list_2;
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
-            this.Alfas = thru_list_3;
-        } else if (Control.equalsIgnoreCase("простокваша")) {
-            this.Alfas = thru_list_4;
         }
         return Alfas;
     }
@@ -917,10 +904,6 @@ public class GameStart extends AppCompatActivity  {
             this.WrongSwitch = Wrong_list_1;
         } else if (Control.equalsIgnoreCase("распределитель")) {
             this.WrongSwitch = Wrong_list_2;
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
-            this.WrongSwitch = Wrong_list_3;
-        } else if (Control.equalsIgnoreCase("простокваша")) {
-            this.WrongSwitch = Wrong_list_4;
         }
         return WrongSwitch;
     }
@@ -951,25 +934,6 @@ public class GameStart extends AppCompatActivity  {
             Toast.makeText(this, "Нет попыток, добудте еще ачивку", Toast.LENGTH_SHORT).show();
         }
         textClock.setText(""+getTryChenge());//2
-
-
-//        if (Control.equalsIgnoreCase("котлисаслон")) {
-//          //  Quest.add(Control);
-//
-//            QuestList.setVisibility(View.VISIBLE);
-//            QuestList2.setVisibility(View.VISIBLE);
-//            QuestList_Answer_two.setVisibility(View.GONE);
-//            QuestList_Answer_Wrong_2.setVisibility(View.GONE);
-//        } else if (Control.equalsIgnoreCase("распределитель")) {
-//           // Quest2.add(Control);
-//
-//            QuestList.setVisibility(View.GONE);
-//            QuestList2.setVisibility(View.GONE);
-//            QuestList_Answer_two.setVisibility(View.VISIBLE);
-//            QuestList_Answer_Wrong_2.setVisibility(View.VISIBLE);
-//        }
-
-
 
     }  //Включить новое слово
     @SuppressLint("SetTextI18n")
@@ -1177,6 +1141,7 @@ public class GameStart extends AppCompatActivity  {
         AddDB();
         SaveText();
         WriteWrong();
+
 
     } //проверка
 
@@ -2070,6 +2035,8 @@ public class GameStart extends AppCompatActivity  {
         View v = tasks.inflate(R.layout.task_fragment, null, false);
         butCloseTask =  v.findViewById(R.id.butCloseTask);
 
+
+
         Thru_answer_1 = v.findViewById(R.id.Thru_answer_1);
         Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
         Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
@@ -2107,8 +2074,25 @@ public class GameStart extends AppCompatActivity  {
             }
         });
 
+        if (Control.equalsIgnoreCase("котлисаслон")) {
             Thru_answer_1.setVisibility(View.VISIBLE);
+            Thru_answer_2.setVisibility(View.GONE);
+            Thru_answer_3.setVisibility(View.GONE);
+            Thru_answer_4.setVisibility(View.GONE);
             Wrong_answer_1.setVisibility(View.VISIBLE);
+            Wrong_answer_2.setVisibility(View.GONE);
+            Wrong_answer_3.setVisibility(View.GONE);
+            Wrong_answer_4.setVisibility(View.GONE);
+        } else if (Control.equalsIgnoreCase("распределитель")) {
+            Thru_answer_1.setVisibility(View.GONE);
+            Thru_answer_2.setVisibility(View.VISIBLE);
+            Thru_answer_3.setVisibility(View.GONE);
+            Thru_answer_4.setVisibility(View.GONE);
+            Wrong_answer_1.setVisibility(View.GONE);
+            Wrong_answer_2.setVisibility(View.VISIBLE);
+            Wrong_answer_3.setVisibility(View.GONE);
+            Wrong_answer_4.setVisibility(View.GONE);
+        }
 
         TaskDialog.show();
 
@@ -2124,7 +2108,6 @@ public class GameStart extends AppCompatActivity  {
         //dbHelper.UpdateDB(a1, a2, a3);
         Toast.makeText(this, a1+" "+a2+" "+a3, Toast.LENGTH_SHORT).show();
     } // добавить запись
-
 
 
     public void ReadfromDB() {
@@ -2152,7 +2135,6 @@ public class GameStart extends AppCompatActivity  {
         Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
 
     } // прочесть последнюю запись
-
 
     public void DeleteDB(View v) {
         CleareDB();
@@ -2230,7 +2212,6 @@ public class GameStart extends AppCompatActivity  {
         }
     } //запись в тхт НЕ ВЕРНО
 
-
     public void ReadFromTxtWrong(){
         try {
             InputStream inputStream = openFileInput(filenameWrong);
@@ -2252,14 +2233,6 @@ public class GameStart extends AppCompatActivity  {
             Log.e("logmetwice", "do not read, bos: " + e.toString());
         }
     } //чтение из тхт НЕ ВЕРНО
-
-
-
-    public String WichTextSave(){
-            this.saveTofile = "save1.txt";
-        return saveTofile;
-    }  // с каким файлом работа - куда сохранять и откуда читать
-
 
     @Override
     protected void onDestroy() {
