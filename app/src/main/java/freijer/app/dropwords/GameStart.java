@@ -13,6 +13,9 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
@@ -287,7 +290,7 @@ public class GameStart extends AppCompatActivity  {
     protected ProgressBar progressBar;
     protected TextView lvlview, QAWord, textClock, score;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
-    TextView textLvl, textScore, textView5, loginText, loginTextViw;
+    TextView textLvl, textScore, textView5, loginText, loginTextViw, tryChange;
     protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14, DELDB;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
     private ImageView img_nextlvl;
@@ -299,6 +302,7 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected ConstraintLayout dropLayout;
     protected Chronometer mChronometer;
+    protected ImageView whatHelp;
     ListView taskDoneList;
 
 
@@ -473,21 +477,17 @@ public class GameStart extends AppCompatActivity  {
         score = findViewById(R.id.score);
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
-        dropLayout = findViewById(R.id.dropLayout);
         QAWord = findViewById(R.id.textButton1);
         mChronometer = findViewById(R.id.chronometer);
-        loginText = findViewById(R.id. loginText);
-        loginTextViw = findViewById(R.id.loginTextViw);
         DELDB = findViewById(R.id.DELDB);
+
 
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
-        textView5 = findViewById(R.id.textView5);
+        tryChange = findViewById(R.id.tryChange);
+
 
         GoneButnnons(); //все кнопки изначально не видимы
-
-        String gg = Integer.toString(numsofliteralsinword);
-
 
         thru_list_1 = new ArrayList<>();
         thru_list_2 = new ArrayList<>();
@@ -519,12 +519,10 @@ public class GameStart extends AppCompatActivity  {
         textClock.setVisibility(GONE);
         textLvl.setVisibility(GONE);
         textScore.setVisibility(GONE);
-        textView5.setVisibility(GONE);
-        loginTextViw.setVisibility(GONE);
-        loginText.setVisibility(GONE);
+        tryChange.setVisibility(GONE);
 
-        Bundle arguments = getIntent().getExtras();
-        login_name = getIntent().getStringExtra("login");;
+
+
 
         firstStart = true;
 
@@ -533,23 +531,12 @@ public class GameStart extends AppCompatActivity  {
         //Если ни разу не запускалось, то такой записи нет
         // значение по дефолту false
 
-        boolean isAgain = prefs.getBoolean(login_name, false);
-        if (isAgain) {
-            // действия, когда приложение запускалось повторно.
-
-//            Switch_answer().clear();
-           // Wrong_Switch_answer().clear();
-            ReadfromDB();
-
-        }
-        // Записываем `true` - первый запуск прошел
         SharedPreferences.Editor e = prefs.edit();
         e.putBoolean(login_name, true);
         e.apply();
 
 
 
-        loginText.setText(login_name);
 
             filename = login_name+version_name+version_number+"truth"+".txt";
             filenameWrong = login_name+version_name+version_number+Control+"wrong"+".txt";
@@ -800,14 +787,13 @@ public class GameStart extends AppCompatActivity  {
         AlertDialog.Builder builder = new AlertDialog.Builder(GameStart.this);
         builder.setTitle("     Инструкция")
                 .setMessage("По экрану движутся кнопки, нажимая на них нужно собрать слово" + "\n"  +
-                        "слово  меньше 3 букв - 1очко" + "\n"  +
-                        "3 буквы +1" + "\n"  +
-                        "4 буквы +2 " + "\n"  +
-                        "5 букв +3" + "\n"  +
-                        "6 букв +4" + "\n"  +
-                        "каждое не правильное слово так же -1 очко" + "\n"  +
+                        "3 буквы +1 очко " + "\n"  +
+                        "4 буквы +2 очка" + "\n"  +
+                        "5 букв +3 очка" + "\n"  +
+                        "6 букв и больше +4 очка " + "\n"  +
+                        "каждое не правильное слово -1 очко " + "\n"  +
                          "Вы мсжете поменять  набор букв в любой момент. Это стоит -1 очко замены." + "\n"  +
-                                "Каждое очко замены дается при достижения новый ачивки"
+                                "Каждое очко замены дается при достижения новый ачивки и нового уровня"
                         )
                 .setCancelable(false)
                 .setNegativeButton("Все понятно, создатель этого приложения гений!",
@@ -848,9 +834,7 @@ public class GameStart extends AppCompatActivity  {
         textClock.setVisibility(VISIBLE);
         textLvl.setVisibility(VISIBLE);
         textScore.setVisibility(VISIBLE);
-        textView5.setVisibility(VISIBLE);
-        loginTextViw.setVisibility(VISIBLE);
-        loginText.setVisibility(VISIBLE);
+        tryChange.setVisibility(VISIBLE);
 
 //        score.setText(""+getCounter());
 //        textClock.setText(""+getTryChenge());
@@ -868,10 +852,14 @@ public class GameStart extends AppCompatActivity  {
         supportClass.Gos();
         ShowButtons();
         starter.setVisibility(GONE);
+
+
+
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                f001 = viewLocatedAt(textButton1).y - (textButton1.getHeight()/8);
+
+               f001 = viewLocatedAt(textButton1).y - (textButton1.getHeight()/8);
                 LineY_1.clear();
                 LineY_1.add(f001);
             }
@@ -894,8 +882,16 @@ public class GameStart extends AppCompatActivity  {
     public List<String> Switch_answer() {
         if (Control.equalsIgnoreCase("котлисаслон")) {
             this.Alfas = thru_list_1;
+            this.WrongSwitch = Wrong_list_1;
         } else if (Control.equalsIgnoreCase("распределитель")) {
             this.Alfas = thru_list_2;
+            this.WrongSwitch = Wrong_list_2;
+        } else if (Control.equalsIgnoreCase("стенографистка")) {
+            this.Alfas = thru_list_3;
+            this.WrongSwitch = Wrong_list_3;
+        } else if (Control.equalsIgnoreCase("простокваша")) {
+            this.Alfas = thru_list_4;
+            this.WrongSwitch = Wrong_list_4;
         }
         return Alfas;
     }
@@ -904,10 +900,13 @@ public class GameStart extends AppCompatActivity  {
             this.WrongSwitch = Wrong_list_1;
         } else if (Control.equalsIgnoreCase("распределитель")) {
             this.WrongSwitch = Wrong_list_2;
+        } else if (Control.equalsIgnoreCase("стенографистка")) {
+            this.WrongSwitch = Wrong_list_3;
+        } else if (Control.equalsIgnoreCase("простокваша")) {
+            this.WrongSwitch = Wrong_list_4;
         }
         return WrongSwitch;
     }
-
 
 
 
@@ -1052,21 +1051,33 @@ public class GameStart extends AppCompatActivity  {
                     case 5:
                         this.nextLvl = 1;
                         break;
-                    case 10:
+                    case 8:
                         this.nextLvl = 2;
                         break;
                     case 15:
                         this.nextLvl = 3;
                         break;
-                    case 20:
+                    case 21:
                         this.nextLvl = 4;
                         break;
-                    case 25:
+                    case 32:
                         this.nextLvl = 5;
                         break;
-                    case 30:
+                    case 45:
                         this.nextLvl = 6;
-
+                        break;
+                    case 60:
+                        this.nextLvl = 7;
+                        break;
+                    case 80:
+                        this.nextLvl = 8;
+                        break;
+                    case 100:
+                        this.nextLvl = 9;
+                        break;
+                    case 150:
+                        this.nextLvl = 10;
+                        break;
                 }
             }
             ActivatePrBar();
@@ -1163,10 +1174,12 @@ public class GameStart extends AppCompatActivity  {
             switch (progressBar.getMax()){
                 case 5:
                     setStepOnNextLvl(1);
+                    setTryChenge(getTryChenge()+1);
                     progressBar.setMax(8);
                     break;
                 case 8:
                     setStepOnNextLvl(2);
+                    setTryChenge(getTryChenge()+1);
                     progressBar.setMax(15);
                     break;
                 case 15:
@@ -1178,8 +1191,28 @@ public class GameStart extends AppCompatActivity  {
                     setStepOnNextLvl(4);
                     break;
                 case 32:
-                    progressBar.setMax(40);
+                    progressBar.setMax(45);
                     setStepOnNextLvl(5);
+                    break;
+                case 45:
+                    progressBar.setMax(60);
+                    setStepOnNextLvl(6);
+                    break;
+                case 60:
+                    progressBar.setMax(80);
+                    setStepOnNextLvl(7);
+                    break;
+                case 80:
+                    progressBar.setMax(100);
+                    setStepOnNextLvl(8);
+                    break;
+                case 100:
+                    progressBar.setMax(150);
+                    setStepOnNextLvl(9);
+                    break;
+                case 150:
+                    progressBar.setMax(200);
+                    setStepOnNextLvl(10);
                     break;
             }
             ShowNewLvl();
@@ -1249,12 +1282,19 @@ public class GameStart extends AppCompatActivity  {
         }
 
 
+        float height = Colo.getScaleX()*2;
+        float weight = Colo.getScaleY()*2;
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
                 PropertyValuesHolder.ofFloat("x", 0, 850),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
+
+//                PropertyValuesHolder.ofFloat("x", 600, 500),
+//                PropertyValuesHolder.ofFloat("y", 600, 500));
+
         button1.setDuration(6000 +this.a);
         button1.setRepeatCount(ObjectAnimator.INFINITE);
         button1.setRepeatMode(ObjectAnimator.REVERSE);
+
 //        button1.start();
 //2 кнопка
         button2 = ObjectAnimator.ofPropertyValuesHolder(pr2,
@@ -1410,13 +1450,9 @@ public class GameStart extends AppCompatActivity  {
         button_copy_button1.setDuration(1500);
         button_copy_button1.start();
 
-       // ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr1.getText().toString());
         pr1.setBackgroundResource(R.drawable.acceptbutton);
         pr1.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
-
         button_copy_button1.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -1493,7 +1529,7 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr3.getText().toString());
         pr3.setBackgroundResource(R.drawable.acceptbutton);
         pr3.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
+
 
         button_copy_button3.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1531,7 +1567,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr4.getText().toString());
         pr4.setBackgroundResource(R.drawable.acceptbutton);
         pr4.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button4.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1569,7 +1604,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr5.getText().toString());
         pr5.setBackgroundResource(R.drawable.acceptbutton);
         pr5.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button5.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1645,7 +1679,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr7.getText().toString());
         pr7.setBackgroundResource(R.drawable.acceptbutton);
         pr7.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button7.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1683,7 +1716,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr8.getText().toString());
         pr8.setBackgroundResource(R.drawable.acceptbutton);
         pr8.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button8.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1721,7 +1753,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr9.getText().toString());
         pr9.setBackgroundResource(R.drawable.acceptbutton);
         pr9.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button9.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1759,7 +1790,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr10.getText().toString());
         pr10.setBackgroundResource(R.drawable.acceptbutton);
         pr10.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button10.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1797,7 +1827,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr11.getText().toString());
         pr11.setBackgroundResource(R.drawable.acceptbutton);
         pr11.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button11.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1835,7 +1864,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr12.getText().toString());
         pr12.setBackgroundResource(R.drawable.acceptbutton);
         pr12.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button12.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1873,7 +1901,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr13.getText().toString());
         pr13.setBackgroundResource(R.drawable.acceptbutton);
         pr13.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button13.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1911,7 +1938,6 @@ public class GameStart extends AppCompatActivity  {
         MainListWord.add(pr14.getText().toString());
         pr14.setBackgroundResource(R.drawable.acceptbutton);
         pr14.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
         button_copy_button14.addListener(new Animator.AnimatorListener() {
             @Override
@@ -1958,7 +1984,6 @@ public class GameStart extends AppCompatActivity  {
         taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
         taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
         taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
-//        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Quest) + " слов");
         taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
 
         LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -2016,12 +2041,7 @@ public class GameStart extends AppCompatActivity  {
             }
 
         });
-//        but2 =  v.findViewById(R.id.butClose);
-//        but3.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                but3.setBackgroundColor(Color.YELLOW);
-//            }
-//        });
+
 
         OptionDialog.show();
     }  // окно статистика
@@ -2092,6 +2112,24 @@ public class GameStart extends AppCompatActivity  {
             Wrong_answer_2.setVisibility(View.VISIBLE);
             Wrong_answer_3.setVisibility(View.GONE);
             Wrong_answer_4.setVisibility(View.GONE);
+        } else if (Control.equalsIgnoreCase("стенографистка")) {
+            Thru_answer_1.setVisibility(View.GONE);
+            Thru_answer_2.setVisibility(View.GONE);
+            Thru_answer_3.setVisibility(View.VISIBLE);
+            Thru_answer_4.setVisibility(View.GONE);
+            Wrong_answer_1.setVisibility(View.GONE);
+            Wrong_answer_2.setVisibility(View.GONE);
+            Wrong_answer_3.setVisibility(View.VISIBLE);
+            Wrong_answer_4.setVisibility(View.GONE);
+        } else if (Control.equalsIgnoreCase("простокваша")) {
+            Thru_answer_1.setVisibility(View.GONE);
+            Thru_answer_2.setVisibility(View.GONE);
+            Thru_answer_3.setVisibility(View.GONE);
+            Thru_answer_4.setVisibility(View.VISIBLE);
+            Wrong_answer_1.setVisibility(View.GONE);
+            Wrong_answer_2.setVisibility(View.GONE);
+            Wrong_answer_3.setVisibility(View.GONE);
+            Wrong_answer_4.setVisibility(View.VISIBLE);
         }
 
         TaskDialog.show();

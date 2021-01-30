@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
 
         play = findViewById(R.id.play);
-        login = findViewById(R.id.login);
+
 
     }
 
@@ -47,15 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, GameStart.class);
 
-        whyLogin = login.getText().toString();
+        whyLogin = "player";
 
-        if (whyLogin.matches("")) {
-            Toast.makeText(this, "Введите имя игрока", Toast.LENGTH_SHORT).show();
-        } else {
-            this.login_nameStart = login.getText().toString();
+            this.login_nameStart = "player";
             intent.putExtra("login", login_nameStart);
             startActivity(intent);
-        }
+
     }
 
 
