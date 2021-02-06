@@ -20,6 +20,7 @@ import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.os.Build;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -40,6 +41,7 @@ import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
@@ -62,9 +64,6 @@ import static android.view.View.VISIBLE;
 
 
 
-
-
-
 //** АВТОЧТЕНИЕ из БАЗЫ ДАННЫХ в кноаку СТАРТ ИГРЫ
 
 
@@ -76,30 +75,18 @@ public class GameStart extends AppCompatActivity  {
 
     Supports supportClass = new Supports();
 
-    protected String login_name;
-    protected String version_name = "a";
-    protected String version_number = "7";
 
-//    protected String filename = login_name+version_name+version_number+"truth"+".txt";
-//    protected String filenameWrong = login_name+version_name+version_number+"wrong"+".txt";
 
-    protected String filename;
-    protected String filenameWrong;
+    String read = "";
+    String readWrong = "";
+    String writeTrue = "";
+    String writeWrong = "";
 
-    private static final String firstStartApp = "first_start";
-    private boolean firstStart;
-    //на кард лайоут перемещаем, кнопка исчезает и появялется буква на текстовом поле,  и можно перемещать перелистывать
-
-    //ctrl+shift+ - все свернуть
-
-    // добавить задания, типа: собрать 3 слова по 4 буквы
-    // каждое следующее слово длиннее на 1 букву
-    // набоать как больше слов за меньшее время
 
     //ачивки выводить не текстом, а "иконками" или не все, а только часть. Например за каждую 10 ачивку.
     DataHelper dbHelper;
 
-    String saveTofile;
+
     protected int flag = 0;
     protected int exp = 0;
 
@@ -290,7 +277,7 @@ public class GameStart extends AppCompatActivity  {
     protected ProgressBar progressBar;
     protected TextView lvlview, QAWord, textClock, score;
     protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
-    TextView textLvl, textScore, textView5, loginText, loginTextViw, tryChange;
+    TextView textLvl, textScore, tryChange;
     protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14, DELDB;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
     private ImageView img_nextlvl;
@@ -300,10 +287,9 @@ public class GameStart extends AppCompatActivity  {
     private ArrayList<String> list;
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();
-    protected ConstraintLayout dropLayout;
     protected Chronometer mChronometer;
-    protected ImageView whatHelp;
     ListView taskDoneList;
+    Button resetProgress;
 
 
     private int indexWord;
@@ -313,7 +299,7 @@ public class GameStart extends AppCompatActivity  {
     protected String[] OriginalWord; //бавзовое слово
     protected String[] MixedleWord; //смешение
     protected String Control;
-    private ConstraintLayout Colo;
+    private RelativeLayout Colo;
     private final int USERID = 6000;
     private int countID;
     protected int numsofliteralsinword;
@@ -327,7 +313,15 @@ public class GameStart extends AppCompatActivity  {
     protected int list_8;
     protected int list_9;
     protected int list_10;
-    protected int worrdcount_1;
+
+
+    public String getControl() {
+        return Control;
+    }
+    public void setControl(String control) {
+        Control = control;
+    }
+
 
                         protected int stepOnNextLvl = 0; // ЧТЕНИЕ и ЗАПИСЬ В БД сохрание Уровня
                         public int getStepOnNextLvl() {
@@ -402,16 +396,6 @@ public class GameStart extends AppCompatActivity  {
         this.list_10 = list_10;
     }
 
-    public int getWorrdcount_1() {
-        return worrdcount_1;
-    }
-    public void setWorrdcount_1(int worrdcount_1) {
-        this.worrdcount_1 = worrdcount_1;
-    }
-
-
-    SharedPreferences sPref;
-
 
     protected int tryChenge = 0;
 
@@ -480,12 +464,11 @@ public class GameStart extends AppCompatActivity  {
         QAWord = findViewById(R.id.textButton1);
         mChronometer = findViewById(R.id.chronometer);
         DELDB = findViewById(R.id.DELDB);
-
+        resetProgress = findViewById(R.id.resetProgress);
 
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
         tryChange = findViewById(R.id.tryChange);
-
 
         GoneButnnons(); //все кнопки изначально не видимы
 
@@ -505,10 +488,10 @@ public class GameStart extends AppCompatActivity  {
       Alfas = new ArrayList<>();
       WrongSwitch= new ArrayList<>();
 
+
         TYU = new ArrayList<>();
         ListReadBuffer = new ArrayList<>();
         ListBuffer = new ArrayList<>();
-
 
 
         progressBar = findViewById(R.id.progressBar);
@@ -524,51 +507,86 @@ public class GameStart extends AppCompatActivity  {
 
 
 
-        firstStart = true;
-
         prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
         //Получаем значение флага.
         //Если ни разу не запускалось, то такой записи нет
         // значение по дефолту false
 
         SharedPreferences.Editor e = prefs.edit();
-        e.putBoolean(login_name, true);
         e.apply();
 
 
 
-
-            filename = login_name+version_name+version_number+"truth"+".txt";
-            filenameWrong = login_name+version_name+version_number+Control+"wrong"+".txt";
-
-        Log.d("FILE", "Список_1: "+filename + " Список_2: " + filenameWrong);
-
+        ControlWordsfinFail(); // читаем проверочные слова
+        ReadWords(); // читаем ключевык
+        Randomizator(); // разиваем на буквы
     }
+
+                                                    public void resetProgress(View v) throws IOException {
+                                                        outputStream = openFileOutput("text_true_dio_1.txt", MODE_PRIVATE);
+                                                        outputStream.write("".getBytes());
+                                                        outputStream.close();
+                                                            outputStream = openFileOutput("text_true_dio_2.txt", MODE_PRIVATE);
+                                                            outputStream.write("".getBytes());
+                                                            outputStream.close();
+                                                                outputStream = openFileOutput("text_true_dio_3.txt", MODE_PRIVATE);
+                                                                outputStream.write("".getBytes());
+                                                                outputStream.close();
+                                                                    outputStream = openFileOutput("text_true_dio_4.txt", MODE_PRIVATE);
+                                                                    outputStream.write("".getBytes());
+                                                                    outputStream.close();
+
+                                                        outputStream = openFileOutput("text_wrong_dio_1.txt", MODE_PRIVATE);
+                                                        outputStream.write("".getBytes());
+                                                        outputStream.close();
+                                                            outputStream = openFileOutput("text_wrong_dio_2.txt", MODE_PRIVATE);
+                                                            outputStream.write("".getBytes());
+                                                            outputStream.close();
+                                                                outputStream = openFileOutput("text_wrong_dio_3.txt", MODE_PRIVATE);
+                                                                outputStream.write("".getBytes());
+                                                                outputStream.close();
+                                                                    outputStream = openFileOutput("text_wrong_dio_4.txt", MODE_PRIVATE);
+                                                                    outputStream.write("".getBytes());
+                                                                    outputStream.close();
+
+                                                        CleareDB();
+                                                    }
+
+
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        String key = login_name+"start";
+        String key = "start";
 
-        if (prefs.getBoolean(key, true)) {
-            CleareDB();
-//            setCounter(0);
-//            setStepOnNextLvl(0);
-//            setTryChenge(10);
-//
-//            score.setText(""+getCounter());
-//            textClock.setText(""+getTryChenge());
-//            lvlview.setText(""+getStepOnNextLvl());
+//        if (prefs.getBoolean(key, true)) {
+//            CleareDB();
+//            prefs.edit().putBoolean(key, false).apply();
+
 
 //            AddDB();
             // При первом запуске (или если юзер удалял все данные приложения)
             // мы попадаем сюда. Делаем что-то
 //и после действия записывам false в переменную firstrun
 //Итого при следующих запусках этот код не вызывается.
-            prefs.edit().putBoolean(key, false).apply();
-        }
+
+//        }
+
+
+
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        try {
+            LoadText();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ReadFromTxtWrong();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -620,7 +638,7 @@ public class GameStart extends AppCompatActivity  {
         textButton1.setEnabled(false);
 
 
-        textButton1.setVisibility(GONE);
+        //textButton1.setVisibility(GONE);
 
 
     } //убрать кнопки с экрана
@@ -688,20 +706,20 @@ public class GameStart extends AppCompatActivity  {
 //        clock.setVisibility(VISIBLE);
         starter.setVisibility(GONE);
         //--
-        textButton1.setVisibility(VISIBLE);
+       // textButton1.setVisibility(VISIBLE);
 
     } // показ кнопок на экране
     public void ReadWords(){
+        String str;
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("sevrallwords.txt")));
-            String str;
-            this.list = new ArrayList<String>();
+
+            this.list = new ArrayList<>();
             while ((str = reader.readLine()) != null) {
                 if (!str.isEmpty()) {
                     list.add(str);
                 }
             }
-//            this.ReadWords = list.toArray(new String[0]);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -728,6 +746,8 @@ public class GameStart extends AppCompatActivity  {
             this.indexWord = r.nextInt(list.size());
             this.word = list.get(indexWord);
             list.remove(word);
+            setControl(this.word);  // <= ВАЖНО setControl должен быть тут!!!
+            Log.d("QQW1", this.word);
         } else if (list.isEmpty()) {
             ReadWords(); //- заново
         }
@@ -740,7 +760,8 @@ public class GameStart extends AppCompatActivity  {
         Collections.shuffle(shuffle);
         shuffle.toArray(Literals);
         this.MixedleWord = Literals;
-        this.Control = this.word;
+//        this.Control = this.word;
+//        setControl(list.get(indexWord));
         this.numsofliteralsinword = MixedleWord.length;
 
     } //разбив слова на буквы
@@ -808,13 +829,7 @@ public class GameStart extends AppCompatActivity  {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void LetsGo(View v){
-        Toast.makeText(this, login_name, Toast.LENGTH_SHORT).show();
 //        dbHelper.DeleteDB();
-
-//        setCounter(0);   //чтение и запись БД очки
-//        setStepOnNextLvl(0); //чтение и запись БД уровень
-
-        //setTryChenge(10); //чтение и запись БД попыток смены слов
 
         score.setText(""+getCounter());
         textClock.setText(""+getTryChenge());
@@ -826,8 +841,6 @@ public class GameStart extends AppCompatActivity  {
         textClock.setText(""+getTryChenge());
         lvlview.setText(""+getStepOnNextLvl());
 
-        LoadText();
-        ReadFromTxtWrong();
 
         score.setVisibility(VISIBLE);
         lvlview.setVisibility(VISIBLE);
@@ -836,14 +849,11 @@ public class GameStart extends AppCompatActivity  {
         textScore.setVisibility(VISIBLE);
         tryChange.setVisibility(VISIBLE);
 
-//        score.setText(""+getCounter());
-//        textClock.setText(""+getTryChenge());
-//        lvlview.setText(""+getStepOnNextLvl());
 
         ListXUpFull(); // заполняем листы координат
-        ControlWordsfinFail(); // читаем проверочные слова
-        ReadWords(); // читаем ключевык
-        Randomizator(); // разиваем на буквы
+//        ControlWordsfinFail(); // читаем проверочные слова
+//        ReadWords(); // читаем ключевык
+//        Randomizator(); // разиваем на буквы
         GoneButnnons(); //все кнопки изначально не видимы
 
         SetLiteralsonButtons(); //установка букв на слова
@@ -853,12 +863,9 @@ public class GameStart extends AppCompatActivity  {
         ShowButtons();
         starter.setVisibility(GONE);
 
-
-
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-
                f001 = viewLocatedAt(textButton1).y - (textButton1.getHeight()/8);
                 LineY_1.clear();
                 LineY_1.add(f001);
@@ -871,44 +878,19 @@ public class GameStart extends AppCompatActivity  {
         thru_list_4.clear();
 
         Wrong_list_1.clear();
-        thru_list_2.clear();
-        thru_list_3.clear();
-        thru_list_4.clear();
+        Wrong_list_2.clear();
+        Wrong_list_3.clear();
+        Wrong_list_4.clear();
 
         progressBar.setProgress(getCounter());
+
+        try {
+            LoadText();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ReadFromTxtWrong();
     }  // СТАРТ, часы
-
-
-    public List<String> Switch_answer() {
-        if (Control.equalsIgnoreCase("котлисаслон")) {
-            this.Alfas = thru_list_1;
-            this.WrongSwitch = Wrong_list_1;
-        } else if (Control.equalsIgnoreCase("распределитель")) {
-            this.Alfas = thru_list_2;
-            this.WrongSwitch = Wrong_list_2;
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
-            this.Alfas = thru_list_3;
-            this.WrongSwitch = Wrong_list_3;
-        } else if (Control.equalsIgnoreCase("простокваша")) {
-            this.Alfas = thru_list_4;
-            this.WrongSwitch = Wrong_list_4;
-        }
-        return Alfas;
-    }
-    public List<String> Wrong_Switch_answer() {
-        if (Control.equalsIgnoreCase("котлисаслон")) {
-            this.WrongSwitch = Wrong_list_1;
-        } else if (Control.equalsIgnoreCase("распределитель")) {
-            this.WrongSwitch = Wrong_list_2;
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
-            this.WrongSwitch = Wrong_list_3;
-        } else if (Control.equalsIgnoreCase("простокваша")) {
-            this.WrongSwitch = Wrong_list_4;
-        }
-        return WrongSwitch;
-    }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
@@ -1033,7 +1015,7 @@ public class GameStart extends AppCompatActivity  {
 
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
-        Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord) && !Switch_answer().contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length); // Передача ОЧКОВ
@@ -1152,14 +1134,11 @@ public class GameStart extends AppCompatActivity  {
         AddDB();
         SaveText();
         WriteWrong();
-
-
     } //проверка
 
 
 
     protected void ActivatePrBar () {
-
         if (getFlag()==1){
             setFlag(0);
         }
@@ -2094,7 +2073,7 @@ public class GameStart extends AppCompatActivity  {
             }
         });
 
-        if (Control.equalsIgnoreCase("котлисаслон")) {
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
             Thru_answer_1.setVisibility(View.VISIBLE);
             Thru_answer_2.setVisibility(View.GONE);
             Thru_answer_3.setVisibility(View.GONE);
@@ -2103,7 +2082,7 @@ public class GameStart extends AppCompatActivity  {
             Wrong_answer_2.setVisibility(View.GONE);
             Wrong_answer_3.setVisibility(View.GONE);
             Wrong_answer_4.setVisibility(View.GONE);
-        } else if (Control.equalsIgnoreCase("распределитель")) {
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
             Thru_answer_1.setVisibility(View.GONE);
             Thru_answer_2.setVisibility(View.VISIBLE);
             Thru_answer_3.setVisibility(View.GONE);
@@ -2112,7 +2091,7 @@ public class GameStart extends AppCompatActivity  {
             Wrong_answer_2.setVisibility(View.VISIBLE);
             Wrong_answer_3.setVisibility(View.GONE);
             Wrong_answer_4.setVisibility(View.GONE);
-        } else if (Control.equalsIgnoreCase("стенографистка")) {
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
             Thru_answer_1.setVisibility(View.GONE);
             Thru_answer_2.setVisibility(View.GONE);
             Thru_answer_3.setVisibility(View.VISIBLE);
@@ -2121,7 +2100,7 @@ public class GameStart extends AppCompatActivity  {
             Wrong_answer_2.setVisibility(View.GONE);
             Wrong_answer_3.setVisibility(View.VISIBLE);
             Wrong_answer_4.setVisibility(View.GONE);
-        } else if (Control.equalsIgnoreCase("простокваша")) {
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
             Thru_answer_1.setVisibility(View.GONE);
             Thru_answer_2.setVisibility(View.GONE);
             Thru_answer_3.setVisibility(View.GONE);
@@ -2136,7 +2115,6 @@ public class GameStart extends AppCompatActivity  {
 
     }  // список собранных слов
 
-
     public void AddDB()   {
         String a1, a2, a3;
         a1 = String.valueOf(getCounter()); // очки
@@ -2144,10 +2122,8 @@ public class GameStart extends AppCompatActivity  {
         a3 = String.valueOf(getTryChenge()); // попыток смены
         dbHelper.WriteDB(a1, a2, a3);
         //dbHelper.UpdateDB(a1, a2, a3);
-        Toast.makeText(this, a1+" "+a2+" "+a3, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this, a1+" "+a2+" "+a3, Toast.LENGTH_SHORT).show();
     } // добавить запись
-
-
     public void ReadfromDB() {
         dbHelper.ReadDB();
 
@@ -2169,7 +2145,7 @@ public class GameStart extends AppCompatActivity  {
 //        lvlview.setText(""+getStepOnNextLvl());
 
 
-        Toast.makeText(this, ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl(), Toast.LENGTH_SHORT).show();
         Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
 
     } // прочесть последнюю запись
@@ -2188,6 +2164,23 @@ public class GameStart extends AppCompatActivity  {
         setAddtryss(""+0);
     }// удалить
 
+
+    public List<String> Switch_answer() {
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            this.Alfas = thru_list_1;
+            return this.Alfas;
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            this.Alfas = thru_list_2;
+            return this.Alfas;
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            this.Alfas = thru_list_3;
+            return this.Alfas;
+        } else  {
+            this.Alfas = thru_list_4;
+        }
+        Log.d("QQW", getControl());
+        return this.Alfas;
+    }
     private String array2str(List<String> strings){
         StringBuilder sb = new StringBuilder();
         for (String s : strings){
@@ -2195,42 +2188,73 @@ public class GameStart extends AppCompatActivity  {
         }
         return sb.toString();
     } //запись в тхт
-
     public void SaveText()  {
         myText = array2str(Switch_answer());
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            this.writeTrue = "text_true_dio_1.txt";
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            this.writeTrue = "text_true_dio_2.txt";
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            this.writeTrue = "text_true_dio_3.txt";
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
+            this.writeTrue = "text_true_dio_4.txt";
+        }
         try {
-            outputStream = openFileOutput(filename, MODE_PRIVATE);
+            outputStream = openFileOutput(writeTrue, MODE_PRIVATE);
             outputStream.write(myText.getBytes());
             outputStream.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();                   //если КОТЛИСАСЛОН - запись в файл кот.тхт, если другое, то в другое.тхт и показ того же списка.
         }
     } //запись в тхт
-
-    public void LoadText() {
+    public void LoadText() throws IOException {
+        String line;
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            this.read = "text_true_dio_1.txt";
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            this.read = "text_true_dio_2.txt";
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            this.read = "text_true_dio_3.txt";
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
+            this.read = "text_true_dio_4.txt";
+        }
         try {
-            InputStream inputStream = openFileInput(filename);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    Switch_answer().add(receiveString);
-                    //listBuffer.add(receiveString);
-                    Log.e("login", String.valueOf(Switch_answer()));
+            FileInputStream in = openFileInput(read);
+            InputStreamReader inputStreamReader = new InputStreamReader(in);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuilder sb = new StringBuilder();
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+//                        sb.append(line);
+                        if (getControl().equalsIgnoreCase("котлисаслон")) {
+                            thru_list_1.add(line);
+                        } else if (getControl().equalsIgnoreCase("распределитель")) {
+                            thru_list_2.add(line);
+                        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+                            thru_list_3.add(line);
+                        } else if (getControl().equalsIgnoreCase("простокваша")) {
+                            thru_list_4.add(line);
+                        }
+                        inputStreamReader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                inputStream.close();
+    }
+
+
+    public List<String> Wrong_Switch_answer() {
+            if (getControl().equalsIgnoreCase("котлисаслон")) {
+                this.WrongSwitch = Wrong_list_1;
+            } else if (getControl().equalsIgnoreCase("распределитель")) {
+                this.WrongSwitch = Wrong_list_2;
+            } else if (getControl().equalsIgnoreCase("стенографистка")) {
+                this.WrongSwitch = Wrong_list_3;
+            } else if (getControl().equalsIgnoreCase("простокваша")) {
+                this.WrongSwitch = Wrong_list_4;
             }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("logme", "File is in ass: " + e.toString());
-        } catch (IOException e) {
-            Log.e("logmetwice", "do not read, bos: " + e.toString());
-        }
-    } //чтение из тхт
-
-
+            return this.WrongSwitch;
+    }
     private String array2strWrong(List<String> strings){
         StringBuilder sb = new StringBuilder();
         for (String s : strings){
@@ -2238,39 +2262,60 @@ public class GameStart extends AppCompatActivity  {
         }
         return sb.toString();
     } //запись в тхт НЕ ВЕРНО
-
     public void WriteWrong(){
-        myText = array2strWrong( Wrong_Switch_answer());
+        myText = array2strWrong(Wrong_Switch_answer());
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            this.writeWrong = "text_wrong_dio_1.txt";
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            this.writeWrong = "text_wrong_dio_2.txt";
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            this.writeWrong = "text_wrong_dio_3.txt";
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
+            this.writeWrong = "text_wrong_dio_4.txt";
+        }
         try {
-            outputStream = openFileOutput(filenameWrong, MODE_PRIVATE);
+            outputStream = openFileOutput(writeWrong, MODE_PRIVATE);
             outputStream.write(myText.getBytes());
             outputStream.close();
         } catch (Exception e) {
+            e.printStackTrace();                   //если КОТЛИСАСЛОН - запись в файл кот.тхт, если другое, то в другое.тхт и показ того же списка.
+        }
+    } //запись в тхт
+    public void ReadFromTxtWrong(){
+        String lineWrong;
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            this.readWrong = "text_wrong_dio_1.txt";
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            this.readWrong = "text_wrong_dio_2.txt";
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            this.readWrong = "text_wrong_dio_3.txt";
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
+            this.readWrong = "text_wrong_dio_4.txt";
+        }
+        try {
+            FileInputStream in = openFileInput(readWrong);
+            InputStreamReader inputStreamReader = new InputStreamReader(in);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuilder sb = new StringBuilder();
+            while ((lineWrong = bufferedReader.readLine()) != null) {
+                sb.append(lineWrong);
+//                        sb.append(line);
+                if (getControl().equalsIgnoreCase("котлисаслон")) {
+                    Wrong_list_1.add(lineWrong);
+                } else if (getControl().equalsIgnoreCase("распределитель")) {
+                    Wrong_list_2.add(lineWrong);
+                } else if (getControl().equalsIgnoreCase("стенографистка")) {
+                    Wrong_list_3.add(lineWrong);
+                } else if (getControl().equalsIgnoreCase("простокваша")) {
+                    Wrong_list_4.add(lineWrong);
+                }
+                inputStreamReader.close();
+            }
+        } catch (IOException e) {
             e.printStackTrace();
         }
-    } //запись в тхт НЕ ВЕРНО
+    }
 
-    public void ReadFromTxtWrong(){
-        try {
-            InputStream inputStream = openFileInput(filenameWrong);
-
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
-                    Wrong_Switch_answer().add(receiveString);
-                    Log.e("login", String.valueOf( Wrong_Switch_answer()));
-                }
-                inputStream.close();
-            }
-        }
-        catch (FileNotFoundException e) {
-            Log.e("logme", "File is in ass: " + e.toString());
-        } catch (IOException e) {
-            Log.e("logmetwice", "do not read, bos: " + e.toString());
-        }
-    } //чтение из тхт НЕ ВЕРНО
 
     @Override
     protected void onDestroy() {

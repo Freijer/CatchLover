@@ -52,7 +52,6 @@
         android:layout_marginStart="15dp"
         android:textColor="#000000"
         android:textSize="14sp"
-
         />
     <TextView
         android:id="@+id/score"
@@ -62,7 +61,8 @@
         android:layout_marginTop="5dp"
         android:layout_below="@id/textScore"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/tryChange" />
+        android:layout_toEndOf="@id/tryChange"
+        android:textColor="#000000"/>
     <TextView
         android:id="@+id/lvlview"
         android:layout_width="60dp"
@@ -86,33 +86,24 @@
 
             />
 
+
+
     </RelativeLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+
+
+    <RelativeLayout
         android:id="@+id/Colo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
         android:layout_marginTop="60dp"
-        android:layout_marginBottom="140dp"
-        android:background="@drawable/desk_fore">
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/desk_fore"
+        android:layout_marginBottom="200dp"
+        >
 
-        <Button
-            android:id="@+id/starter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="150dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="150dp"
-            android:background="@drawable/startgame"
-            android:onClick="LetsGo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.953" />
 
 
         <ImageView
@@ -120,13 +111,28 @@
             android:layout_width="207dp"
             android:layout_height="212dp"
             android:alpha="0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.68"
+            android:layout_centerInParent="true"
             app:srcCompat="@drawable/nextlvl" />
+
+        <Button
+            android:id="@+id/starter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_nextlvl"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/startgame"
+            android:onClick="LetsGo" />
+
+        <Button
+            android:id="@+id/resetProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/starter"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
+            android:text="Сброс прогресса"
+            android:onClick="resetProgress" />
 
         <Button
             android:id="@+id/pr1"
@@ -316,53 +322,35 @@
             android:layout_width="27dp"
             android:layout_height="125dp"
             android:layout_marginStart="359dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="2dp"
-            android:layout_marginBottom="10dp"
             android:background="#FF0A0A"
             android:onClick="DeleteDB"
             android:text="DEL_DB"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            />
 
-        <TextView
-            android:id="@+id/textButton1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/scroll"
-            android:gravity="center"
-            android:onClick="Chek_1"
-            android:padding="10dp"
-            android:text=" "
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.917" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 
     <RelativeLayout
         android:id="@+id/constraintLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         >
 
-
+        <TextView
+            android:id="@+id/textButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/scroll"
+            android:onClick="Chek_1"
+            android:text=" "
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
 
 
@@ -371,10 +359,11 @@
             style="@android:style/Widget.ProgressBar.Horizontal"
             android:layout_width="300dp"
             android:layout_height="20dp"
-            android:layout_alignParentTop="true"
+           android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_centerInParent="true"
+            android:layout_below="@id/textButton1"
             />
         <Button
             android:id="@+id/progress"
@@ -382,10 +371,10 @@
             android:layout_height="50dp"
             android:background="@drawable/list"
             android:onClick="ShowStats"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:layout_below="@id/progressBar"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             />
         <Button
             android:id="@+id/button2"
@@ -393,11 +382,11 @@
             android:layout_height="50dp"
             android:background="@drawable/resets"
             android:onClick="ResetField"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:layout_below="@id/progressBar"
             android:layout_toEndOf="@id/progress"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
            />
         <Button
             android:id="@+id/task"
@@ -405,11 +394,11 @@
             android:layout_height="50dp"
             android:background="@drawable/task"
             android:onClick="TaskShow"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:layout_below="@id/progressBar"
             android:layout_toEndOf="@id/button2"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
              />
         <Button
             android:id="@+id/reset"
@@ -417,12 +406,12 @@
             android:layout_height="50dp"
             android:background="@drawable/wordnew"
             android:onClick="ResTart"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:layout_below="@id/progressBar"
             android:layout_toEndOf="@id/task"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
              />
 
     </RelativeLayout>
