@@ -317,16 +317,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.366" />
 
-        <Button
-            android:id="@+id/DELDB"
-            android:layout_width="27dp"
-            android:layout_height="125dp"
-            android:layout_marginStart="359dp"
-            android:background="#FF0A0A"
-            android:onClick="DeleteDB"
-            android:text="DEL_DB"
-            />
-
 
     </RelativeLayout>
 

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorSpeed">
+
+    <Button
+        android:id="@+id/fast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/Fast"
+        android:background="@drawable/forlessbutton" />
+    <Button
+        android:id="@+id/medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/fast"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/forlessbutton"
+        android:text="@string/Medium"/>
+    <Button
+        android:id="@+id/slow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/medium"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/forlessbutton"
+        android:text="@string/Slow"/>
+
+
+    <ImageView
+        android:id="@+id/fast_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:layout_toStartOf="@id/fast"
+        android:layout_marginEnd="5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/forward_black"/>
+    <ImageView
+        android:id="@+id/medium_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/fast"
+        android:layout_toStartOf="@id/medium"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/forward_black"/>
+    <ImageView
+        android:id="@+id/slow_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/medium"
+        android:layout_marginTop="15dp"
+        android:layout_toStartOf="@id/slow"
+        android:layout_marginEnd="5dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/forward_black"/>
+
+</RelativeLayout>

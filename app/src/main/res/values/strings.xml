@@ -1,6 +1,26 @@
 <resources>
     <string name="app_name">DropWords</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="Start_the_Game">Начать игру</string>
+    <string name="Settings">Параметры игры</string>
+
+
+    <string name="Speed">Скорость</string>
+    <string name="Total_reset">Сбросить прогресс</string>
+
+    <string name="Game_standart">Стандартная игра</string>
+    <string name="Game_time">Игра на время</string>
+    <string name="Game_no_idea">В разработке</string>
+    <string name="Game_language">Игра на английском языке (необходма покупка 5$)</string>
+    <string name="Back">Назад</string>
+
+    <string name="Fast">Быстро</string>
+    <string name="Medium">Стандартно</string>
+    <string name="Slow">Медленно</string>
+
+    <string name="Reset_no">Нет</string>
+    <string name="Reset_yes">Да</string>
+
 </resources>

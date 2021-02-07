@@ -314,6 +314,13 @@ public class GameStart extends AppCompatActivity  {
     protected int list_9;
     protected int list_10;
 
+    protected int speed_a;
+        public int getSpeed_a() {
+            return speed_a;
+        }
+        public void setSpeed_a(int speed_a) {
+            this.speed_a = speed_a;
+        }
 
     public String getControl() {
         return Control;
@@ -398,11 +405,9 @@ public class GameStart extends AppCompatActivity  {
 
 
     protected int tryChenge = 0;
-
     public int getTryChenge() {
         return tryChenge;
     }
-
     public void setTryChenge(int tryChenge) {
         this.tryChenge = tryChenge;
     }
@@ -463,7 +468,6 @@ public class GameStart extends AppCompatActivity  {
         Colo = findViewById(R.id.Colo);
         QAWord = findViewById(R.id.textButton1);
         mChronometer = findViewById(R.id.chronometer);
-        DELDB = findViewById(R.id.DELDB);
         resetProgress = findViewById(R.id.resetProgress);
 
         textLvl = findViewById(R.id.textLvl);
@@ -520,6 +524,14 @@ public class GameStart extends AppCompatActivity  {
         ControlWordsfinFail(); // читаем проверочные слова
         ReadWords(); // читаем ключевык
         Randomizator(); // разиваем на буквы
+
+
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+            String income1 = bundle.getString("setSpeed_buttons");
+            setSpeed_a(Integer.parseInt(income1));
+            Log.d("SPEED2", ""+getSpeed_a());
+        }
     }
 
                                                     public void resetProgress(View v) throws IOException {
@@ -1247,18 +1259,18 @@ public class GameStart extends AppCompatActivity  {
         pr14.setEnabled(true);
         pr14.setBackgroundResource(R.drawable.forlessbutton);
     } //кнопки снова активны и имеют исходный стиль
-    int a;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Creates(){
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String melodyName = sharedPreferences.getString("speed_but", "midle");
-        if (melodyName.equals("slow")) {
-            this.a = 5500;
-        } else if (melodyName.equals("midle")) {
-            this.a = 0;
-        } else if (melodyName.equals("fast")) {
-            this.a = -2500;
-        }
+//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+//        String melodyName = sharedPreferences.getString("speed_but", "midle");
+//        if (melodyName.equals("slow")) {
+//            this.speed_a = 5500;
+//        } else if (melodyName.equals("midle")) {
+//            this.speed_a = 0;
+//        } else if (melodyName.equals("fast")) {
+//            this.speed_a = -2500;
+//        }
 
 
         float height = Colo.getScaleX()*2;
@@ -1270,7 +1282,7 @@ public class GameStart extends AppCompatActivity  {
 //                PropertyValuesHolder.ofFloat("x", 600, 500),
 //                PropertyValuesHolder.ofFloat("y", 600, 500));
 
-        button1.setDuration(6000 +this.a);
+        button1.setDuration(6000 +getSpeed_a());
         button1.setRepeatCount(ObjectAnimator.INFINITE);
         button1.setRepeatMode(ObjectAnimator.REVERSE);
 
@@ -1279,7 +1291,7 @@ public class GameStart extends AppCompatActivity  {
         button2 = ObjectAnimator.ofPropertyValuesHolder(pr2,
                 PropertyValuesHolder.ofFloat("x", 200, 400),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-        button2.setDuration(6300+this.a);
+        button2.setDuration(6300+getSpeed_a());
         button2.setRepeatCount(ObjectAnimator.INFINITE);
         button2.setRepeatMode(ObjectAnimator.REVERSE);
 //        button2.start();
@@ -1287,7 +1299,7 @@ public class GameStart extends AppCompatActivity  {
         button3 = ObjectAnimator.ofPropertyValuesHolder(pr3,
                 PropertyValuesHolder.ofFloat("x", 0, 910),
                 PropertyValuesHolder.ofFloat("y", 140, 140));
-        button3.setDuration(7500+this.a);
+        button3.setDuration(7500+getSpeed_a());
         button3.setRepeatCount(ObjectAnimator.INFINITE);
         button3.setRepeatMode(ObjectAnimator.REVERSE);
 //        button3.start();
@@ -1295,7 +1307,7 @@ public class GameStart extends AppCompatActivity  {
         button4 = ObjectAnimator.ofPropertyValuesHolder(pr4,
                 PropertyValuesHolder.ofFloat("x", 0, 910),
                 PropertyValuesHolder.ofFloat("y", 500, 500));
-        button4.setDuration(8000+this.a);
+        button4.setDuration(8000+getSpeed_a());
         button4.setRepeatCount(ObjectAnimator.INFINITE);
         button4.setRepeatMode(ObjectAnimator.REVERSE);
 //        button4.start();
@@ -1303,7 +1315,7 @@ public class GameStart extends AppCompatActivity  {
         button5 = ObjectAnimator.ofPropertyValuesHolder(pr5,
                 PropertyValuesHolder.ofFloat("x", 0, 910),
                 PropertyValuesHolder.ofFloat("y", 900, 900));
-        button5.setDuration(5300+this.a);
+        button5.setDuration(5300+getSpeed_a());
         button5.setRepeatCount(ObjectAnimator.INFINITE);
         button5.setRepeatMode(ObjectAnimator.REVERSE);
 //        button5.start();
@@ -1311,7 +1323,7 @@ public class GameStart extends AppCompatActivity  {
         button6 = ObjectAnimator.ofPropertyValuesHolder(pr6,
                 PropertyValuesHolder.ofFloat("x", 910, 0),
                 PropertyValuesHolder.ofFloat("y", 300, 300));
-        button6.setDuration(5600 +this.a);
+        button6.setDuration(5600 +getSpeed_a());
         button6.setRepeatCount(ObjectAnimator.INFINITE);
         button6.setRepeatMode(ObjectAnimator.REVERSE);
 //        button6.start();
@@ -1319,7 +1331,7 @@ public class GameStart extends AppCompatActivity  {
         button7 = ObjectAnimator.ofPropertyValuesHolder(pr7,
                 PropertyValuesHolder.ofFloat("x", 910, 0),
                 PropertyValuesHolder.ofFloat("y", 700, 700));
-        button7.setDuration(4400 +this.a);
+        button7.setDuration(4400 +getSpeed_a());
         button7.setRepeatCount(ObjectAnimator.INFINITE);
         button7.setRepeatMode(ObjectAnimator.REVERSE);
 //        button7.start();
@@ -1327,7 +1339,7 @@ public class GameStart extends AppCompatActivity  {
         button8 = ObjectAnimator.ofPropertyValuesHolder(pr8,
                 PropertyValuesHolder.ofFloat("x", 200, 650),
                 PropertyValuesHolder.ofFloat("y", 1050, 140));
-        button8.setDuration(3900 +this.a);
+        button8.setDuration(3900 +getSpeed_a());
         button8.setRepeatCount(ObjectAnimator.INFINITE);
         button8.setRepeatMode(ObjectAnimator.REVERSE);
 //        button8.start();
@@ -1335,7 +1347,7 @@ public class GameStart extends AppCompatActivity  {
         button9 = ObjectAnimator.ofPropertyValuesHolder(pr9,
                 PropertyValuesHolder.ofFloat("x", 800, 800),
                 PropertyValuesHolder.ofFloat("y", 1050, 140));
-        button9.setDuration(4100 +this.a);
+        button9.setDuration(4100 +getSpeed_a());
         button9.setRepeatCount(ObjectAnimator.INFINITE);
         button9.setRepeatMode(ObjectAnimator.REVERSE);
 //        button9.start();
@@ -1343,7 +1355,7 @@ public class GameStart extends AppCompatActivity  {
         button10 = ObjectAnimator.ofPropertyValuesHolder(pr10,
                 PropertyValuesHolder.ofFloat("x", 0, 250),
                 PropertyValuesHolder.ofFloat("y", 1050, 140));
-        button10.setDuration(4500 +this.a);
+        button10.setDuration(4500 +getSpeed_a());
         button10.setRepeatCount(ObjectAnimator.INFINITE);
         button10.setRepeatMode(ObjectAnimator.REVERSE);
 //        button10.start();
@@ -1351,7 +1363,7 @@ public class GameStart extends AppCompatActivity  {
         button11 = ObjectAnimator.ofPropertyValuesHolder(pr11,
                 PropertyValuesHolder.ofFloat("x", 910, 100),
                 PropertyValuesHolder.ofFloat("y", 140, 950));
-        button11.setDuration(5700 +this.a);
+        button11.setDuration(5700 +getSpeed_a());
         button11.setRepeatCount(ObjectAnimator.INFINITE);
         button11.setRepeatMode(ObjectAnimator.REVERSE);
 //        button11.start();
@@ -1359,7 +1371,7 @@ public class GameStart extends AppCompatActivity  {
         button12 = ObjectAnimator.ofPropertyValuesHolder(pr12,
                 PropertyValuesHolder.ofFloat("x", 700, 400),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-        button12.setDuration(3600 +this.a);
+        button12.setDuration(3600 +getSpeed_a());
         button12.setRepeatCount(ObjectAnimator.INFINITE);
         button12.setRepeatMode(ObjectAnimator.REVERSE);
 //        button12.start();
@@ -1368,7 +1380,7 @@ public class GameStart extends AppCompatActivity  {
         button13 = ObjectAnimator.ofPropertyValuesHolder(pr13,
                 PropertyValuesHolder.ofFloat("x", 910, 0),
                 PropertyValuesHolder.ofFloat("y", 1100, 1050));
-        button13.setDuration(5100 +this.a);
+        button13.setDuration(5100 +getSpeed_a());
         button13.setRepeatCount(ObjectAnimator.INFINITE);
         button13.setRepeatMode(ObjectAnimator.REVERSE);
 //        button13.start();
@@ -1376,7 +1388,7 @@ public class GameStart extends AppCompatActivity  {
         button14 = ObjectAnimator.ofPropertyValuesHolder(pr14,
                 PropertyValuesHolder.ofFloat("x", 500, 500),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-        button14.setDuration(4800 +this.a);
+        button14.setDuration(4800 +getSpeed_a());
         button14.setRepeatCount(ObjectAnimator.INFINITE);
         button14.setRepeatMode(ObjectAnimator.REVERSE);
 //        button14.start();
@@ -2323,7 +2335,27 @@ public class GameStart extends AppCompatActivity  {
         AddDB();
         super.onDestroy();
     }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Выйти из приложения на главный жкран?")
+                .setMessage("Вы действительно хотите выйти?")
+                .setNegativeButton(android.R.string.no, null)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        //SomeActivity - имя класса Activity для которой переопределяем onBackPressed();
+
+                        Intent intent = new Intent(GameStart.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+
+                    }
+                }).create().show();
+    } //переназнчание кнопки назад
+
 }
+
 
     //Ачивка за сбор  слова (3 раза словао из 3 букв ,только если они верные) сделать. сейчас все слова в зачет идут.
 

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settings.SettingsAndParams"
+    android:background="@drawable/desk2">
+
+
+    <Button
+        android:id="@+id/speed_game"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:background="@drawable/forlessbutton"
+        android:textSize="16sp"
+        android:text="@string/Speed"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:onClick="Change_speed"/>
+
+    <Button
+        android:id="@+id/total_resset"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:background="@drawable/resetbutton"
+        android:textSize="16sp"
+        android:text="@string/Total_reset"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="100dp"
+        android:onClick="Totaly_reset_progress"/>
+
+    <Button
+        android:id="@+id/standart_game"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@drawable/forlessbutton"
+        android:textSize="16sp"
+        android:text="@string/Game_standart"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/speed_game"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="150dp"/>
+
+    <Button
+        android:id="@+id/time_game"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@drawable/forlessbutton"
+        android:textSize="16sp"
+        android:text="@string/Game_time"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/total_resset"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="150dp"/>
+
+
+    <Button
+        android:id="@+id/languache_game"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@drawable/forlessbutton"
+        android:textSize="16sp"
+        android:text="@string/Game_language"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/standart_game"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"/>
+
+
+    <Button
+        android:id="@+id/no_idea_game"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:background="@drawable/forlessbutton"
+        android:textSize="16sp"
+        android:text="@string/Game_no_idea"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/time_game"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"/>
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/buttonback"
+        android:textSize="16sp"
+        android:text="@string/Back"
+        android:layout_below="@+id/languache_game"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="50dp"
+        android:onClick="Back"/>
+</RelativeLayout>
