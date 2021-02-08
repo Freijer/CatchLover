@@ -289,7 +289,6 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected Chronometer mChronometer;
     ListView taskDoneList;
-    Button resetProgress;
 
 
     private int indexWord;
@@ -468,7 +467,6 @@ public class GameStart extends AppCompatActivity  {
         Colo = findViewById(R.id.Colo);
         QAWord = findViewById(R.id.textButton1);
         mChronometer = findViewById(R.id.chronometer);
-        resetProgress = findViewById(R.id.resetProgress);
 
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
@@ -508,17 +506,11 @@ public class GameStart extends AppCompatActivity  {
         textScore.setVisibility(GONE);
         tryChange.setVisibility(GONE);
 
-
-
-
         prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
-        //Получаем значение флага.
-        //Если ни разу не запускалось, то такой записи нет
-        // значение по дефолту false
+
 
         SharedPreferences.Editor e = prefs.edit();
         e.apply();
-
 
 
         ControlWordsfinFail(); // читаем проверочные слова
@@ -534,58 +526,10 @@ public class GameStart extends AppCompatActivity  {
         }
     }
 
-                                                    public void resetProgress(View v) throws IOException {
-                                                        outputStream = openFileOutput("text_true_dio_1.txt", MODE_PRIVATE);
-                                                        outputStream.write("".getBytes());
-                                                        outputStream.close();
-                                                            outputStream = openFileOutput("text_true_dio_2.txt", MODE_PRIVATE);
-                                                            outputStream.write("".getBytes());
-                                                            outputStream.close();
-                                                                outputStream = openFileOutput("text_true_dio_3.txt", MODE_PRIVATE);
-                                                                outputStream.write("".getBytes());
-                                                                outputStream.close();
-                                                                    outputStream = openFileOutput("text_true_dio_4.txt", MODE_PRIVATE);
-                                                                    outputStream.write("".getBytes());
-                                                                    outputStream.close();
-
-                                                        outputStream = openFileOutput("text_wrong_dio_1.txt", MODE_PRIVATE);
-                                                        outputStream.write("".getBytes());
-                                                        outputStream.close();
-                                                            outputStream = openFileOutput("text_wrong_dio_2.txt", MODE_PRIVATE);
-                                                            outputStream.write("".getBytes());
-                                                            outputStream.close();
-                                                                outputStream = openFileOutput("text_wrong_dio_3.txt", MODE_PRIVATE);
-                                                                outputStream.write("".getBytes());
-                                                                outputStream.close();
-                                                                    outputStream = openFileOutput("text_wrong_dio_4.txt", MODE_PRIVATE);
-                                                                    outputStream.write("".getBytes());
-                                                                    outputStream.close();
-
-                                                        CleareDB();
-                                                    }
-
-
-
 
     @Override
     protected void onResume() {
         super.onResume();
-        String key = "start";
-
-//        if (prefs.getBoolean(key, true)) {
-//            CleareDB();
-//            prefs.edit().putBoolean(key, false).apply();
-
-
-//            AddDB();
-            // При первом запуске (или если юзер удалял все данные приложения)
-            // мы попадаем сюда. Делаем что-то
-//и после действия записывам false в переменную firstrun
-//Итого при следующих запусках этот код не вызывается.
-
-//        }
-
-
 
     }
 

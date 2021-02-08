@@ -102,6 +102,8 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/desk_fore"
         android:layout_marginBottom="200dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         >
 
 
@@ -123,16 +125,6 @@
             android:layout_marginTop="36dp"
             android:background="@drawable/startgame"
             android:onClick="LetsGo" />
-
-        <Button
-            android:id="@+id/resetProgress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/starter"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="36dp"
-            android:text="Сброс прогресса"
-            android:onClick="resetProgress" />
 
         <Button
             android:id="@+id/pr1"
@@ -339,6 +331,8 @@
             android:background="@drawable/scroll"
             android:onClick="Chek_1"
             android:text=" "
+            android:textAlignment="center"
+            android:gravity="center"
             android:textSize="18sp"
             android:textStyle="bold" />
 
