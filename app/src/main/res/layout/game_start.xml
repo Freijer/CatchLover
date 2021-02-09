@@ -318,24 +318,203 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        >
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/ChekOut"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/char_1"
+            android:onClick="Chek_1"
+            android:background="@drawable/tamplatetwo"/>
 
         <TextView
-            android:id="@+id/textButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/scroll"
-            android:onClick="Chek_1"
-            android:text=" "
+            android:id="@+id/char_1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:textAlignment="center"
             android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textSize="13sp"
 
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll" />
+
+        <TextView
+            android:id="@+id/char_2"
+            android:layout_toEndOf="@id/char_1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_3"
+            android:layout_toEndOf="@id/char_2"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_4"
+            android:layout_toEndOf="@id/char_3"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_5"
+            android:layout_toEndOf="@id/char_4"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_6"
+            android:layout_toEndOf="@id/char_5"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_7"
+            android:layout_toEndOf="@id/char_6"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_8"
+            android:layout_toEndOf="@id/char_7"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_9"
+            android:layout_toEndOf="@id/char_8"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_10"
+            android:layout_toEndOf="@id/char_9"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_11"
+            android:layout_toEndOf="@id/char_10"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_12"
+            android:layout_toEndOf="@id/char_11"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_13"
+            android:layout_toEndOf="@id/char_12"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
+
+        <TextView
+            android:id="@+id/char_14"
+            android:layout_toEndOf="@id/char_13"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/scroll"/>
 
 
         <ProgressBar
@@ -347,7 +526,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_centerInParent="true"
-            android:layout_below="@id/textButton1"
+            android:layout_below="@id/ChekOut"
             />
         <Button
             android:id="@+id/progress"

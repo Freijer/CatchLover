@@ -75,8 +75,6 @@ public class GameStart extends AppCompatActivity  {
 
     Supports supportClass = new Supports();
 
-
-
     String read = "";
     String readWrong = "";
     String writeTrue = "";
@@ -276,8 +274,7 @@ public class GameStart extends AppCompatActivity  {
 
     protected ProgressBar progressBar;
     protected TextView lvlview, QAWord, textClock, score;
-    protected TextView textButton1, textButton2, textButton3, textButton4, textButton5, textButton6, textButton7, textButton8, textButton9, textButton10;
-    TextView textLvl, textScore, tryChange;
+    protected TextView textLvl, textScore, tryChange;
     protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14, DELDB;
     protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
     private ImageView img_nextlvl;
@@ -289,6 +286,9 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected Chronometer mChronometer;
     ListView taskDoneList;
+
+    protected TextView char_1, char_2, char_3, char_4, char_5, char_6, char_7, char_8, char_9, char_10, char_11, char_12, char_13, char_14;
+    protected  Button ChekOut;
 
 
     private int indexWord;
@@ -460,17 +460,34 @@ public class GameStart extends AppCompatActivity  {
         task = findViewById(R.id.task);
         lvlview = findViewById(R.id.lvlview);
         img_nextlvl = findViewById(R.id.img_nextlvl);
-        textButton1 = findViewById(R.id.textButton1);
         progress = findViewById(R.id.progress);
         score = findViewById(R.id.score);
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
-        QAWord = findViewById(R.id.textButton1);
         mChronometer = findViewById(R.id.chronometer);
 
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
         tryChange = findViewById(R.id.tryChange);
+
+
+        char_1 = findViewById(R.id.char_1);
+        char_2 = findViewById(R.id.char_2);
+        char_3 = findViewById(R.id.char_3);
+        char_4 = findViewById(R.id.char_4);
+        char_5 = findViewById(R.id.char_5);
+        char_6 = findViewById(R.id.char_6);
+        char_7 = findViewById(R.id.char_7);
+        char_8 = findViewById(R.id.char_8);
+        char_9 = findViewById(R.id.char_9);
+        char_10 = findViewById(R.id.char_10);
+        char_11 = findViewById(R.id.char_11);
+        char_12 = findViewById(R.id.char_12);
+        char_13 = findViewById(R.id.char_13);
+        char_14 = findViewById(R.id.char_14);
+
+
+
 
         GoneButnnons(); //все кнопки изначально не видимы
 
@@ -484,6 +501,7 @@ public class GameStart extends AppCompatActivity  {
         Wrong_list_3 = new ArrayList<>();
         Wrong_list_4 = new ArrayList<>();
 
+        ChekOut = findViewById(R.id.ChekOut);
 
       bufferReadList = new ArrayList<>();
 
@@ -564,7 +582,7 @@ public class GameStart extends AppCompatActivity  {
     } // отработка нажтий на МЕНЮ элементе 2
 
     public void ListXUpFull(){
-        ListCoordinateX_1.add(textButton1.getHeight()/8);
+        ListCoordinateX_1.add(ChekOut.getHeight()/8);
         ListCoordinateX_1.add(200);
         ListCoordinateX_1.add(200);
         ListCoordinateX_1.add(200);
@@ -587,19 +605,24 @@ public class GameStart extends AppCompatActivity  {
         pr13.setVisibility(GONE);
         pr14.setVisibility(GONE);
 
-//        clock.setVisibility(GONE);
-
-
-
-        textButton1.setEnabled(false);
-
-
-        //textButton1.setVisibility(GONE);
+        char_1.setVisibility(GONE);
+        char_2.setVisibility(GONE);
+        char_3.setVisibility(GONE);
+        char_4.setVisibility(GONE);
+        char_5.setVisibility(GONE);
+        char_6.setVisibility(GONE);
+        char_7.setVisibility(GONE);
+        char_8.setVisibility(GONE);
+        char_9.setVisibility(GONE);
+        char_10.setVisibility(GONE);
+        char_11.setVisibility(GONE);
+        char_12.setVisibility(GONE);
+        char_13.setVisibility(GONE);
+        char_14.setVisibility(GONE);
 
 
     } //убрать кнопки с экрана
     public void ShowButtons(){
-        textButton1.setEnabled(true);
         switch (numsofliteralsinword){
             case 11:
                 pr1.setVisibility(VISIBLE);
@@ -659,10 +682,11 @@ public class GameStart extends AppCompatActivity  {
                 break;
 
         }
-//        clock.setVisibility(VISIBLE);
         starter.setVisibility(GONE);
+        char_1.setVisibility(VISIBLE);
+        char_2.setVisibility(VISIBLE);
+        char_3.setVisibility(VISIBLE);
         //--
-       // textButton1.setVisibility(VISIBLE);
 
     } // показ кнопок на экране
     public void ReadWords(){
@@ -822,7 +846,7 @@ public class GameStart extends AppCompatActivity  {
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-               f001 = viewLocatedAt(textButton1).y - (textButton1.getHeight()/8);
+               f001 = viewLocatedAt(ChekOut).y - (ChekOut.getHeight()/8);
                 LineY_1.clear();
                 LineY_1.add(f001);
             }
@@ -1020,7 +1044,7 @@ public class GameStart extends AppCompatActivity  {
             }
             ActivatePrBar();
             ProgressBarNextLvl();
-            textButton1.startAnimation(animation);
+            ChekOut.startAnimation(animation);
         } else if (listBuffer.contains(KeyWord)){
             ListXUpFull();
             setCounter(getCounter()-1);
@@ -1029,7 +1053,7 @@ public class GameStart extends AppCompatActivity  {
             ProgressBarNextLvl();
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
             Wrong_Switch_answer().add(KeyWord);
-            textButton1.startAnimation(animation2);
+            ChekOut.startAnimation(animation2);
         } else{
             ListXUpFull();
             setCounter(getCounter()-1);
@@ -1037,12 +1061,12 @@ public class GameStart extends AppCompatActivity  {
             ActivatePrBar();
             ProgressBarNextLvl();
             Wrong_Switch_answer().add(KeyWord);
-            textButton1.startAnimation(animation2);
+            ChekOut.startAnimation(animation2);
         }
         EneblendButtonsAffterPress();
         listBuffer.add(KeyWord);
         MainListWord.removeAll(MainListWord);
-          textButton1.setText("Собери слово");
+        ChekOut.setText("Собери слово");
 
 
         taskList.add("Слово из 3 букв собранно " + getList_3() + " раза");
@@ -1338,557 +1362,408 @@ public class GameStart extends AppCompatActivity  {
 //        button14.start();
     } //движение кнопок
     protected void SwitchTextField(){
-        switch(getTextFlag()){
-            case 1:
-                textButton1.setText(String.valueOf(MainListWord));
-                break;
-            case 2:
-                textButton2.setText(String.valueOf(MainListWord));
-                break;
-            case 3:
-                textButton3.setText(String.valueOf(MainListWord));
-                break;
-            case 4:
-                textButton4.setText(String.valueOf(MainListWord));
-                break;
-            case 5:
-                textButton5.setText(String.valueOf(MainListWord));
-                break;
-            case 6:
-                textButton6.setText(String.valueOf(MainListWord));
-                break;
-            case 7:
-                textButton7.setText(String.valueOf(MainListWord));
-                break;
-            case 8:
-                textButton8.setText(String.valueOf(MainListWord));
-                break;
-            case 9:
-                textButton9.setText(String.valueOf(MainListWord));
-                break;
-            case 10:
-                textButton10.setText(String.valueOf(MainListWord));
-                break;
-        }
+//        switch(getTextFlag()){
+//            case 1:
+//                textButton1.setText(String.valueOf(MainListWord));
+//                break;
+//            case 2:
+//                textButton2.setText(String.valueOf(MainListWord));
+//                break;
+//            case 3:
+//                textButton3.setText(String.valueOf(MainListWord));
+//                break;
+//            case 4:
+//                textButton4.setText(String.valueOf(MainListWord));
+//                break;
+//            case 5:
+//                textButton5.setText(String.valueOf(MainListWord));
+//                break;
+//            case 6:
+//                textButton6.setText(String.valueOf(MainListWord));
+//                break;
+//            case 7:
+//                textButton7.setText(String.valueOf(MainListWord));
+//                break;
+//            case 8:
+//                textButton8.setText(String.valueOf(MainListWord));
+//                break;
+//            case 9:
+//                textButton9.setText(String.valueOf(MainListWord));
+//                break;
+//            case 10:
+//                textButton10.setText(String.valueOf(MainListWord));
+//                break;
+//        }
+
+
+// Старое назначение букв на выход     // ста
+
+        // старое назначение букв на вывод на виюшку
+
+
+            if (MainListWord.size() == 1){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText("");
+                char_3.setText("");
+                char_4.setText("");
+                char_5.setText("");
+                char_6.setText("");
+                char_7.setText("");
+                char_8.setText("");
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+            } else if (MainListWord.size() == 2){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText("");
+                char_4.setText("");
+                char_5.setText("");
+                char_6.setText("");
+                char_7.setText("");
+                char_8.setText("");
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+            } else if (MainListWord.size() == 3){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText("");
+                char_5.setText("");
+                char_6.setText("");
+                char_7.setText("");
+                char_8.setText("");
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                char_4.setVisibility(VISIBLE);
+            } else if (MainListWord.size() == 4){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText("");
+                char_6.setText("");
+                char_7.setText("");
+                char_8.setText("");
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                char_5.setVisibility(VISIBLE);
+            } else if (MainListWord.size() == 5){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText("");
+                char_7.setText("");
+                char_8.setText("");
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                char_6.setVisibility(VISIBLE);
+            } else if (MainListWord.size() == 6){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText("");
+                char_8.setText("");
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                char_7.setVisibility(VISIBLE);
+            } else if (MainListWord.size() == 7){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText("");
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                char_8.setVisibility(VISIBLE);
+            } else if (MainListWord.size() == 8){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText(MainListWord.get(7));
+                char_9.setText("");
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                char_9.setVisibility(VISIBLE);
+            } else if (MainListWord.size() == 9){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText(MainListWord.get(7));
+                char_9.setText(MainListWord.get(8));
+                char_10.setText("");
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                char_10.setVisibility(VISIBLE);
+            }else if (MainListWord.size() == 10){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText(MainListWord.get(7));
+                char_9.setText(MainListWord.get(8));
+                char_10.setText(MainListWord.get(9));
+                char_11.setText("");
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                if (numsofliteralsinword > 10) {
+                    char_11.setVisibility(VISIBLE);
+                }
+            } else if (MainListWord.size() == 11){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText(MainListWord.get(7));
+                char_9.setText(MainListWord.get(8));
+                char_10.setText(MainListWord.get(9));
+                char_11.setText(MainListWord.get(10));
+                char_12.setText("");
+                char_13.setText("");
+                char_13.setText("");
+                if (numsofliteralsinword == 14) {
+                    char_12.setVisibility(VISIBLE);
+                }
+            } else if (MainListWord.size() == 12){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText(MainListWord.get(7));
+                char_9.setText(MainListWord.get(8));
+                char_10.setText(MainListWord.get(9));
+                char_11.setText(MainListWord.get(10));
+                char_12.setText(MainListWord.get(11));
+                char_13.setText("");
+                char_13.setText("");
+                if (numsofliteralsinword == 14) {
+                    char_13.setVisibility(VISIBLE);
+                }
+            } else if (MainListWord.size() == 13){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText(MainListWord.get(7));
+                char_9.setText(MainListWord.get(8));
+                char_10.setText(MainListWord.get(9));
+                char_11.setText(MainListWord.get(10));
+                char_12.setText(MainListWord.get(11));
+                char_13.setText(MainListWord.get(12));
+                char_13.setText("");
+                if (numsofliteralsinword == 14) {
+                    char_14.setVisibility(VISIBLE);
+                }
+            } else if (MainListWord.size() == 14){
+                char_1.setText(MainListWord.get(0));
+                char_2.setText(MainListWord.get(1));
+                char_3.setText(MainListWord.get(2));
+                char_4.setText(MainListWord.get(3));
+                char_5.setText(MainListWord.get(4));
+                char_6.setText(MainListWord.get(5));
+                char_7.setText(MainListWord.get(6));
+                char_8.setText(MainListWord.get(7));
+                char_9.setText(MainListWord.get(8));
+                char_10.setText(MainListWord.get(9));
+                char_11.setText(MainListWord.get(10));
+                char_12.setText(MainListWord.get(11));
+                char_13.setText(MainListWord.get(12));
+                char_13.setText(MainListWord.get(13));
+
+            }
+
+
+
     } // изменение флага печати текста
+
     public void ClickButton1(View v){
 
-        copy_pr1 = new Button(getApplicationContext());
-        copy_pr1.setBackgroundResource(R.drawable.newpate);
-        copy_pr1.setText(pr1.getText().toString());
-        copy_pr1.setId(USERID + countID);
-        Colo.addView(copy_pr1);
         countID++;
-        final ObjectAnimator button_copy_button1 = ObjectAnimator.ofPropertyValuesHolder(copy_pr1,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button1.setDuration(1500);
-        button_copy_button1.start();
-
         MainListWord.add(pr1.getText().toString());
         pr1.setBackgroundResource(R.drawable.acceptbutton);
         pr1.setEnabled(false);
-        button_copy_button1.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button1.ofFloat(copy_pr1, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
+
         SwitchTextField();
         ListXUpFull();
 
     } //кнопка 1
     public void ClickButton2(View v){
 
-        copy_pr2 = new Button(getApplicationContext());
-        copy_pr2.setBackgroundResource(R.drawable.newpate);
-        copy_pr2.setText(pr2.getText().toString() );
-
-        copy_pr2.setId(USERID + countID);
-        Colo.addView(copy_pr2);
         countID++;
-        final ObjectAnimator button_copy_button2 = ObjectAnimator.ofPropertyValuesHolder(copy_pr2,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button2.setDuration(1500);
-        button_copy_button2.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr2.getText().toString());
         pr2.setBackgroundResource(R.drawable.acceptbutton);
         pr2.setEnabled(false);
 
-
-        button_copy_button2.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button2.ofFloat(copy_pr2, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 2
     public void ClickButton3(View v){
-        copy_pr3 = new Button(getApplicationContext());
-        copy_pr3.setBackgroundResource(R.drawable.newpate);
-        copy_pr3.setText(pr3.getText().toString() );
-
-        copy_pr3.setId(USERID + countID);
-        Colo.addView(copy_pr3);
         countID++;
-        final ObjectAnimator button_copy_button3 = ObjectAnimator.ofPropertyValuesHolder(copy_pr3,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button3.setDuration(1500);
-        button_copy_button3.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr3.getText().toString());
         pr3.setBackgroundResource(R.drawable.acceptbutton);
         pr3.setEnabled(false);
 
-
-        button_copy_button3.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button3.ofFloat(copy_pr3, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
+
     } //кнопка 3
     public void ClickButton4(View v){
-        copy_pr4 = new Button(getApplicationContext());
-        copy_pr4.setBackgroundResource(R.drawable.newpate);
-        copy_pr4.setText(pr4.getText().toString() );
-
-        copy_pr4.setId(USERID + countID);
-        Colo.addView(copy_pr4);
         countID++;
-        final ObjectAnimator button_copy_button4 = ObjectAnimator.ofPropertyValuesHolder(copy_pr4,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button4.setDuration(1500);
-        button_copy_button4.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr4.getText().toString());
         pr4.setBackgroundResource(R.drawable.acceptbutton);
         pr4.setEnabled(false);
 
-        button_copy_button4.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button4.ofFloat(copy_pr4, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 4
     public void ClickButton5(View v){
-        copy_pr5 = new Button(getApplicationContext());
-        copy_pr5.setBackgroundResource(R.drawable.newpate);
-        copy_pr5.setText(pr5.getText().toString() );
-
-        copy_pr5.setId(USERID + countID);
-        Colo.addView(copy_pr5);
         countID++;
-        final ObjectAnimator button_copy_button5 = ObjectAnimator.ofPropertyValuesHolder(copy_pr5,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button5.setDuration(1500);
-        button_copy_button5.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr5.getText().toString());
         pr5.setBackgroundResource(R.drawable.acceptbutton);
         pr5.setEnabled(false);
 
-        button_copy_button5.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button5.ofFloat(copy_pr5, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 5
     public void ClickButton6(View v){
-        copy_pr6 = new Button(getApplicationContext());
-        copy_pr6.setBackgroundResource(R.drawable.newpate);
-        copy_pr6.setText(pr6.getText().toString() );
-
-        copy_pr6.setId(USERID + countID);
-        Colo.addView(copy_pr6);
         countID++;
-        final ObjectAnimator button_copy_button6 = ObjectAnimator.ofPropertyValuesHolder(copy_pr6,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button6.setDuration(1500);
-        button_copy_button6.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr6.getText().toString());
         pr6.setBackgroundResource(R.drawable.acceptbutton);
         pr6.setEnabled(false);
-//        textSee.setText(String.valueOf(MainListWord));
 
-        button_copy_button6.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button6.ofFloat(copy_pr6, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 6
     public void ClickButton7(View v){
-        copy_pr7 = new Button(getApplicationContext());
-        copy_pr7.setBackgroundResource(R.drawable.newpate);
-        copy_pr7.setText(pr7.getText().toString() );
-
-        copy_pr7.setId(USERID + countID);
-        Colo.addView(copy_pr7);
         countID++;
-        final ObjectAnimator button_copy_button7 = ObjectAnimator.ofPropertyValuesHolder(copy_pr7,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button7.setDuration(1500);
-        button_copy_button7.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr7.getText().toString());
         pr7.setBackgroundResource(R.drawable.acceptbutton);
         pr7.setEnabled(false);
 
-        button_copy_button7.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button7.ofFloat(copy_pr7, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 7
     public void ClickButton8(View v){
-        copy_pr8 = new Button(getApplicationContext());
-        copy_pr8.setBackgroundResource(R.drawable.newpate);
-        copy_pr8.setText(pr8.getText().toString() );
-
-        copy_pr8.setId(USERID + countID);
-        Colo.addView(copy_pr8);
         countID++;
-        final ObjectAnimator button_copy_button8 = ObjectAnimator.ofPropertyValuesHolder(copy_pr8,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button8.setDuration(1500);
-        button_copy_button8.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr8.getText().toString());
         pr8.setBackgroundResource(R.drawable.acceptbutton);
         pr8.setEnabled(false);
 
-        button_copy_button8.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button8.ofFloat(copy_pr8, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 8
     public void ClickButton9(View v){
-        copy_pr9 = new Button(getApplicationContext());
-        copy_pr9.setBackgroundResource(R.drawable.newpate);
-        copy_pr9.setText(pr9.getText().toString() );
-
-        copy_pr9.setId(USERID + countID);
-        Colo.addView(copy_pr9);
         countID++;
-        final ObjectAnimator button_copy_button9 = ObjectAnimator.ofPropertyValuesHolder(copy_pr9,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button9.setDuration(1500);
-        button_copy_button9.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr9.getText().toString());
         pr9.setBackgroundResource(R.drawable.acceptbutton);
         pr9.setEnabled(false);
 
-        button_copy_button9.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button9.ofFloat(copy_pr9, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 9
     public void ClickButton10(View v){
-        copy_pr10 = new Button(getApplicationContext());
-        copy_pr10.setBackgroundResource(R.drawable.newpate);
-        copy_pr10.setText(pr10.getText().toString() );
-
-        copy_pr10.setId(USERID + countID);
-        Colo.addView(copy_pr10);
         countID++;
-        final ObjectAnimator button_copy_button10 = ObjectAnimator.ofPropertyValuesHolder(copy_pr10,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button10.setDuration(1500);
-        button_copy_button10.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr10.getText().toString());
         pr10.setBackgroundResource(R.drawable.acceptbutton);
         pr10.setEnabled(false);
 
-        button_copy_button10.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button10.ofFloat(copy_pr10, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 10
     public void ClickButton11(View v){
-        copy_pr11 = new Button(getApplicationContext());
-        copy_pr11.setBackgroundResource(R.drawable.newpate);
-        copy_pr11.setText(pr11.getText().toString() );
-
-        copy_pr11.setId(USERID + countID);
-        Colo.addView(copy_pr11);
         countID++;
-        final ObjectAnimator button_copy_button11 = ObjectAnimator.ofPropertyValuesHolder(copy_pr11,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button11.setDuration(1500);
-        button_copy_button11.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr11.getText().toString());
         pr11.setBackgroundResource(R.drawable.acceptbutton);
         pr11.setEnabled(false);
 
-        button_copy_button11.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button11.ofFloat(copy_pr11, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 11
     public void ClickButton12(View v){
-        copy_pr12 = new Button(getApplicationContext());
-        copy_pr12.setBackgroundResource(R.drawable.newpate);
-        copy_pr12.setText(pr12.getText().toString() );
-
-        copy_pr12.setId(USERID + countID);
-        Colo.addView(copy_pr12);
         countID++;
-        final ObjectAnimator button_copy_button12 = ObjectAnimator.ofPropertyValuesHolder(copy_pr12,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button12.setDuration(1500);
-        button_copy_button12.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr12.getText().toString());
         pr12.setBackgroundResource(R.drawable.acceptbutton);
         pr12.setEnabled(false);
 
-        button_copy_button12.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button12.ofFloat(copy_pr12, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 12
     public void ClickButton13(View v){
-        copy_pr13 = new Button(getApplicationContext());
-        copy_pr13.setBackgroundResource(R.drawable.newpate);
-        copy_pr13.setText(pr13.getText().toString() );
-
-        copy_pr13.setId(USERID + countID);
-        Colo.addView(copy_pr13);
         countID++;
-        final ObjectAnimator button_copy_button13 = ObjectAnimator.ofPropertyValuesHolder(copy_pr13,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button13.setDuration(1500);
-        button_copy_button13.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr13.getText().toString());
         pr13.setBackgroundResource(R.drawable.acceptbutton);
         pr13.setEnabled(false);
 
-        button_copy_button13.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button13.ofFloat(copy_pr13, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 13
     public void ClickButton14(View v){
-        copy_pr14 = new Button(getApplicationContext());
-        copy_pr14.setBackgroundResource(R.drawable.newpate);
-        copy_pr14.setText(pr14.getText().toString() );
-
-        copy_pr14.setId(USERID + countID);
-        Colo.addView(copy_pr14);
         countID++;
-        final ObjectAnimator button_copy_button14 = ObjectAnimator.ofPropertyValuesHolder(copy_pr14,
-                PropertyValuesHolder.ofFloat("x", ListCoordinateX_1.get(0)),
-                PropertyValuesHolder.ofFloat("y", LineY_1.get(0)));
-        button_copy_button14.setDuration(1500);
-        button_copy_button14.start();
-        ListCoordinateX_1.remove(0);
-
         MainListWord.add(pr14.getText().toString());
         pr14.setBackgroundResource(R.drawable.acceptbutton);
         pr14.setEnabled(false);
 
-        button_copy_button14.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-            }
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                button_copy_button14.ofFloat(copy_pr14, "alpha", 0f).setDuration(600).start();
-            }
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
         SwitchTextField();
         ListXUpFull();
     } //кнопка 14
@@ -1898,7 +1773,7 @@ public class GameStart extends AppCompatActivity  {
         EneblendButtonsAffterPress();
         switch (getTextFlag()){
             case 1:
-                textButton1.setText("Собери слово");
+                ChekOut.setText("Собери слово");
                 break;
         }
     } //сброс кнопок
