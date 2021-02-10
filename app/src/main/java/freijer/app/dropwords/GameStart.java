@@ -1830,7 +1830,7 @@ public class GameStart extends AppCompatActivity  {
         TaskDialog();
     } //кнопка открытия заадний
 
-    public void Dialogus(){
+    public void Dialogus(){                                     // сохранять это в тхт
         taskList.add("Слово из 3 букв собранно " + getList_3() + " раза");
         taskList.add("Слово из 4 букв собранно " + getList_4() + " раза");
         taskList.add("Слово из 5 букв собранно " + getList_5() + " раза");

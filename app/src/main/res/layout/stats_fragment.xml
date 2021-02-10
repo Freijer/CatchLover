@@ -1,44 +1,18 @@
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="match_parent">
 
-    >
-
-
-    <Button
-        android:id="@+id/butClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="30dp"
-        android:onClick="Close"
-        android:text="Закрыть"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
     <LinearLayout
         android:id="@+id/allLists"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="200dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.021"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.211">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:id="@+id/List_2"
@@ -250,36 +224,36 @@
         </LinearLayout>
     </LinearLayout>
 
+
+
+<EditText
+    android:text="последовательность собранных слов
+и все это сохранять в ткт и читать потом при загрузке"
+    android:layout_width="200dp"
+    android:layout_height="250dp"
+    android:layout_alignParentEnd="true"
+    />
+
+
     <ListView
         android:id="@+id/taskDoneList"
-        android:layout_width="344dp"
-        android:layout_height="196dp"
-        android:layout_marginStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
         android:background="@android:color/holo_blue_light"
-        app:layout_constraintBottom_toTopOf="@+id/butClose"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allLists"
-        app:layout_constraintVertical_bias="0.881" />
-
-    <TextView
-        android:id="@+id/achives"
+        android:layout_above="@+id/butClose" />
+    <Button
+        android:id="@+id/butClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/textstyletrue"
-        android:padding="10dp"
-        android:text="Достижения"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/taskDoneList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allLists"
-        app:layout_constraintVertical_bias="0.684" />
+        android:layout_marginBottom="10dp"
+        android:onClick="Close"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Закрыть" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
