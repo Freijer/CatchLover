@@ -23,4 +23,10 @@
     <string name="Reset_no">Нет</string>
     <string name="Reset_yes">Да</string>
 
+    <string name="Missions">Миссии</string>
+
+    <string name="score_5">5</string>
+    <string name="score_10">10</string>
+    <string name="score_15">15</string>
+
 </resources>

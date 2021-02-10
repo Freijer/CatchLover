@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,6 +9,7 @@
     tools:context=".GameStart">
 
     <RelativeLayout
+        android:id="@+id/topLayout"
         android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +23,7 @@
             android:layout_marginTop="2dp"
             android:text="Очков смены слов:"
             android:textColor="#000000"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
         <TextView
             android:id="@+id/textScore"
             android:layout_width="wrap_content"
@@ -31,7 +33,7 @@
             android:layout_marginStart="15dp"
             android:text="Очки"
             android:textColor="#000000"
-            android:textSize="14sp"
+            android:textSize="12sp"
              />
         <TextView
             android:id="@+id/textLvl"
@@ -42,7 +44,7 @@
             android:layout_marginTop="2dp"
             android:text="Уровень"
             android:textColor="#000000"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
     <TextView
         android:id="@+id/textClock"
         android:layout_width="60dp"
@@ -51,18 +53,17 @@
         android:layout_below="@id/textScore"
         android:layout_marginStart="15dp"
         android:textColor="#000000"
-        android:textSize="14sp"
-        />
+        android:textSize="12sp" />
     <TextView
         android:id="@+id/score"
-        android:textSize="16sp"
         android:layout_width="60dp"
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:layout_below="@id/textScore"
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/tryChange"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:textSize="12sp"/>
     <TextView
         android:id="@+id/lvlview"
         android:layout_width="60dp"
@@ -72,8 +73,7 @@
         android:layout_marginStart="10dp"
         android:layout_toEndOf="@id/score"
         android:textColor="#000000"
-        android:textSize="14sp"
-        />
+        android:textSize="12sp" />
         <Button
             android:id="@+id/faq"
             android:layout_width="40dp"
@@ -81,30 +81,36 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/faquest"
-            android:onClick="onClick"
+            android:onClick="onClick" />
 
-            />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="350dp"
+            android:layout_height="10dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/score" />
 
 
 
     </RelativeLayout>
 
-
-
-
     <RelativeLayout
         android:id="@+id/Colo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        android:layout_marginTop="60dp"
         android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/desk_fore"
-        android:layout_marginBottom="200dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        >
+        android:layout_marginBottom="0dp"
+        android:layout_below="@+id/topLayout">
 
 
 
@@ -312,27 +318,17 @@
 
     </RelativeLayout>
 
-
     <RelativeLayout
-        android:id="@+id/constraintLayout1"
+        android:id="@+id/chars_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_height="40dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_marginBottom="5dp"
+        android:layout_centerInParent="true"
+        android:layout_above="@id/engine_buttons"
+        android:layout_below="@+id/Colo">
 
-        <Button
-            android:id="@+id/ChekOut"
-            android:layout_width="180dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="5dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/char_1"
-            android:onClick="Chek_1"
-            android:background="@drawable/tamplatetwo"/>
 
         <TextView
             android:id="@+id/char_1"
@@ -341,11 +337,9 @@
             android:textAlignment="center"
             android:gravity="center"
             android:textSize="13sp"
-
-            android:layout_marginTop="5dp"
+            android:layout_centerVertical="true"
             android:textColor="@color/black"
             android:background="@drawable/scroll" />
-
         <TextView
             android:id="@+id/char_2"
             android:layout_toEndOf="@id/char_1"
@@ -357,8 +351,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_3"
             android:layout_toEndOf="@id/char_2"
@@ -370,8 +364,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_4"
             android:layout_toEndOf="@id/char_3"
@@ -383,8 +377,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_5"
             android:layout_toEndOf="@id/char_4"
@@ -396,8 +390,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_6"
             android:layout_toEndOf="@id/char_5"
@@ -409,8 +403,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_7"
             android:layout_toEndOf="@id/char_6"
@@ -422,8 +416,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_8"
             android:layout_toEndOf="@id/char_7"
@@ -435,8 +429,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_9"
             android:layout_toEndOf="@id/char_8"
@@ -448,8 +442,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_10"
             android:layout_toEndOf="@id/char_9"
@@ -461,8 +455,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_11"
             android:layout_toEndOf="@id/char_10"
@@ -474,8 +468,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_12"
             android:layout_toEndOf="@id/char_11"
@@ -487,8 +481,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_13"
             android:layout_toEndOf="@id/char_12"
@@ -500,8 +494,8 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
         <TextView
             android:id="@+id/char_14"
             android:layout_toEndOf="@id/char_13"
@@ -514,68 +508,83 @@
             android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
             android:textColor="@color/black"
-            android:background="@drawable/scroll"/>
-
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="300dp"
-            android:layout_height="20dp"
-           android:layout_marginTop="10dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_centerInParent="true"
-            android:layout_below="@id/ChekOut"
-            />
-        <Button
-            android:id="@+id/progress"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/list"
-            android:onClick="ShowStats"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_below="@id/progressBar"
-            android:layout_marginBottom="5dp"
-            />
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/resets"
-            android:onClick="ResetField"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_below="@id/progressBar"
-            android:layout_toEndOf="@id/progress"
-            android:layout_marginBottom="5dp"
-           />
-        <Button
-            android:id="@+id/task"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/task"
-            android:onClick="TaskShow"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_below="@id/progressBar"
-            android:layout_toEndOf="@id/button2"
-            android:layout_marginBottom="5dp"
-             />
-        <Button
-            android:id="@+id/reset"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/wordnew"
-            android:onClick="ResTart"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_below="@id/progressBar"
-            android:layout_toEndOf="@id/task"
-            android:layout_marginBottom="5dp"
-             />
+            android:background="@drawable/scroll"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/engine_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="3dp">
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:background="@drawable/resets"
+        android:onClick="ResetField"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"/>
+
+        <Button
+            android:id="@+id/ChekOut"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="15dp"
+            android:layout_centerInParent="true"
+            android:onClick="Chek_1"
+            android:background="@drawable/tamplatetwo" />
+    <Button
+        android:id="@+id/progress"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/list"
+        android:onClick="ShowStats"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_toEndOf="@id/ChekOut" />
+
+        <Button
+            android:id="@+id/task"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/task"
+            android:onClick="TaskShow"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_below="@+id/progress"
+            android:layout_marginEnd="5dp"
+            android:layout_toEndOf="@id/ChekOut"/>
+
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/wordnew"
+        android:onClick="ResTart"
+        android:layout_marginBottom="5dp"
+        android:layout_toEndOf="@id/progress"/>
+
+        <Button
+            android:id="@+id/quest"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:background="@drawable/quest"
+            android:layout_toEndOf="@+id/task"
+            android:layout_below="@id/reset"
+            android:layout_marginBottom="5dp"
+            android:onClick="Mission_random_lenght"/>
+        </RelativeLayout>
+
 </RelativeLayout>

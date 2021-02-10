@@ -242,7 +242,7 @@ public class GameStart extends AppCompatActivity  {
     String  myText;
 
     protected Button butClose, butCloseTask;
-    private AlertDialog OptionDialog;
+    private AlertDialog OptionDialog, MissionDialog;
     private AlertDialog TaskDialog;
 
 
@@ -273,10 +273,10 @@ public class GameStart extends AppCompatActivity  {
     ObjectAnimator  button14;
 
     protected ProgressBar progressBar;
-    protected TextView lvlview, QAWord, textClock, score;
+    protected TextView lvlview, textClock, score, about_mission;
     protected TextView textLvl, textScore, tryChange;
-    protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14, DELDB;
-    protected Button copy_pr1, copy_pr2, copy_pr3, copy_pr4, copy_pr5, copy_pr6, copy_pr7, copy_pr8, copy_pr9, copy_pr10, copy_pr11, copy_pr12, copy_pr13, copy_pr14;
+    protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
+    protected Button butClose_mission, quest;
     private ImageView img_nextlvl;
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
@@ -285,10 +285,14 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected Chronometer mChronometer;
+    protected RelativeLayout chars_layout;
+
+
     ListView taskDoneList;
 
+
     protected TextView char_1, char_2, char_3, char_4, char_5, char_6, char_7, char_8, char_9, char_10, char_11, char_12, char_13, char_14;
-    protected  Button ChekOut;
+    protected Button ChekOut;
 
 
     private int indexWord;
@@ -440,6 +444,10 @@ public class GameStart extends AppCompatActivity  {
         setTextFlag(1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_start);
+        chars_layout = findViewById(R.id.chars_layout);
+        quest = findViewById(R.id.quest);
+
+
         pr1 = findViewById(R.id.pr1);
         pr2 = findViewById(R.id.pr2);
         pr3 = findViewById(R.id.pr3);
@@ -489,6 +497,7 @@ public class GameStart extends AppCompatActivity  {
 
 
 
+
         GoneButnnons(); //все кнопки изначально не видимы
 
         thru_list_1 = new ArrayList<>();
@@ -523,7 +532,7 @@ public class GameStart extends AppCompatActivity  {
         textLvl.setVisibility(GONE);
         textScore.setVisibility(GONE);
         tryChange.setVisibility(GONE);
-
+        progressBar.setVisibility(GONE);
         prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
 
@@ -590,6 +599,8 @@ public class GameStart extends AppCompatActivity  {
         ListCoordinateX_1.add(200);
     } //координаты для первого слова
     public void GoneButnnons(){
+
+
         pr1.setVisibility(GONE);
         pr2.setVisibility(GONE);
         pr3.setVisibility(GONE);
@@ -623,6 +634,7 @@ public class GameStart extends AppCompatActivity  {
 
     } //убрать кнопки с экрана
     public void ShowButtons(){
+        progressBar.setVisibility(VISIBLE);
         switch (numsofliteralsinword){
             case 11:
                 pr1.setVisibility(VISIBLE);
@@ -1066,6 +1078,25 @@ public class GameStart extends AppCompatActivity  {
         EneblendButtonsAffterPress();
         listBuffer.add(KeyWord);
         MainListWord.removeAll(MainListWord);
+
+        MainListWord.clear();
+        char_1.setText("");
+        char_2.setText("");
+        char_3.setText("");
+        char_4.setText("");
+        char_5.setText("");
+        char_6.setText("");
+        char_7.setText("");
+        char_8.setText("");
+        char_9.setText("");
+        char_10.setText("");
+        char_11.setText("");
+        char_12.setText("");
+        char_13.setText("");
+        char_13.setText("");
+
+
+
         ChekOut.setText("Собери слово");
 
 
@@ -1115,7 +1146,6 @@ public class GameStart extends AppCompatActivity  {
         SaveText();
         WriteWrong();
     } //проверка
-
 
 
     protected void ActivatePrBar () {
@@ -1770,6 +1800,21 @@ public class GameStart extends AppCompatActivity  {
 
     public void ResetField(View v){
         MainListWord.clear();
+            char_1.setText("");
+            char_2.setText("");
+            char_3.setText("");
+            char_4.setText("");
+            char_5.setText("");
+            char_6.setText("");
+            char_7.setText("");
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_13.setText("");
+
         EneblendButtonsAffterPress();
         switch (getTextFlag()){
             case 1:
@@ -1819,8 +1864,6 @@ public class GameStart extends AppCompatActivity  {
         setNumber_word_9(getList_9());
         setNumber_word_10(getList_10());
 
-
-
         butClose =  v.findViewById(R.id.butClose);
         text_2_inner = v.findViewById(R.id.text_2_inner);
         text_3_inner = v.findViewById(R.id.text_3_inner);
@@ -1852,13 +1895,9 @@ public class GameStart extends AppCompatActivity  {
 
         });
 
-
         OptionDialog.show();
     }  // окно статистика
     public void TaskDialog(){
-
-
-
         TaskDialog = new AlertDialog.Builder(this).create();
         LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -2154,6 +2193,16 @@ public class GameStart extends AppCompatActivity  {
         AddDB();
         super.onDestroy();
     }
+
+
+
+    public void Mission_random_lenght(View v){
+        Intent intent_mission = new Intent(this, Missions.class);
+        startActivity(intent_mission);
+    }
+
+
+
 
     @Override
     public void onBackPressed() {
