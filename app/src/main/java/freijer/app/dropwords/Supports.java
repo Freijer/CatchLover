@@ -11,59 +11,85 @@ import java.util.List;
 public class Supports {
     int asd;
 
+    static int counter_plus = 0;
+    static int plusLenght = 0;
+    static int counter_stay = 0;
+    static int stayLenght = 0;
+
+
+    protected int plusLength; //+1 буква в слове
+    private int stayLength; //слова той же длинны подряд раз
+    private int minusLength; //-1 буква в слове
+    protected  ArrayList<String> Alfas = new ArrayList<>(); //вхоящий прогресс
+
+
     static List<String> logQA = new ArrayList<>();
     static List<String> taskDone = new ArrayList<>();
 
 
-    public static int CountCorrectSeqLen(List<String> data) {
-        double modifier_to_score = 1.5;
-        int score = 0;
-        int maxLength = 0;
+
+    private void add_plus (int input) {
+        if (input > 2) {
+            counter_plus++;
+        }
+        plusLenght = input;
+    } //счетчик увеличения длинны слов
+    private void add_stay (int input, int param) {
+        if (input == param) {
+            counter_stay++;
+        }
+        stayLenght = input;
+    } //счетчик слов равной длинны
+
+
+
+    public int CountCorrectSeqLen(List<String> data) {
         int currentLength = data.size() != 0 ? 1 : 0;
         for (int i = 1; i < data.size(); i++) {
             if (data.get(i).length() == data.get(i - 1).length() + 1) {
                 currentLength++;
             } else {
-                maxLength = Math.max(maxLength, currentLength);
+                plusLength = Math.max(plusLength, currentLength);
                 currentLength = 1;
             }
         }
-        maxLength = Math.max(maxLength, currentLength);
-        score = (int) (maxLength * modifier_to_score);
-        //return score;
-        return maxLength;
+        plusLength = Math.max(plusLength, currentLength);
+        return plusLength;
     }  // последовательность +1 буква к следующему слову
-    public static int countStayWord(List<String> data) {
-        int maxLength = 0;
-        int currentLength = data.size() != 0 ? 1 : 0;
+    public int countStayWord(List<String> data) {
+        int currentLength = data.size() != 0 ? 0 : 0;
         for (int i = 1; i < data.size(); i++) {
-            if (data.get(i).length() == data.get(i - 1).length() + 1) {
+            if (data.get(i).length() == data.get(i - 1).length()) {
                 currentLength++;
             } else {
-                maxLength = Math.max(maxLength, currentLength);
+                stayLength = Math.max(stayLength, currentLength);
                 currentLength = 0;
             }
         }
-        maxLength = Math.max(maxLength, currentLength);
-        return maxLength;
-    }// слов одинаковой длинны подряд
-    public static int countWordMinus(List<String> data) {
-        int maxLength = 0;
+        stayLength = Math.max(stayLength, currentLength);
+        return stayLength;
+    }// слов одинаковой длинны подряд.
+    public int countWordMinus(List<String> data) {
         int currentLength = data.size() != 0 ? 1 : 0;
         for (int i = 1; i < data.size(); i++) {
             if (data.get(i).length() == data.get(i - 1).length() - 1) {
                 currentLength++;
             } else {
-                maxLength = Math.max(maxLength, currentLength);
+                minusLength = Math.max(minusLength, currentLength);
                 currentLength = 1;
             }
         }
-        maxLength = Math.max(maxLength, currentLength);
-        return maxLength;
+        minusLength = Math.max(minusLength, currentLength);
+        return minusLength;
     }// слов одинаковой длинны уменьшение
 
 
-    
+
+
+
+
+
+
 
     public void ShowTaskWelDone(List<String> incom) {
         for (String eachString : incom) {
