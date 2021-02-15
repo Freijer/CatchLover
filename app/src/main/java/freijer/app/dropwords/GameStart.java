@@ -288,7 +288,7 @@ public class GameStart extends AppCompatActivity  {
     protected RelativeLayout chars_layout;
 
 
-    ListView taskDoneList;
+    protected ListView taskDoneList;
 
 
     protected TextView char_1, char_2, char_3, char_4, char_5, char_6, char_7, char_8, char_9, char_10, char_11, char_12, char_13, char_14;
