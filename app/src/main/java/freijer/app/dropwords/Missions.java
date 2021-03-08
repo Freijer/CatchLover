@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 public class Missions extends AppCompatActivity {
@@ -30,8 +31,8 @@ public class Missions extends AppCompatActivity {
         mis_1.setText("Слово из 3 букв");
         mis_2.setText("Слово из 4 букв");
         mis_3.setText("С * Р А"); //СЕРА
-
     }
+
 
     @Override
     public void onBackPressed() {
@@ -42,10 +43,6 @@ public class Missions extends AppCompatActivity {
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
                         //SomeActivity - имя класса Activity для которой переопределяем onBackPressed();
-
-                        Intent intent = new Intent(Missions.this, GameStart.class);
-                        startActivity(intent);
-                        finish();
 
                     }
                 }).create().show();

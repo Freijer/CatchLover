@@ -55,6 +55,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import freijer.app.dropwords.DataBase.DataHelper;
@@ -87,6 +88,9 @@ public class GameStart extends AppCompatActivity  {
 
     protected int flag = 0;
     protected int exp = 0;
+    protected int time_word;
+    private List<Integer> addScore = new ArrayList<>();
+
 
     public int getFlag() {
         return flag;
@@ -241,9 +245,8 @@ public class GameStart extends AppCompatActivity  {
     FileOutputStream outputStream;
     String  myText;
 
-    protected Button butClose, butCloseTask;
-    private AlertDialog OptionDialog, MissionDialog;
-    private AlertDialog TaskDialog;
+    protected Button butClose, butCloseTask, butClose_mission;
+    private AlertDialog OptionDialog, TaskDialog, MissionsDialog;
 
 
     protected int textFlag;
@@ -272,11 +275,12 @@ public class GameStart extends AppCompatActivity  {
     ObjectAnimator  button13;
     ObjectAnimator  button14;
 
+    TextView mis_1, mis_2, mis_3;
     protected ProgressBar progressBar;
-    protected TextView lvlview, textClock, score, about_mission;
-    protected TextView textLvl, textScore, tryChange;
+    protected TextView lvlview, textClock, score, text_plus, text_minus;
+    protected TextView textLvl, textScore, tryChange, clock;
     protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
-    protected Button butClose_mission, quest;
+    protected Button  quest;
     private ImageView img_nextlvl;
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
@@ -316,6 +320,10 @@ public class GameStart extends AppCompatActivity  {
     protected int list_8;
     protected int list_9;
     protected int list_10;
+    protected int list_11;
+    protected int list_12;
+    protected int list_13;
+    protected int list_14;
 
     protected int speed_a;
         public int getSpeed_a() {
@@ -405,6 +413,31 @@ public class GameStart extends AppCompatActivity  {
     public void setList_10(int list_10) {
         this.list_10 = list_10;
     }
+    public int getList_11() {
+        return list_11;
+    }
+    public void setList_11(int list_11) {
+        this.list_11 = list_11;
+    }
+    public int getList_12() {
+        return list_12;
+    }
+    public void setList_12(int list_12) {
+        this.list_12 = list_12;
+    }
+    public int getList_13() {
+        return list_13;
+    }
+    public void setList_13(int list_13) {
+        this.list_13 = list_13;
+    }
+    public int getList_14() {
+        return list_14;
+    }
+    public void setList_14(int list_14) {
+        this.list_14 = list_14;
+    }
+
 
 
     protected int tryChenge = 0;
@@ -415,7 +448,7 @@ public class GameStart extends AppCompatActivity  {
         this.tryChenge = tryChenge;
     }
 
-    protected TextView text_2_inner, text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner;
+    protected TextView text_2_inner, text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner, text_11_inner, text_12_inner, text_13_inner, text_14_inner;
 
     public Point viewLocatedAt(View v) {
         int[] location = new int[2];
@@ -435,6 +468,9 @@ public class GameStart extends AppCompatActivity  {
         this.nextLvl = nextLvl;
     }
     SharedPreferences prefs = null;
+
+    private int seconds = 0;
+    private boolean running;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -477,7 +513,7 @@ public class GameStart extends AppCompatActivity  {
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
         tryChange = findViewById(R.id.tryChange);
-
+        clock = findViewById(R.id.clock);
 
         char_1 = findViewById(R.id.char_1);
         char_2 = findViewById(R.id.char_2);
@@ -493,9 +529,6 @@ public class GameStart extends AppCompatActivity  {
         char_12 = findViewById(R.id.char_12);
         char_13 = findViewById(R.id.char_13);
         char_14 = findViewById(R.id.char_14);
-
-
-
 
 
         GoneButnnons(); //все кнопки изначально не видимы
@@ -551,6 +584,9 @@ public class GameStart extends AppCompatActivity  {
             setSpeed_a(Integer.parseInt(income1));
             Log.d("SPEED2", ""+getSpeed_a());
         }
+
+        ClockWork();
+
     }
 
 
@@ -882,6 +918,8 @@ public class GameStart extends AppCompatActivity  {
             e.printStackTrace();
         }
         ReadFromTxtWrong();
+
+        onClickStart();//старт часов
     }  // СТАРТ, часы
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -946,7 +984,7 @@ public class GameStart extends AppCompatActivity  {
     protected void HowLenght (int incom1){
         switch (incom1){
             case 2:
-                setList_2(getList_2()+1);
+                setList_2(getList_2()+0);
                 break;
             case 3:
                 setList_3(getList_3()+1);
@@ -971,6 +1009,18 @@ public class GameStart extends AppCompatActivity  {
                 break;
             case 10:
                 setList_10(getList_10()+1);
+                break;
+            case 11:
+                setList_11(getList_10()+1);
+                break;
+            case 12:
+                setList_12(getList_10()+1);
+                break;
+            case 13:
+                setList_13(getList_10()+1);
+                break;
+            case 14:
+                setList_14(getList_10()+1);
                 break;
         }
     }
@@ -1013,6 +1063,7 @@ public class GameStart extends AppCompatActivity  {
             HowScore(ArrayListWord.length); // Передача ОЧКОВ
             HowLenght(ArrayListWord.length);
             Switch_answer().add(KeyWord);
+            setCounter(getCounter()+1);
             setExp(getExp()+4);
             if (progressBar.getProgress() >= progressBar.getMax()) {
                 ShowNewLvl();
@@ -1095,20 +1146,7 @@ public class GameStart extends AppCompatActivity  {
         char_13.setText("");
         char_13.setText("");
 
-
-
         ChekOut.setText("Собери слово");
-
-
-        taskList.add("Слово из 3 букв собранно " + getList_3() + " раза");
-        taskList.add("Слово из 4 букв собранно " + getList_4() + " раза");
-        taskList.add("Слово из 5 букв собранно " + getList_5() + " раза");
-        taskList.add("Слово из 6 букв собранно " + getList_6() + " раза");
-        taskList.add("Слово из 7 букв собранно " + getList_7() + " раза");
-        taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
-        taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
-        taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
-        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
         supportClass.ShowTaskWelDone(taskList);
 
         switch(supportClass.taskDone.size()){
@@ -1138,6 +1176,7 @@ public class GameStart extends AppCompatActivity  {
                 break;
         }
 
+
         score.setText(""+getCounter()); // ФИНАЛЬНЫЕ данные очки
         textClock.setText(""+getTryChenge());// ФИНАЛЬНЫЕ данные попыток смены
         lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
@@ -1145,8 +1184,45 @@ public class GameStart extends AppCompatActivity  {
         AddDB();
         SaveText();
         WriteWrong();
+
+
+        achivites();
+
     } //проверка
 
+
+    //------------таймер
+    public void ClockWork(){
+
+        final Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                int hours = seconds/3600;
+                int minutes = (seconds%3600)/60;
+                int secs = seconds%60;
+                String time = String.format(Locale.getDefault(),
+                        "%d:%02d:%02d", hours, minutes, secs);
+                clock.setText(time);
+                if (running) {
+                    seconds++;
+                }
+                handler.postDelayed(this, 1000);
+            }
+        });
+    }
+    public void onClickStart() {
+        running = true;
+
+    } //старт
+    public void onClickStop() {
+        running = false;
+    } //стоп, пауза
+    public void onClickReset() {
+       // running = false;
+        seconds = 0;
+    } // сброс
+    //-------------
 
     protected void ActivatePrBar () {
         if (getFlag()==1){
@@ -1660,10 +1736,7 @@ public class GameStart extends AppCompatActivity  {
                 char_12.setText(MainListWord.get(11));
                 char_13.setText(MainListWord.get(12));
                 char_13.setText(MainListWord.get(13));
-
             }
-
-
 
     } // изменение флага печати текста
 
@@ -1824,22 +1897,338 @@ public class GameStart extends AppCompatActivity  {
     } //сброс кнопок
     public void ShowStats(View v){
        Dialogus();
-
+       onClickStop();
     } //открытие статистики
     public void TaskShow(View v){
         TaskDialog();
+        onClickStop();
     } //кнопка открытия заадний
 
+
+
+                                         public void achivites() {
+        if (getList_3() == 3) {
+            taskList.add("Слово из 3 букв собранно 3 раза");
+            Toast.makeText(this, "Новое достижение и новые баллы!",Toast.LENGTH_SHORT).show();
+        } else if (getList_3() == 10) {
+            taskList.add("Слово из 3 букв собранно 10 раз");
+        } else if (getList_3() == 15) {
+            taskList.add("Слово из 3 букв собранно 15 раз");
+        } else if (getList_3() == 25) {
+            taskList.add("Слово из 3 букв собранно 25 раз");
+        } else if (getList_3() == 33) {
+            taskList.add("Слово из 3 букв собранно 33 раза");
+        } else if (getList_3() == 45) {
+            taskList.add("Слово из 3 букв собранно 44 раза");
+        } else if (getList_3() == 55) {
+            taskList.add("Слово из 3 букв собранно 60 раз");
+        } else if (getList_3() == 60) {
+            taskList.add("Слово из 3 букв собранно 75 раз");
+        } else if (getList_3() == 75) {
+            taskList.add("Слово из 3 букв собранно 100 раз");
+        } else if (getList_3() == 90) {
+            taskList.add("Слово из 3 букв собранно 100 раз");
+        } else if (getList_3() == 100) {
+            taskList.add("Слово из 3 букв собранно 100 раз");
+        }
+        //------4---
+        if (getList_4() == 4) {
+            taskList.add("Слово из 4 букв собранно 4 раза");
+        } else if (getList_4() == 8) {
+            taskList.add("Слово из 4 букв собранно 8 раз");
+        } else if (getList_4() == 12) {
+            taskList.add("Слово из 4 букв собранно 14 раз");
+        } else if (getList_4() == 16) {
+            taskList.add("Слово из 4 букв собранно 21 раз");
+        } else if (getList_4() == 20) {
+            taskList.add("Слово из 4 букв собранно 38 раз");
+        } else if (getList_4() == 25) {
+            taskList.add("Слово из 4 букв собранно 44 раза");
+        } else if (getList_4() == 40) {
+            taskList.add("Слово из 4 букв собранно 60 раз");
+        } else if (getList_4() == 55) {
+            taskList.add("Слово из 4 букв собранно 75 раза");
+        } else if (getList_4() == 60) {
+            taskList.add("Слово из 4 букв собранно 87 раза");
+        } else if (getList_4() == 70) {
+            taskList.add("Слово из 4 букв собранно 93 раза");
+        } else if (getList_4() == 80) {
+            taskList.add("Слово из 4 букв собранно 100 раз");
+        } else if (getList_4() == 90) {
+            taskList.add("Слово из 4 букв собранно 100 раз");
+        } else if (getList_4() == 100) {
+            taskList.add("Слово из 4 букв собранно 100 раз");
+        }
+        //-----5---
+        if (getList_5() == 2) {
+            taskList.add("Слово из 5 букв собранно 2 раза");
+        } else if (getList_5() == 5) {
+            taskList.add("Слово из 5 букв собранно 5 раза");
+        } else if (getList_5() == 10) {
+            taskList.add("Слово из 5 букв собранно 10 раза");
+        } else if (getList_5() == 15) {
+            taskList.add("Слово из 5 букв собранно 15 раза");
+        } else if (getList_5() == 20) {
+            taskList.add("Слово из 5 букв собранно 20 раза");
+        } else if (getList_5() == 30) {
+            taskList.add("Слово из 5 букв собранно 30 раза");
+        } else if (getList_5() == 45) {
+            taskList.add("Слово из 5 букв собранно 45 раза");
+        } else if (getList_5() == 55) {
+            taskList.add("Слово из 5 букв собранно 55 раза");
+        } else if (getList_5() == 70) {
+            taskList.add("Слово из 5 букв собранно 70 раза");
+        } else if (getList_5() == 80) {
+            taskList.add("Слово из 5 букв собранно 80 раза");
+        } else if (getList_5() == 90) {
+            taskList.add("Слово из 5 букв собранно 90 раза");
+        } else if (getList_5() == 100) {
+            taskList.add("Слово из 5 букв собранно 100 раза");
+        }
+        //------6-----
+        if (getList_6() == 1) {
+            taskList.add("Слово из 6 букв собранно 1 раза");
+        } else if (getList_6() == 3) {
+            taskList.add("Слово из 6 букв собранно 3 раза");
+        } else if (getList_6() == 5) {
+            taskList.add("Слово из 6 букв собранно 5 раза");
+        } else if (getList_6() == 11) {
+            taskList.add("Слово из 6 букв собранно 11 раза");
+        } else if (getList_6() == 25) {
+            taskList.add("Слово из 6 букв собранно 25 раза");
+        } else if (getList_6() == 45) {
+            taskList.add("Слово из 6 букв собранно 45 раза");
+        } else if (getList_6() == 57) {
+            taskList.add("Слово из 6 букв собранно 57 раза");
+        } else if (getList_6() == 69) {
+            taskList.add("Слово из 6 букв собранно 69 раза");
+        } else if (getList_6() == 78) {
+            taskList.add("Слово из 6 букв собранно 78 раза");
+        } else if (getList_6() == 84) {
+            taskList.add("Слово из 6 букв собранно 84 раза");
+        } else if (getList_6() == 95) {
+            taskList.add("Слово из 6 букв собранно 95 раза");
+        } else if (getList_6() == 100) {
+            taskList.add("Слово из 6 букв собранно 100 раза");
+        }
+        //---7---
+        if (getList_7() == 1) {
+            taskList.add("Слово из 7 букв собранно 1 раза");
+        } else if (getList_7() == 3) {
+            taskList.add("Слово из 7 букв собранно 3 раза");
+        } else if (getList_7() == 7) {
+            taskList.add("Слово из 7 букв собранно 7 раза");
+        } else if (getList_7() == 11) {
+            taskList.add("Слово из 7 букв собранно 11 раза");
+        } else if (getList_7() == 15) {
+            taskList.add("Слово из 7 букв собранно 15 раза");
+        } else if (getList_7() == 23) {
+            taskList.add("Слово из 7 букв собранно 23 раза");
+        } else if (getList_7() == 37) {
+            taskList.add("Слово из 7 букв собранно 37 раза");
+        } else if (getList_7() == 49) {
+            taskList.add("Слово из 7 букв собранно 49 раза");
+        } else if (getList_7() == 75) {
+            taskList.add("Слово из 7 букв собранно 75 раза");
+        } else if (getList_7() == 88) {
+            taskList.add("Слово из 7 букв собранно 88 раза");
+        } else if (getList_7() == 92) {
+            taskList.add("Слово из 7 букв собранно 92 раза");
+        } else if (getList_7() == 100) {
+            taskList.add("Слово из 7 букв собранно 100 раза");
+        }
+        //---8---
+        if (getList_8() == 1) {
+            taskList.add("Слово из 8 букв собранно 1 раза");
+        } else if (getList_8() == 3) {
+            taskList.add("Слово из 8 букв собранно 3 раза");
+        } else if (getList_8() == 6) {
+            taskList.add("Слово из 8 букв собранно 6 раза");
+        } else if (getList_8() == 15) {
+            taskList.add("Слово из 8 букв собранно 15 раза");
+        } else if (getList_8() == 20) {
+            taskList.add("Слово из 8 букв собранно 20 раза");
+        } else if (getList_8() == 30) {
+            taskList.add("Слово из 8 букв собранно 27 раза");
+        } else if (getList_8() == 50) {
+            taskList.add("Слово из 8 букв собранно 50 раза");
+        } else if (getList_8() == 55) {
+            taskList.add("Слово из 8 букв собранно 55 раза");
+        } else if (getList_8() == 60) {
+            taskList.add("Слово из 8 букв собранно 60 раза");
+        } else if (getList_8() == 70) {
+            taskList.add("Слово из 8 букв собранно 70 раза");
+        } else if (getList_8() == 80) {
+            taskList.add("Слово из 8 букв собранно 80 раза");
+        } else if (getList_8() == 90) {
+            taskList.add("Слово из 8 букв собранно 90 раза");
+        } else if (getList_8() == 100) {
+            taskList.add("Слово из 8 букв собранно 100 раза");
+        }
+        //---9--
+        if (getList_9() == 1) {
+            taskList.add("Слово из 9 букв собранно 1 раза");
+        } else if (getList_9() == 2) {
+            taskList.add("Слово из 9 букв собранно 2 раза");
+        } else if (getList_9() == 5) {
+            taskList.add("Слово из 9 букв собранно 5 раза");
+        } else if (getList_9() == 10) {
+            taskList.add("Слово из 9 букв собранно 10 раза");
+        } else if (getList_9() == 20) {
+            taskList.add("Слово из 9 букв собранно 20 раза");
+        } else if (getList_9() == 40) {
+            taskList.add("Слово из 9 букв собранно 40 раза");
+        } else if (getList_9() == 45) {
+            taskList.add("Слово из 9 букв собранно 45 раза");
+        } else if (getList_9() == 55) {
+            taskList.add("Слово из 9 букв собранно 55 раза");
+        } else if (getList_9() == 65) {
+            taskList.add("Слово из 9 букв собранно 65 раза");
+        } else if (getList_9() == 75) {
+            taskList.add("Слово из 9 букв собранно 75 раза");
+        } else if (getList_9() == 85) {
+            taskList.add("Слово из 9 букв собранно 85 раза");
+        } else if (getList_9() == 95) {
+            taskList.add("Слово из 9 букв собранно 95 раза");
+        } else if (getList_9() == 100) {
+            taskList.add("Слово из 9 букв собранно 100 раза");
+        }
+        //--10----
+        if (getList_10() == 1) {
+            taskList.add("Слово из 10 букв собранно 1 раза");
+        } else if (getList_10() == 2) {
+            taskList.add("Слово из 10 букв собранно 2 раза");
+        } else if (getList_10() == 5) {
+            taskList.add("Слово из 10 букв собранно 5 раза");
+        } else if (getList_10()==10) {
+            taskList.add("Слово из 10 букв собранно 10 раза");
+        }else if (getList_10()==20) {
+            taskList.add("Слово из 10 букв собранно 20 раза");
+        }else if (getList_10()==40) {
+            taskList.add("Слово из 10 букв собранно 40 раза");
+        }else if (getList_10()==55) {
+            taskList.add("Слово из 10 букв собранно 55 раза");
+        }else if (getList_10()==75) {
+            taskList.add("Слово из 10 букв собранно 75 раза");
+        }else if (getList_10()==85) {
+            taskList.add("Слово из 10 букв собранно 85 раза");
+        }else if (getList_10()==95) {
+            taskList.add("Слово из 10 букв собранно 95 раза");
+        }else if (getList_10()==100) {
+            taskList.add("Слово из 10 букв собранно 100 раза");
+        }
+//---11-----
+        if (getList_11() == 1) {
+           taskList.add("Слово из 11 букв собранно 1 раза");
+        } else if (getList_11() == 3) {
+            taskList.add("Слово из 11 букв собранно 2 раза");
+        }  else if (getList_11() == 5) {
+            taskList.add("Слово из 11 букв собранно 2 раза");
+        }   else if (getList_11() == 10) {
+            taskList.add("Слово из 11 букв собранно 10 раза");
+        }   else if (getList_11() == 25) {
+            taskList.add("Слово из 11 букв собранно 25 раза");
+        }  else if (getList_11() ==30) {
+            taskList.add("Слово из 11 букв собранно 30 раза");
+        } else if (getList_11() ==40) {
+            taskList.add("Слово из 11 букв собранно 40 раза");
+        }  else if (getList_11() ==50) {
+            taskList.add("Слово из 11 букв собранно 50 раза");
+        } else if (getList_11() ==65) {
+            taskList.add("Слово из 11 букв собранно 65 раза");
+        }  else if (getList_11() ==75) {
+            taskList.add("Слово из 11 букв собранно 75 раза");
+        } else if (getList_11() ==85) {
+            taskList.add("Слово из 11 букв собранно 85 раза");
+        }  else if (getList_11() ==95) {
+            taskList.add("Слово из 11 букв собранно 95 раза");
+        } else if (getList_11() ==100) {
+            taskList.add("Слово из 11 букв собранно 100 раза");
+        }
+//-----12---
+        if (getList_12() == 1) {
+            taskList.add("Слово из 12 букв собранно 1 раза");
+        } else if (getList_12() == 3) {
+            taskList.add("Слово из 12 букв собранно 3 раза");
+        } else if (getList_12() == 5) {
+            taskList.add("Слово из 12 букв собранно 5 раза");
+        } else if (getList_12() ==10) {
+            taskList.add("Слово из 12 букв собранно 10 раза");
+        } else if (getList_12() ==20) {
+            taskList.add("Слово из 12 букв собранно 20 раза");
+        } else if (getList_12() ==30) {
+            taskList.add("Слово из 12 букв собранно 30 раза");
+        } else if (getList_12() ==40) {
+            taskList.add("Слово из 12 букв собранно 40 раза");
+        } else if (getList_12() == 50) {
+            taskList.add("Слово из 12 букв собранно 50 раза");
+        } else if (getList_12() == 60) {
+            taskList.add("Слово из 12 букв собранно 60 раза");
+        } else if (getList_12() == 75) {
+            taskList.add("Слово из 12 букв собранно 75 раза");
+        } else if (getList_12() == 90) {
+            taskList.add("Слово из 12 букв собранно 90 раза");
+        } else if (getList_12() == 100) {
+            taskList.add("Слово из 12 букв собранно 100 раза");
+        }
+   //---13----
+        if (getList_13() == 1) {
+            taskList.add("Слово из 13 букв собранно 1 раза");
+        } else if (getList_13() == 3) {
+            taskList.add("Слово из 13 букв собранно 3 раза");
+        } else if (getList_13() == 5) {
+            taskList.add("Слово из 13 букв собранно 5 раза");
+        } else if (getList_13() ==10 ) {
+            taskList.add("Слово из 13 букв собранно 10 раза");
+        } else if (getList_13() == 15) {
+            taskList.add("Слово из 13 букв собранно 15 раза");
+        } else if (getList_13() == 25) {
+            taskList.add("Слово из 13 букв собранно 25 раза");
+        } else if (getList_13() == 30) {
+            taskList.add("Слово из 13 букв собранно 30 раза");
+        } else if (getList_13() == 50) {
+            taskList.add("Слово из 13 букв собранно 50 раза");
+        } else if (getList_13() == 65) {
+            taskList.add("Слово из 13 букв собранно 65 раза");
+        } else if (getList_13() == 70) {
+            taskList.add("Слово из 13 букв собранно 70 раза");
+        } else if (getList_13() == 85) {
+            taskList.add("Слово из 13 букв собранно 85 раза");
+        } else if (getList_13() == 100) {
+            taskList.add("Слово из 13 букв собранно 100 раза");
+        }
+
+        //---14-----
+         if (getList_14() == 1) {
+            taskList.add("Слово из 12 букв собранно 1 раза");
+         } else if (getList_14() == 3) {
+            taskList.add("Слово из 12 букв собранно 3 раза");
+         } else if (getList_14() == 5) {
+             taskList.add("Слово из 12 букв собранно 5 раза");
+         } else if (getList_14() == 15) {
+             taskList.add("Слово из 12 букв собранно 15 раза");
+         } else if (getList_14() == 25) {
+             taskList.add("Слово из 12 букв собранно 25 раза");
+         } else if (getList_14() == 35) {
+             taskList.add("Слово из 12 букв собранно 35 раза");
+         } else if (getList_14() == 50) {
+             taskList.add("Слово из 12 букв собранно 50 раза");
+         } else if (getList_14() == 65) {
+             taskList.add("Слово из 12 букв собранно 65 раза");
+         } else if (getList_14() == 80) {
+             taskList.add("Слово из 12 букв собранно 80 раза");
+         } else if (getList_14() == 95) {
+             taskList.add("Слово из 12 букв собранно 95 раза");
+         } else if (getList_14() == 100) {
+             taskList.add("Слово из 12 букв собранно 100 раза");
+         }
+    }
+
+
     public void Dialogus(){                                     // сохранять это в тхт
-        taskList.add("Слово из 3 букв собранно " + getList_3() + " раза");
-        taskList.add("Слово из 4 букв собранно " + getList_4() + " раза");
-        taskList.add("Слово из 5 букв собранно " + getList_5() + " раза");
-        taskList.add("Слово из 6 букв собранно " + getList_6() + " раза");
-        taskList.add("Слово из 7 букв собранно " + getList_7() + " раза");
-        taskList.add("Слово из 8 букв собранно " + getList_8() + " раза");
-        taskList.add("Слово из 9 букв собранно " + getList_9() + " раза");
-        taskList.add("Слово из 10 букв собранно " + getList_10() + " раза");
-        taskList.add("Последовательность из +1 буква длинной в " + supportClass.CountCorrectSeqLen(Switch_answer()) + " слов");
+
+
+
 
         LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = li.inflate(R.layout.stats_fragment, null, false);
@@ -1849,11 +2238,11 @@ public class GameStart extends AppCompatActivity  {
         OptionDialog = new AlertDialog.Builder(this).create();
         OptionDialog.setTitle("Статистика");
 
-        adapterDone = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, supportClass.taskDone);
+        adapterDone = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskList);
         taskDoneList.setAdapter(adapterDone);
 
 
-        supportClass.ShowTaskWelDone(taskList);
+//        supportClass.ShowTaskWelDone(taskList);
 
         setNumber_word_3(getList_3());
         setNumber_word_4(getList_4());
@@ -1865,7 +2254,7 @@ public class GameStart extends AppCompatActivity  {
         setNumber_word_10(getList_10());
 
         butClose =  v.findViewById(R.id.butClose);
-        text_2_inner = v.findViewById(R.id.text_2_inner);
+
         text_3_inner = v.findViewById(R.id.text_3_inner);
         text_4_inner = v.findViewById(R.id.text_4_inner);
         text_5_inner = v.findViewById(R.id.text_5_inner);
@@ -1874,8 +2263,15 @@ public class GameStart extends AppCompatActivity  {
         text_8_inner = v.findViewById(R.id.text_8_inner);
         text_9_inner = v.findViewById(R.id.text_9_inner);
         text_10_inner = v.findViewById(R.id.text_10_inner);
+        text_11_inner = v.findViewById(R.id.text_11_inner);
+        text_12_inner = v.findViewById(R.id.text_12_inner);
+        text_13_inner = v.findViewById(R.id.text_13_inner);
+        text_14_inner = v.findViewById(R.id.text_14_inner);
 
-        text_2_inner.setText(String.valueOf(getList_2()));
+
+        text_plus = v.findViewById(R.id.text_plus);
+        text_minus = v.findViewById(R.id.text_minus);
+
         text_3_inner.setText(String.valueOf(getList_3()));
         text_4_inner.setText(String.valueOf(getList_4()));
         text_5_inner.setText(String.valueOf(getList_5()));
@@ -1884,12 +2280,22 @@ public class GameStart extends AppCompatActivity  {
         text_8_inner.setText(String.valueOf(getList_8()));
         text_9_inner.setText(String.valueOf(getList_9()));
         text_10_inner.setText(String.valueOf(getList_10()));
+        text_11_inner.setText(String.valueOf(getList_11()));
+        text_12_inner.setText(String.valueOf(getList_12()));
+        text_13_inner.setText(String.valueOf(getList_13()));
+        text_14_inner.setText(String.valueOf(getList_14()));
+
+
+        text_plus.setText("Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на 1 букву: " + supportClass.CountCorrectSeqLen(Switch_answer()));
+        text_minus.setText("Максимальная последовательность собранных слов. Каждое следующее слово короче предыдущего на 1 букву: " + supportClass.countWordMinus(Switch_answer()));
+
         OptionDialog.setView(v);
         OptionDialog.setCancelable(true);
 
         butClose.setBackgroundColor(Color.CYAN);
         butClose.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                onClickStart();
                 OptionDialog.dismiss();
             }
 
@@ -1939,6 +2345,7 @@ public class GameStart extends AppCompatActivity  {
         butCloseTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onClickStart();
                 TaskDialog.dismiss();
             }
         });
@@ -2051,6 +2458,7 @@ public class GameStart extends AppCompatActivity  {
         Log.d("QQW", getControl());
         return this.Alfas;
     }
+
     private String array2str(List<String> strings){
         StringBuilder sb = new StringBuilder();
         for (String s : strings){
@@ -2112,7 +2520,7 @@ public class GameStart extends AppCompatActivity  {
                 }
     }
 
-
+    //-------
     public List<String> Wrong_Switch_answer() {
             if (getControl().equalsIgnoreCase("котлисаслон")) {
                 this.WrongSwitch = Wrong_list_1;
@@ -2185,7 +2593,64 @@ public class GameStart extends AppCompatActivity  {
             e.printStackTrace();
         }
     }
+    //-------
 
+
+    //-------Сохранение и чтение количества собранных букв
+    public void Save_hom_mutch_word()  {
+        myText = array2str(Switch_answer());
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            this.writeTrue = "text_true_dio_1.txt";
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            this.writeTrue = "text_true_dio_2.txt";
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            this.writeTrue = "text_true_dio_3.txt";
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
+            this.writeTrue = "text_true_dio_4.txt";
+        }
+        try {
+            outputStream = openFileOutput(writeTrue, MODE_PRIVATE);
+            outputStream.write(myText.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();                   //если КОТЛИСАСЛОН - запись в файл кот.тхт, если другое, то в другое.тхт и показ того же списка.
+        }
+    } //запись в тхт
+    public void Load_hom_mutch_word()  {
+        String line;
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            this.read = "text_true_dio_1.txt";
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            this.read = "text_true_dio_2.txt";
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            this.read = "text_true_dio_3.txt";
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
+            this.read = "text_true_dio_4.txt";
+        }
+        try {
+            FileInputStream in = openFileInput(read);
+            InputStreamReader inputStreamReader = new InputStreamReader(in);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            StringBuilder sb = new StringBuilder();
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+//                        sb.append(line);
+                if (getControl().equalsIgnoreCase("котлисаслон")) {
+                    thru_list_1.add(line);
+                } else if (getControl().equalsIgnoreCase("распределитель")) {
+                    thru_list_2.add(line);
+                } else if (getControl().equalsIgnoreCase("стенографистка")) {
+                    thru_list_3.add(line);
+                } else if (getControl().equalsIgnoreCase("простокваша")) {
+                    thru_list_4.add(line);
+                }
+                inputStreamReader.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //----------
 
     @Override
     protected void onDestroy() {
@@ -2195,14 +2660,44 @@ public class GameStart extends AppCompatActivity  {
     }
 
 
-
-    public void Mission_random_lenght(View v){
-        Intent intent_mission = new Intent(this, Missions.class);
-        startActivity(intent_mission);
+    public void Mission_random_lenght(View v) {
+        MissionDialogStart();
+        onClickStop();
     }
+    public void MissionDialogStart(){
+        MissionsDialog = new AlertDialog.Builder(this).create();
+        LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View missions = tasks.inflate(R.layout.activity_missions, null, false);
+        butClose_mission =  missions.findViewById(R.id.butClose_mission);
+
+
+            mis_1 = missions.findViewById(R.id.mis_1);
+            mis_2 = missions.findViewById(R.id.mis_2);
+            mis_3 = missions.findViewById(R.id.mis_3);
+
+
+            mis_1.setText("Слово из 3 букв");
+            mis_2.setText("Слово из 4 букв");
+            mis_3.setText("С * Р А"); //СЕРА
 
 
 
+        MissionsDialog.setView(missions);
+        MissionsDialog.setCancelable(true);
+
+        butClose_mission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickStart();
+                MissionsDialog.dismiss();
+            }
+        });
+
+
+        MissionsDialog.show();
+
+    }
 
     @Override
     public void onBackPressed() {

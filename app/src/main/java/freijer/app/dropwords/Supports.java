@@ -27,7 +27,6 @@ public class Supports {
     static List<String> taskDone = new ArrayList<>();
 
 
-
     private void add_plus (int input) {
         if (input > 2) {
             counter_plus++;
@@ -40,7 +39,6 @@ public class Supports {
         }
         stayLenght = input;
     } //счетчик слов равной длинны
-
 
 
     public int CountCorrectSeqLen(List<String> data) {
@@ -81,13 +79,7 @@ public class Supports {
         }
         minusLength = Math.max(minusLength, currentLength);
         return minusLength;
-    }// слов одинаковой длинны уменьшение
-
-
-
-
-
-
+    }// слов  длинны уменьшение
 
 
 
