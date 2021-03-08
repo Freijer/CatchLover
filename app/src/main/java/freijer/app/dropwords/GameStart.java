@@ -857,13 +857,13 @@ public class GameStart extends AppCompatActivity  {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void LetsGo(View v){
-//        dbHelper.DeleteDB();
 
         score.setText(""+getCounter());
         textClock.setText(""+getTryChenge());
         lvlview.setText(""+getStepOnNextLvl());
 
         ReadfromDB();
+         ReadfromDB_lenght();
 
         score.setText(""+getCounter());
         textClock.setText(""+getTryChenge());
@@ -1185,6 +1185,7 @@ public class GameStart extends AppCompatActivity  {
         SaveText();
         WriteWrong();
 
+            AddDB_lenght();
 
         achivites();
 
@@ -2197,7 +2198,6 @@ public class GameStart extends AppCompatActivity  {
         } else if (getList_13() == 100) {
             taskList.add("Слово из 13 букв собранно 100 раза");
         }
-
         //---14-----
          if (getList_14() == 1) {
             taskList.add("Слово из 12 букв собранно 1 раза");
@@ -2392,6 +2392,7 @@ public class GameStart extends AppCompatActivity  {
 
     }  // список собранных слов
 
+
     public void AddDB()   {
         String a1, a2, a3;
         a1 = String.valueOf(getCounter()); // очки
@@ -2426,7 +2427,6 @@ public class GameStart extends AppCompatActivity  {
         Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
 
     } // прочесть последнюю запись
-
     public void DeleteDB(View v) {
         CleareDB();
     }
@@ -2440,6 +2440,43 @@ public class GameStart extends AppCompatActivity  {
         setAddlvl(""+0);
         setAddtryss(""+0);
     }// удалить
+
+    //---работа с таблицей длинны слов букв
+        public void AddDB_lenght(){
+        String  b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14;
+        b3 = String.valueOf(getList_3());
+        b4 = String.valueOf(getList_4());
+        b5 = String.valueOf(getList_5());
+        b6 = String.valueOf(getList_6());
+        b7 = String.valueOf(getList_7());
+        b8 = String.valueOf(getList_8());
+        b9 = String.valueOf(getList_9());
+        b10 = String.valueOf(getList_10());
+        b11 = String.valueOf(getList_11());
+        b12 = String.valueOf(getList_12());
+        b13 = String.valueOf(getList_13());
+        b14 = String.valueOf(getList_14());
+            dbHelper.WriteDB_lenght(b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14);
+    }
+        public void ReadfromDB_lenght() {
+            dbHelper.ReadDB_lenght();
+                setList_3(dbHelper.getLENGHT_3());
+                setList_4(dbHelper.getLENGHT_4());
+                setList_5(dbHelper.getLENGHT_5());
+                setList_6(dbHelper.getLENGHT_6());
+                setList_7(dbHelper.getLENGHT_7());
+                setList_8(dbHelper.getLENGHT_8());
+                setList_9(dbHelper.getLENGHT_9());
+                setList_10(dbHelper.getLENGHT_10());
+                setList_11(dbHelper.getLENGHT_11());
+                setList_12(dbHelper.getLENGHT_12());
+                setList_13(dbHelper.getLENGHT_13());
+                setList_14(dbHelper.getLENGHT_14());
+
+        } // прочесть последнюю запись
+
+    //--
+
 
 
     public List<String> Switch_answer() {
@@ -2596,7 +2633,7 @@ public class GameStart extends AppCompatActivity  {
     //-------
 
 
-    //-------Сохранение и чтение количества собранных букв
+    //-------Сохранение и чтение длинны собранных букв
     public void Save_hom_mutch_word()  {
         myText = array2str(Switch_answer());
         if (getControl().equalsIgnoreCase("котлисаслон")) {
@@ -2656,6 +2693,7 @@ public class GameStart extends AppCompatActivity  {
     protected void onDestroy() {
         SaveText();
         AddDB();
+            AddDB_lenght();
         super.onDestroy();
     }
 

@@ -195,6 +195,8 @@ public class SettingsAndParams extends AppCompatActivity {
                     outputStream = openFileOutput("text_wrong_dio_4.txt", MODE_PRIVATE);
                     outputStream.write("".getBytes());
                     outputStream.close();
+
+        dbHelper.DeleteDB_lenght();
     }
     public void Back(View v){
         Intent intentBack = new Intent(SettingsAndParams.this, MainActivity.class);
