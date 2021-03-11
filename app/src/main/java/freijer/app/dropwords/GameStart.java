@@ -51,6 +51,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -73,14 +74,37 @@ import static android.view.View.VISIBLE;
 public class GameStart extends AppCompatActivity  {
 
 
+    private int lenght_plus; //переменная отвечающая за хранение последовательносит увеличения длинны слов на +1
+    private int lenght_minus; //переменная отвечающая за хранение последовательносит уменьшения длинны слов на -1
+        public int getLenght_plus() {
+            return lenght_plus;
+        }
+        public void setLenght_plus(int lenght_plus) {
+            this.lenght_plus = lenght_plus;
+        }
+            public int getLenght_minus() {
+                return lenght_minus;
+            }
+            public void setLenght_minus(int lenght_minus) {
+                this.lenght_minus = lenght_minus;
+            }
+
+    ArrayList<String> lenght_plus_com;
+    ArrayList<String> lenght_minus_com;
+
 
     Supports supportClass = new Supports();
+    SharedPreferences sPref;
+    final String SAVED_TEXT = "saved_text";
+    protected int  number_max_lenght= 0;
 
     String read = "";
     String readWrong = "";
     String writeTrue = "";
     String writeWrong = "";
 
+    private String text_plus_lenght;
+    private String text_minus_lenght;
 
     //ачивки выводить не текстом, а "иконками" или не все, а только часть. Например за каждую 10 ачивку.
     DataHelper dbHelper;
@@ -448,7 +472,7 @@ public class GameStart extends AppCompatActivity  {
         this.tryChenge = tryChenge;
     }
 
-    protected TextView text_2_inner, text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner, text_11_inner, text_12_inner, text_13_inner, text_14_inner;
+    protected TextView text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner, text_11_inner, text_12_inner, text_13_inner, text_14_inner;
 
     public Point viewLocatedAt(View v) {
         int[] location = new int[2];
@@ -482,6 +506,9 @@ public class GameStart extends AppCompatActivity  {
         setContentView(R.layout.game_start);
         chars_layout = findViewById(R.id.chars_layout);
         quest = findViewById(R.id.quest);
+
+        lenght_plus_com = new ArrayList<>();
+        lenght_minus_com = new ArrayList<>();
 
 
         pr1 = findViewById(R.id.pr1);
@@ -587,6 +614,11 @@ public class GameStart extends AppCompatActivity  {
 
         ClockWork();
 
+//        try {
+////            Load_Lenght_plus();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
     }
 
 
@@ -601,6 +633,7 @@ public class GameStart extends AppCompatActivity  {
         super.onStart();
         try {
             LoadText();
+//            Load_Lenght_plus();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -1024,6 +1057,19 @@ public class GameStart extends AppCompatActivity  {
                 break;
         }
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected void howLenght_plus(String keyWord_lenght){
+//        String[] listWord_lenght = MainListWord.toArray(new String[0]);
+//        String keyWord_lenght = (String.join("", listWord_lenght));
+                lenght_plus_com.add(keyWord_lenght);
+                setLenght_plus(supportClass.CountCorrectSeqLen(lenght_plus_com));
+
+                    lenght_minus_com.add(keyWord_lenght);
+                    setLenght_minus(supportClass.countWordMinus(lenght_minus_com));
+                    Log.d("uuui", String.valueOf(getLenght_plus()));
+    } //Если я читаю это секйчас, пожалуйста, не думай зачем я это все писал. Главное, что это работает
+
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Chek_1(View v){
@@ -1051,17 +1097,16 @@ public class GameStart extends AppCompatActivity  {
 //режим повтора (бесконечно
         animation2.setInterpolator(new BounceInterpolator());
         animation2.setRepeatCount(1);
-//накладываем анимацию на TextView
-
-//        this.bufferReadList = thru_list_1;
 
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
+
        // Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord) && !Switch_answer().contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length); // Передача ОЧКОВ
             HowLenght(ArrayListWord.length);
+                    howLenght_plus(KeyWord);
             Switch_answer().add(KeyWord);
             setCounter(getCounter()+1);
             setExp(getExp()+4);
@@ -1183,11 +1228,14 @@ public class GameStart extends AppCompatActivity  {
 
         AddDB();
         SaveText();
+//        Save_lenght_plus();
         WriteWrong();
 
             AddDB_lenght();
 
+
         achivites();
+
 
     } //проверка
 
@@ -1337,25 +1385,12 @@ public class GameStart extends AppCompatActivity  {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Creates(){
-//                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//        String melodyName = sharedPreferences.getString("speed_but", "midle");
-//        if (melodyName.equals("slow")) {
-//            this.speed_a = 5500;
-//        } else if (melodyName.equals("midle")) {
-//            this.speed_a = 0;
-//        } else if (melodyName.equals("fast")) {
-//            this.speed_a = -2500;
-//        }
 
 
-        float height = Colo.getScaleX()*2;
-        float weight = Colo.getScaleY()*2;
+
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
                 PropertyValuesHolder.ofFloat("x", 0, 850),
                 PropertyValuesHolder.ofFloat("y", 140, 1050));
-
-//                PropertyValuesHolder.ofFloat("x", 600, 500),
-//                PropertyValuesHolder.ofFloat("y", 600, 500));
 
         button1.setDuration(6000 +getSpeed_a());
         button1.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1907,326 +1942,365 @@ public class GameStart extends AppCompatActivity  {
 
 
 
+
                                          public void achivites() {
-        if (getList_3() == 3) {
-            taskList.add("Слово из 3 букв собранно 3 раза");
-            Toast.makeText(this, "Новое достижение и новые баллы!",Toast.LENGTH_SHORT).show();
-        } else if (getList_3() == 10) {
-            taskList.add("Слово из 3 букв собранно 10 раз");
-        } else if (getList_3() == 15) {
-            taskList.add("Слово из 3 букв собранно 15 раз");
-        } else if (getList_3() == 25) {
-            taskList.add("Слово из 3 букв собранно 25 раз");
-        } else if (getList_3() == 33) {
-            taskList.add("Слово из 3 букв собранно 33 раза");
-        } else if (getList_3() == 45) {
-            taskList.add("Слово из 3 букв собранно 44 раза");
-        } else if (getList_3() == 55) {
-            taskList.add("Слово из 3 букв собранно 60 раз");
-        } else if (getList_3() == 60) {
-            taskList.add("Слово из 3 букв собранно 75 раз");
-        } else if (getList_3() == 75) {
-            taskList.add("Слово из 3 букв собранно 100 раз");
-        } else if (getList_3() == 90) {
-            taskList.add("Слово из 3 букв собранно 100 раз");
-        } else if (getList_3() == 100) {
-            taskList.add("Слово из 3 букв собранно 100 раз");
+
+        switch (getList_3()) {
+            case 3:
+                taskList.add("Слово из 3 букв собранно 3 раза");
+                Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                break;
+            case 10:
+                taskList.add("Слово из 3 букв собранно 10 раза");
+                break;
+            case 25:
+                taskList.add("Слово из 3 букв собранно 25 раз");
+                break;
+            case 45:
+                taskList.add("Слово из 3 букв собранно 45 раза");
+                break;
+            case 60:
+                taskList.add("Слово из 3 букв собранно 60 раз");
+                break;
+            case 80:
+                taskList.add("Слово из 3 букв собранно 80 раз");
+                break;
+            case 100:
+                taskList.add("Слово из 3 букв собранно 100 раз");
+                break;
         }
-        //------4---
-        if (getList_4() == 4) {
-            taskList.add("Слово из 4 букв собранно 4 раза");
-        } else if (getList_4() == 8) {
-            taskList.add("Слово из 4 букв собранно 8 раз");
-        } else if (getList_4() == 12) {
-            taskList.add("Слово из 4 букв собранно 14 раз");
-        } else if (getList_4() == 16) {
-            taskList.add("Слово из 4 букв собранно 21 раз");
-        } else if (getList_4() == 20) {
-            taskList.add("Слово из 4 букв собранно 38 раз");
-        } else if (getList_4() == 25) {
-            taskList.add("Слово из 4 букв собранно 44 раза");
-        } else if (getList_4() == 40) {
-            taskList.add("Слово из 4 букв собранно 60 раз");
-        } else if (getList_4() == 55) {
-            taskList.add("Слово из 4 букв собранно 75 раза");
-        } else if (getList_4() == 60) {
-            taskList.add("Слово из 4 букв собранно 87 раза");
-        } else if (getList_4() == 70) {
-            taskList.add("Слово из 4 букв собранно 93 раза");
-        } else if (getList_4() == 80) {
-            taskList.add("Слово из 4 букв собранно 100 раз");
-        } else if (getList_4() == 90) {
-            taskList.add("Слово из 4 букв собранно 100 раз");
-        } else if (getList_4() == 100) {
-            taskList.add("Слово из 4 букв собранно 100 раз");
-        }
-        //-----5---
-        if (getList_5() == 2) {
-            taskList.add("Слово из 5 букв собранно 2 раза");
-        } else if (getList_5() == 5) {
-            taskList.add("Слово из 5 букв собранно 5 раза");
-        } else if (getList_5() == 10) {
-            taskList.add("Слово из 5 букв собранно 10 раза");
-        } else if (getList_5() == 15) {
-            taskList.add("Слово из 5 букв собранно 15 раза");
-        } else if (getList_5() == 20) {
-            taskList.add("Слово из 5 букв собранно 20 раза");
-        } else if (getList_5() == 30) {
-            taskList.add("Слово из 5 букв собранно 30 раза");
-        } else if (getList_5() == 45) {
-            taskList.add("Слово из 5 букв собранно 45 раза");
-        } else if (getList_5() == 55) {
-            taskList.add("Слово из 5 букв собранно 55 раза");
-        } else if (getList_5() == 70) {
-            taskList.add("Слово из 5 букв собранно 70 раза");
-        } else if (getList_5() == 80) {
-            taskList.add("Слово из 5 букв собранно 80 раза");
-        } else if (getList_5() == 90) {
-            taskList.add("Слово из 5 букв собранно 90 раза");
-        } else if (getList_5() == 100) {
-            taskList.add("Слово из 5 букв собранно 100 раза");
-        }
-        //------6-----
-        if (getList_6() == 1) {
-            taskList.add("Слово из 6 букв собранно 1 раза");
-        } else if (getList_6() == 3) {
-            taskList.add("Слово из 6 букв собранно 3 раза");
-        } else if (getList_6() == 5) {
-            taskList.add("Слово из 6 букв собранно 5 раза");
-        } else if (getList_6() == 11) {
-            taskList.add("Слово из 6 букв собранно 11 раза");
-        } else if (getList_6() == 25) {
-            taskList.add("Слово из 6 букв собранно 25 раза");
-        } else if (getList_6() == 45) {
-            taskList.add("Слово из 6 букв собранно 45 раза");
-        } else if (getList_6() == 57) {
-            taskList.add("Слово из 6 букв собранно 57 раза");
-        } else if (getList_6() == 69) {
-            taskList.add("Слово из 6 букв собранно 69 раза");
-        } else if (getList_6() == 78) {
-            taskList.add("Слово из 6 букв собранно 78 раза");
-        } else if (getList_6() == 84) {
-            taskList.add("Слово из 6 букв собранно 84 раза");
-        } else if (getList_6() == 95) {
-            taskList.add("Слово из 6 букв собранно 95 раза");
-        } else if (getList_6() == 100) {
-            taskList.add("Слово из 6 букв собранно 100 раза");
-        }
-        //---7---
-        if (getList_7() == 1) {
-            taskList.add("Слово из 7 букв собранно 1 раза");
-        } else if (getList_7() == 3) {
-            taskList.add("Слово из 7 букв собранно 3 раза");
-        } else if (getList_7() == 7) {
-            taskList.add("Слово из 7 букв собранно 7 раза");
-        } else if (getList_7() == 11) {
-            taskList.add("Слово из 7 букв собранно 11 раза");
-        } else if (getList_7() == 15) {
-            taskList.add("Слово из 7 букв собранно 15 раза");
-        } else if (getList_7() == 23) {
-            taskList.add("Слово из 7 букв собранно 23 раза");
-        } else if (getList_7() == 37) {
-            taskList.add("Слово из 7 букв собранно 37 раза");
-        } else if (getList_7() == 49) {
-            taskList.add("Слово из 7 букв собранно 49 раза");
-        } else if (getList_7() == 75) {
-            taskList.add("Слово из 7 букв собранно 75 раза");
-        } else if (getList_7() == 88) {
-            taskList.add("Слово из 7 букв собранно 88 раза");
-        } else if (getList_7() == 92) {
-            taskList.add("Слово из 7 букв собранно 92 раза");
-        } else if (getList_7() == 100) {
-            taskList.add("Слово из 7 букв собранно 100 раза");
-        }
-        //---8---
-        if (getList_8() == 1) {
-            taskList.add("Слово из 8 букв собранно 1 раза");
-        } else if (getList_8() == 3) {
-            taskList.add("Слово из 8 букв собранно 3 раза");
-        } else if (getList_8() == 6) {
-            taskList.add("Слово из 8 букв собранно 6 раза");
-        } else if (getList_8() == 15) {
-            taskList.add("Слово из 8 букв собранно 15 раза");
-        } else if (getList_8() == 20) {
-            taskList.add("Слово из 8 букв собранно 20 раза");
-        } else if (getList_8() == 30) {
-            taskList.add("Слово из 8 букв собранно 27 раза");
-        } else if (getList_8() == 50) {
-            taskList.add("Слово из 8 букв собранно 50 раза");
-        } else if (getList_8() == 55) {
-            taskList.add("Слово из 8 букв собранно 55 раза");
-        } else if (getList_8() == 60) {
-            taskList.add("Слово из 8 букв собранно 60 раза");
-        } else if (getList_8() == 70) {
-            taskList.add("Слово из 8 букв собранно 70 раза");
-        } else if (getList_8() == 80) {
-            taskList.add("Слово из 8 букв собранно 80 раза");
-        } else if (getList_8() == 90) {
-            taskList.add("Слово из 8 букв собранно 90 раза");
-        } else if (getList_8() == 100) {
-            taskList.add("Слово из 8 букв собранно 100 раза");
-        }
-        //---9--
-        if (getList_9() == 1) {
-            taskList.add("Слово из 9 букв собранно 1 раза");
-        } else if (getList_9() == 2) {
-            taskList.add("Слово из 9 букв собранно 2 раза");
-        } else if (getList_9() == 5) {
-            taskList.add("Слово из 9 букв собранно 5 раза");
-        } else if (getList_9() == 10) {
-            taskList.add("Слово из 9 букв собранно 10 раза");
-        } else if (getList_9() == 20) {
-            taskList.add("Слово из 9 букв собранно 20 раза");
-        } else if (getList_9() == 40) {
-            taskList.add("Слово из 9 букв собранно 40 раза");
-        } else if (getList_9() == 45) {
-            taskList.add("Слово из 9 букв собранно 45 раза");
-        } else if (getList_9() == 55) {
-            taskList.add("Слово из 9 букв собранно 55 раза");
-        } else if (getList_9() == 65) {
-            taskList.add("Слово из 9 букв собранно 65 раза");
-        } else if (getList_9() == 75) {
-            taskList.add("Слово из 9 букв собранно 75 раза");
-        } else if (getList_9() == 85) {
-            taskList.add("Слово из 9 букв собранно 85 раза");
-        } else if (getList_9() == 95) {
-            taskList.add("Слово из 9 букв собранно 95 раза");
-        } else if (getList_9() == 100) {
-            taskList.add("Слово из 9 букв собранно 100 раза");
-        }
-        //--10----
-        if (getList_10() == 1) {
-            taskList.add("Слово из 10 букв собранно 1 раза");
-        } else if (getList_10() == 2) {
-            taskList.add("Слово из 10 букв собранно 2 раза");
-        } else if (getList_10() == 5) {
-            taskList.add("Слово из 10 букв собранно 5 раза");
-        } else if (getList_10()==10) {
-            taskList.add("Слово из 10 букв собранно 10 раза");
-        }else if (getList_10()==20) {
-            taskList.add("Слово из 10 букв собранно 20 раза");
-        }else if (getList_10()==40) {
-            taskList.add("Слово из 10 букв собранно 40 раза");
-        }else if (getList_10()==55) {
-            taskList.add("Слово из 10 букв собранно 55 раза");
-        }else if (getList_10()==75) {
-            taskList.add("Слово из 10 букв собранно 75 раза");
-        }else if (getList_10()==85) {
-            taskList.add("Слово из 10 букв собранно 85 раза");
-        }else if (getList_10()==95) {
-            taskList.add("Слово из 10 букв собранно 95 раза");
-        }else if (getList_10()==100) {
-            taskList.add("Слово из 10 букв собранно 100 раза");
-        }
-//---11-----
-        if (getList_11() == 1) {
-           taskList.add("Слово из 11 букв собранно 1 раза");
-        } else if (getList_11() == 3) {
-            taskList.add("Слово из 11 букв собранно 2 раза");
-        }  else if (getList_11() == 5) {
-            taskList.add("Слово из 11 букв собранно 2 раза");
-        }   else if (getList_11() == 10) {
-            taskList.add("Слово из 11 букв собранно 10 раза");
-        }   else if (getList_11() == 25) {
-            taskList.add("Слово из 11 букв собранно 25 раза");
-        }  else if (getList_11() ==30) {
-            taskList.add("Слово из 11 букв собранно 30 раза");
-        } else if (getList_11() ==40) {
-            taskList.add("Слово из 11 букв собранно 40 раза");
-        }  else if (getList_11() ==50) {
-            taskList.add("Слово из 11 букв собранно 50 раза");
-        } else if (getList_11() ==65) {
-            taskList.add("Слово из 11 букв собранно 65 раза");
-        }  else if (getList_11() ==75) {
-            taskList.add("Слово из 11 букв собранно 75 раза");
-        } else if (getList_11() ==85) {
-            taskList.add("Слово из 11 букв собранно 85 раза");
-        }  else if (getList_11() ==95) {
-            taskList.add("Слово из 11 букв собранно 95 раза");
-        } else if (getList_11() ==100) {
-            taskList.add("Слово из 11 букв собранно 100 раза");
-        }
-//-----12---
-        if (getList_12() == 1) {
-            taskList.add("Слово из 12 букв собранно 1 раза");
-        } else if (getList_12() == 3) {
-            taskList.add("Слово из 12 букв собранно 3 раза");
-        } else if (getList_12() == 5) {
-            taskList.add("Слово из 12 букв собранно 5 раза");
-        } else if (getList_12() ==10) {
-            taskList.add("Слово из 12 букв собранно 10 раза");
-        } else if (getList_12() ==20) {
-            taskList.add("Слово из 12 букв собранно 20 раза");
-        } else if (getList_12() ==30) {
-            taskList.add("Слово из 12 букв собранно 30 раза");
-        } else if (getList_12() ==40) {
-            taskList.add("Слово из 12 букв собранно 40 раза");
-        } else if (getList_12() == 50) {
-            taskList.add("Слово из 12 букв собранно 50 раза");
-        } else if (getList_12() == 60) {
-            taskList.add("Слово из 12 букв собранно 60 раза");
-        } else if (getList_12() == 75) {
-            taskList.add("Слово из 12 букв собранно 75 раза");
-        } else if (getList_12() == 90) {
-            taskList.add("Слово из 12 букв собранно 90 раза");
-        } else if (getList_12() == 100) {
-            taskList.add("Слово из 12 букв собранно 100 раза");
-        }
-   //---13----
-        if (getList_13() == 1) {
-            taskList.add("Слово из 13 букв собранно 1 раза");
-        } else if (getList_13() == 3) {
-            taskList.add("Слово из 13 букв собранно 3 раза");
-        } else if (getList_13() == 5) {
-            taskList.add("Слово из 13 букв собранно 5 раза");
-        } else if (getList_13() ==10 ) {
-            taskList.add("Слово из 13 букв собранно 10 раза");
-        } else if (getList_13() == 15) {
-            taskList.add("Слово из 13 букв собранно 15 раза");
-        } else if (getList_13() == 25) {
-            taskList.add("Слово из 13 букв собранно 25 раза");
-        } else if (getList_13() == 30) {
-            taskList.add("Слово из 13 букв собранно 30 раза");
-        } else if (getList_13() == 50) {
-            taskList.add("Слово из 13 букв собранно 50 раза");
-        } else if (getList_13() == 65) {
-            taskList.add("Слово из 13 букв собранно 65 раза");
-        } else if (getList_13() == 70) {
-            taskList.add("Слово из 13 букв собранно 70 раза");
-        } else if (getList_13() == 85) {
-            taskList.add("Слово из 13 букв собранно 85 раза");
-        } else if (getList_13() == 100) {
-            taskList.add("Слово из 13 букв собранно 100 раза");
-        }
-        //---14-----
-         if (getList_14() == 1) {
-            taskList.add("Слово из 12 букв собранно 1 раза");
-         } else if (getList_14() == 3) {
-            taskList.add("Слово из 12 букв собранно 3 раза");
-         } else if (getList_14() == 5) {
-             taskList.add("Слово из 12 букв собранно 5 раза");
-         } else if (getList_14() == 15) {
-             taskList.add("Слово из 12 букв собранно 15 раза");
-         } else if (getList_14() == 25) {
-             taskList.add("Слово из 12 букв собранно 25 раза");
-         } else if (getList_14() == 35) {
-             taskList.add("Слово из 12 букв собранно 35 раза");
-         } else if (getList_14() == 50) {
-             taskList.add("Слово из 12 букв собранно 50 раза");
-         } else if (getList_14() == 65) {
-             taskList.add("Слово из 12 букв собранно 65 раза");
-         } else if (getList_14() == 80) {
-             taskList.add("Слово из 12 букв собранно 80 раза");
-         } else if (getList_14() == 95) {
-             taskList.add("Слово из 12 букв собранно 95 раза");
-         } else if (getList_14() == 100) {
-             taskList.add("Слово из 12 букв собранно 100 раза");
-         }
+                                             switch (getList_4()) {
+                                                 case 3:
+                                                     taskList.add("Слово из 4 букв собранно 3 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 4 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 4 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 4 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 4 букв собранно 60 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 4 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 4 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_5()) {
+                                                 case 2:
+                                                     taskList.add("Слово из 5 букв собранно 2 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 5 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 5 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 5 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 5 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 5 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 5 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 5 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_6()) {
+                                                 case 2:
+                                                     taskList.add("Слово из 6 букв собранно 2 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 6 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 6 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 6 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 6 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 6 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 6 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 6 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_7()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 7 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 7 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 7 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 7 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 7 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 7 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 7 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 7 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 7 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_8()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 8 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 8 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 8 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 8 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 8 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 8 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 8 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 8 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 8 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_9()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 9 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 9 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 9 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 9 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 9 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 9 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 9 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 9 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 9 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_10()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 10 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 10 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 10 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 10 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 10 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 10 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 10 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 10 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 10 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_11()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 11 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 11 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 11 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 11 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 11 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 11 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 11 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 11 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 11 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_12()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 12 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 12 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 12 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 12 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 12 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 12 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 12 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 12 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 12 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_13()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 13 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 13 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 13 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 13 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 13 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 13 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 13 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 13 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 13 букв собранно 100 раз");
+                                                     break;
+                                             }
+
+                                             switch (getList_14()) {
+                                                 case 1:
+                                                     taskList.add("Слово из 14 букв собранно 1 раза");
+                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                                                     break;
+                                                 case 5:
+                                                     taskList.add("Слово из 14 букв собранно 5 раза");
+                                                     break;
+                                                 case 10:
+                                                     taskList.add("Слово из 14 букв собранно 10 раза");
+                                                     break;
+                                                 case 25:
+                                                     taskList.add("Слово из 14 букв собранно 25 раз");
+                                                     break;
+                                                 case 45:
+                                                     taskList.add("Слово из 14 букв собранно 45 раза");
+                                                     break;
+                                                 case 60:
+                                                     taskList.add("Слово из 14 букв собранно 60 раз");
+                                                     break;
+                                                 case 70:
+                                                     taskList.add("Слово из 14 букв собранно 70 раз");
+                                                     break;
+                                                 case 80:
+                                                     taskList.add("Слово из 14 букв собранно 80 раз");
+                                                     break;
+                                                 case 100:
+                                                     taskList.add("Слово из 14 букв собранно 100 раз");
+                                                     break;
+                                             }
     }
 
 
     public void Dialogus(){                                     // сохранять это в тхт
-
 
 
 
@@ -2242,7 +2316,6 @@ public class GameStart extends AppCompatActivity  {
         taskDoneList.setAdapter(adapterDone);
 
 
-//        supportClass.ShowTaskWelDone(taskList);
 
         setNumber_word_3(getList_3());
         setNumber_word_4(getList_4());
@@ -2286,8 +2359,12 @@ public class GameStart extends AppCompatActivity  {
         text_14_inner.setText(String.valueOf(getList_14()));
 
 
-        text_plus.setText("Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на 1 букву: " + supportClass.CountCorrectSeqLen(Switch_answer()));
-        text_minus.setText("Максимальная последовательность собранных слов. Каждое следующее слово короче предыдущего на 1 букву: " + supportClass.countWordMinus(Switch_answer()));
+        text_plus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на +1 букву: ";
+        text_minus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово короче предыдущего на -1 букву: ";
+
+
+        text_plus.setText(text_plus_lenght + getLenght_plus());
+        text_minus.setText(text_minus_lenght + getLenght_minus());
 
         OptionDialog.setView(v);
         OptionDialog.setCancelable(true);
@@ -2387,7 +2464,6 @@ public class GameStart extends AppCompatActivity  {
             Wrong_answer_3.setVisibility(View.GONE);
             Wrong_answer_4.setVisibility(View.VISIBLE);
         }
-
         TaskDialog.show();
 
     }  // список собранных слов
@@ -2404,28 +2480,11 @@ public class GameStart extends AppCompatActivity  {
     } // добавить запись
     public void ReadfromDB() {
         dbHelper.ReadDB();
+            setCounter(dbHelper.getValueScore());
+            setStepOnNextLvl(dbHelper.getValueLvl());
+            setTryChenge(dbHelper.getValueTrys());
 
-//          setCounter(Integer.parseInt(dbHelper.getValueScore()));
-//          setStepOnNextLvl(Integer.parseInt(dbHelper.getValueLvl()));
-//          setTryChenge(Integer.parseInt(dbHelper.getValueTrys()));
-
-//        score.setText(""+getCounter());
-//        textClock.setText(""+getTryChenge());
-//        lvlview.setText(""+getStepOnNextLvl());
-
-        setCounter(dbHelper.getValueScore());
-        setStepOnNextLvl(dbHelper.getValueLvl());
-        setTryChenge(dbHelper.getValueTrys());
-
-
-//        score.setText(""+getCounter());
-//        textClock.setText(""+getTryChenge());
-//        lvlview.setText(""+getStepOnNextLvl());
-
-
-        //Toast.makeText(this, ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl(), Toast.LENGTH_SHORT).show();
-        Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
-
+                Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
     } // прочесть последнюю запись
     public void DeleteDB(View v) {
         CleareDB();
@@ -2435,15 +2494,14 @@ public class GameStart extends AppCompatActivity  {
         setCounter(0);   //чтение и запись БД очки
         setStepOnNextLvl(0); //чтение и запись БД уровень
         setTryChenge(0); //чтение и запись БД попыток смены слов
-
-        setAddsc(""+0);
-        setAddlvl(""+0);
-        setAddtryss(""+0);
+            setAddsc(""+0);
+            setAddlvl(""+0);
+            setAddtryss(""+0);
     }// удалить
 
     //---работа с таблицей длинны слов букв
         public void AddDB_lenght(){
-        String  b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14;
+        String  b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus;
         b3 = String.valueOf(getList_3());
         b4 = String.valueOf(getList_4());
         b5 = String.valueOf(getList_5());
@@ -2456,7 +2514,8 @@ public class GameStart extends AppCompatActivity  {
         b12 = String.valueOf(getList_12());
         b13 = String.valueOf(getList_13());
         b14 = String.valueOf(getList_14());
-            dbHelper.WriteDB_lenght(b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14);
+            b_plus = String.valueOf(getLenght_plus());
+            dbHelper.WriteDB_lenght(b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus);
     }
         public void ReadfromDB_lenght() {
             dbHelper.ReadDB_lenght();
@@ -2472,13 +2531,14 @@ public class GameStart extends AppCompatActivity  {
                 setList_12(dbHelper.getLENGHT_12());
                 setList_13(dbHelper.getLENGHT_13());
                 setList_14(dbHelper.getLENGHT_14());
+                    setLenght_plus(dbHelper.getLENGHT_PLUS());
 
+            achivites();
         } // прочесть последнюю запись
-
     //--
 
 
-
+    //--------------сохранение-чтение списка собравнных слов
     public List<String> Switch_answer() {
         if (getControl().equalsIgnoreCase("котлисаслон")) {
             this.Alfas = thru_list_1;
@@ -2495,7 +2555,6 @@ public class GameStart extends AppCompatActivity  {
         Log.d("QQW", getControl());
         return this.Alfas;
     }
-
     private String array2str(List<String> strings){
         StringBuilder sb = new StringBuilder();
         for (String s : strings){
@@ -2556,7 +2615,6 @@ public class GameStart extends AppCompatActivity  {
                     e.printStackTrace();
                 }
     }
-
     //-------
     public List<String> Wrong_Switch_answer() {
             if (getControl().equalsIgnoreCase("котлисаслон")) {
@@ -2633,67 +2691,56 @@ public class GameStart extends AppCompatActivity  {
     //-------
 
 
-    //-------Сохранение и чтение длинны собранных букв
-    public void Save_hom_mutch_word()  {
-        myText = array2str(Switch_answer());
-        if (getControl().equalsIgnoreCase("котлисаслон")) {
-            this.writeTrue = "text_true_dio_1.txt";
-        } else if (getControl().equalsIgnoreCase("распределитель")) {
-            this.writeTrue = "text_true_dio_2.txt";
-        } else if (getControl().equalsIgnoreCase("стенографистка")) {
-            this.writeTrue = "text_true_dio_3.txt";
-        } else if (getControl().equalsIgnoreCase("простокваша")) {
-            this.writeTrue = "text_true_dio_4.txt";
-        }
-        try {
-            outputStream = openFileOutput(writeTrue, MODE_PRIVATE);
-            outputStream.write(myText.getBytes());
-            outputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();                   //если КОТЛИСАСЛОН - запись в файл кот.тхт, если другое, то в другое.тхт и показ того же списка.
-        }
-    } //запись в тхт
-    public void Load_hom_mutch_word()  {
-        String line;
-        if (getControl().equalsIgnoreCase("котлисаслон")) {
-            this.read = "text_true_dio_1.txt";
-        } else if (getControl().equalsIgnoreCase("распределитель")) {
-            this.read = "text_true_dio_2.txt";
-        } else if (getControl().equalsIgnoreCase("стенографистка")) {
-            this.read = "text_true_dio_3.txt";
-        } else if (getControl().equalsIgnoreCase("простокваша")) {
-            this.read = "text_true_dio_4.txt";
-        }
-        try {
-            FileInputStream in = openFileInput(read);
-            InputStreamReader inputStreamReader = new InputStreamReader(in);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-            StringBuilder sb = new StringBuilder();
-            while ((line = bufferedReader.readLine()) != null) {
-                sb.append(line);
-//                        sb.append(line);
-                if (getControl().equalsIgnoreCase("котлисаслон")) {
-                    thru_list_1.add(line);
-                } else if (getControl().equalsIgnoreCase("распределитель")) {
-                    thru_list_2.add(line);
-                } else if (getControl().equalsIgnoreCase("стенографистка")) {
-                    thru_list_3.add(line);
-                } else if (getControl().equalsIgnoreCase("простокваша")) {
-                    thru_list_4.add(line);
-                }
-                inputStreamReader.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    //----------
+    //-----сохранение-чтение статистики
+//    public void saveText_number_lenght() {
+//        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+//        SharedPreferences.Editor ed = sPref.edit();
+//        ed.putString(SAVED_TEXT, text_plus_lenght);
+//        ed.commit();
+//    }
+//    public void loadText_number_lenght() {
+//        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
+//        String savedText = sPref.getString(SAVED_TEXT, "");
+//        text_plus_lenght = savedText;
+//    }
+
+//    public void Save_lenght_plus()  {
+////        //String buf_plus = String.valueOf(getLenght_plus());
+////       try {
+////            outputStream = openFileOutput("txt_plus.txt", MODE_PRIVATE);
+////            outputStream.write(buf_plus.getBytes());
+////            outputStream.close();
+////        } catch (Exception e) {
+////            e.printStackTrace();                   //если КОТЛИСАСЛОН - запись в файл кот.тхт, если другое, то в другое.тхт и показ того же списка.
+////        }
+//    } //запись в тхт
+//    public void Load_Lenght_plus() throws IOException {
+//        String line;
+//       try {
+//            FileInputStream in = openFileInput("txt_plus.txt");
+//            InputStreamReader inputStreamReader = new InputStreamReader(in);
+//            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+//            StringBuilder sb = new StringBuilder();
+//            while ((line = bufferedReader.readLine()) != null) {
+//                sb.append(line);
+//
+//               Log.d("RRR", String.valueOf(getLenght_plus()));
+//                inputStreamReader.close();
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
 
     @Override
     protected void onDestroy() {
         SaveText();
+//        Save_lenght_plus();
         AddDB();
             AddDB_lenght();
+
+
         super.onDestroy();
     }
 

@@ -11,7 +11,7 @@ import android.util.Log;
 public class DataHelper extends SQLiteOpenHelper {
 
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 5;
 
     private static final String DATABASE_NAME = "saveStats";
     private static final String TABLE_NAME = "stats";
@@ -35,10 +35,11 @@ public class DataHelper extends SQLiteOpenHelper {
         private static final String KEY_LENGHT_12 = "lenght_12";
         private static final String KEY_LENGHT_13 = "lenght_13";
         private static final String KEY_LENGHT_14 = "lenght_14";
+            private static final String KEY_LENGHT_PLUS = "lenght_plus";
+            private static final String KEY_LENGHT_MINUS = "lenght_minus";
 
 
     SQLiteDatabase database;
-        SQLiteDatabase database_lenght;
 
     Cursor cursor;
     ContentValues contentValues = new ContentValues();
@@ -61,6 +62,11 @@ public class DataHelper extends SQLiteOpenHelper {
         private int LENGHT_12;
         private int LENGHT_13;
         private int LENGHT_14;
+            private int LENGHT_PLUS;
+
+
+
+
 
     public int getLENGHT_3() {
         return LENGHT_3;
@@ -134,6 +140,12 @@ public class DataHelper extends SQLiteOpenHelper {
     public void setLENGHT_14(int LENGHT_14) {
         this.LENGHT_14 = LENGHT_14;
     }
+        public int getLENGHT_PLUS() {
+            return LENGHT_PLUS;
+        }
+        public void setLENGHT_PLUS(int LENGHT_PLUS) {
+            this.LENGHT_PLUS = LENGHT_PLUS;
+        }
 
             public int getValueScore() {
                 return valueScore;
@@ -165,7 +177,7 @@ public class DataHelper extends SQLiteOpenHelper {
                 + " integer primary key," + KEY_LENGHT_3 + " text," + KEY_LENGHT_4 + " text," +  KEY_LENGHT_5 + " text,"
                 + KEY_LENGHT_6 + " text," + KEY_LENGHT_7 + " text," + KEY_LENGHT_8 + " text," + KEY_LENGHT_9 + " text,"
                 + KEY_LENGHT_10 + " text," + KEY_LENGHT_11 + " text," + KEY_LENGHT_12 + " text," + KEY_LENGHT_13 + " text,"
-                + KEY_LENGHT_14 + " text," + " text" + ");");
+                + KEY_LENGHT_14 + " text," + KEY_LENGHT_PLUS + " text," + " text" + ");");
 
         db.execSQL("create table " + TABLE_NAME + "(" + KEY_ID
                 + " integer primary key," + KEY_SCORE + " text," + KEY_LVL + " text," + KEY_TRYS + " text" + ");");
@@ -226,7 +238,7 @@ public class DataHelper extends SQLiteOpenHelper {
 
     //---------- Длинна слов, кол-во букв
     public void WriteDB_lenght(String lenght_3, String lenght_4, String lenght_5, String lenght_6, String lenght_7,
-                               String lenght_8, String lenght_9, String lenght_10, String lenght_11, String lenght_12, String lenght_13, String lenght_14) {
+                               String lenght_8, String lenght_9, String lenght_10, String lenght_11, String lenght_12, String lenght_13, String lenght_14, String lenght_plus) {
         database = this.getWritableDatabase();
             contentValues_lenght.put(KEY_LENGHT_3, lenght_3);
             contentValues_lenght.put(KEY_LENGHT_4, lenght_4);
@@ -240,6 +252,7 @@ public class DataHelper extends SQLiteOpenHelper {
             contentValues_lenght.put(KEY_LENGHT_12, lenght_12);
             contentValues_lenght.put(KEY_LENGHT_13, lenght_13);
             contentValues_lenght.put(KEY_LENGHT_14, lenght_14);
+                contentValues_lenght.put(KEY_LENGHT_PLUS, lenght_plus);
                 database.insert(TABLE_NAME_lenght, null, contentValues_lenght);
     }
     public void ReadDB_lenght() {
@@ -258,6 +271,7 @@ public class DataHelper extends SQLiteOpenHelper {
                 setLENGHT_12(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_LENGHT_12))));
                 setLENGHT_13(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_LENGHT_13))));
                 setLENGHT_14(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_LENGHT_14))));
+                    setLENGHT_PLUS(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_LENGHT_PLUS))));
             }
         cursor.close();
     }

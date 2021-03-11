@@ -197,6 +197,17 @@ public class SettingsAndParams extends AppCompatActivity {
                     outputStream.close();
 
         dbHelper.DeleteDB_lenght();
+            outputStream = openFileOutput("taskDoneList.txt", MODE_PRIVATE);
+            outputStream.write("".getBytes());
+            outputStream.close();
+
+        outputStream = openFileOutput("txt_plus.txt", MODE_PRIVATE);
+        outputStream.write("".getBytes());
+        outputStream.close();
+            outputStream = openFileOutput("txt_minus.txt", MODE_PRIVATE);
+            outputStream.write("".getBytes());
+            outputStream.close();
+
     }
     public void Back(View v){
         Intent intentBack = new Intent(SettingsAndParams.this, MainActivity.class);
