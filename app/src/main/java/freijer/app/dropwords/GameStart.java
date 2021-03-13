@@ -74,19 +74,21 @@ import static android.view.View.VISIBLE;
 public class GameStart extends AppCompatActivity  {
 
 
+
+    protected int lenght_minus_minus;
     private int lenght_plus; //переменная отвечающая за хранение последовательносит увеличения длинны слов на +1
-    private int lenght_minus; //переменная отвечающая за хранение последовательносит уменьшения длинны слов на -1
+    //переменная отвечающая за хранение последовательносит уменьшения длинны слов на -1
         public int getLenght_plus() {
             return lenght_plus;
         }
         public void setLenght_plus(int lenght_plus) {
             this.lenght_plus = lenght_plus;
         }
-            public int getLenght_minus() {
-                return lenght_minus;
+            public int getLenght_minus_minus() {
+                return lenght_minus_minus;
             }
-            public void setLenght_minus(int lenght_minus) {
-                this.lenght_minus = lenght_minus;
+            public void setLenght_minus_minus(int lenght_minus_minus) {
+                this.lenght_minus_minus = lenght_minus_minus;
             }
 
     ArrayList<String> lenght_plus_com;
@@ -1064,11 +1066,19 @@ public class GameStart extends AppCompatActivity  {
 //        String keyWord_lenght = (String.join("", listWord_lenght));
                 lenght_plus_com.add(keyWord_lenght);
                 setLenght_plus(supportClass.CountCorrectSeqLen(lenght_plus_com));
-
                     lenght_minus_com.add(keyWord_lenght);
-                    setLenght_minus(supportClass.countWordMinus(lenght_minus_com));
-                    Log.d("uuui", String.valueOf(getLenght_plus()));
+                    setLenght_minus_minus(supportClass.countWordMinus(lenght_minus_com));
+
+                    Log.d("uuui_plus", String.valueOf(getLenght_plus()));
     } //Если я читаю это секйчас, пожалуйста, не думай зачем я это все писал. Главное, что это работает
+
+    protected void howLenght_minus(String keyWord_lenght){
+        lenght_minus_com.add(keyWord_lenght);
+        setLenght_minus_minus(supportClass.countWordMinus(lenght_minus_com));
+
+        Log.d("uuui_minus", String.valueOf(getLenght_minus_minus()));
+    } //Если я читаю это секйчас, пожалуйста, не думай зачем я это все писа
+
 
     @SuppressLint("SetTextI18n")
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -1107,6 +1117,7 @@ public class GameStart extends AppCompatActivity  {
             HowScore(ArrayListWord.length); // Передача ОЧКОВ
             HowLenght(ArrayListWord.length);
                     howLenght_plus(KeyWord);
+                    howLenght_minus(KeyWord);
             Switch_answer().add(KeyWord);
             setCounter(getCounter()+1);
             setExp(getExp()+4);
@@ -1228,7 +1239,6 @@ public class GameStart extends AppCompatActivity  {
 
         AddDB();
         SaveText();
-//        Save_lenght_plus();
         WriteWrong();
 
             AddDB_lenght();
@@ -2364,7 +2374,7 @@ public class GameStart extends AppCompatActivity  {
 
 
         text_plus.setText(text_plus_lenght + getLenght_plus());
-        text_minus.setText(text_minus_lenght + getLenght_minus());
+        text_minus.setText(text_minus_lenght + getLenght_minus_minus());
 
         OptionDialog.setView(v);
         OptionDialog.setCancelable(true);
@@ -2501,7 +2511,7 @@ public class GameStart extends AppCompatActivity  {
 
     //---работа с таблицей длинны слов букв
         public void AddDB_lenght(){
-        String  b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus;
+        String  b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus, b_minus;
         b3 = String.valueOf(getList_3());
         b4 = String.valueOf(getList_4());
         b5 = String.valueOf(getList_5());
@@ -2515,7 +2525,9 @@ public class GameStart extends AppCompatActivity  {
         b13 = String.valueOf(getList_13());
         b14 = String.valueOf(getList_14());
             b_plus = String.valueOf(getLenght_plus());
-            dbHelper.WriteDB_lenght(b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus);
+            b_minus = String.valueOf(getLenght_minus_minus());
+
+            dbHelper.WriteDB_lenght(b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus, b_minus);
     }
         public void ReadfromDB_lenght() {
             dbHelper.ReadDB_lenght();
@@ -2532,6 +2544,7 @@ public class GameStart extends AppCompatActivity  {
                 setList_13(dbHelper.getLENGHT_13());
                 setList_14(dbHelper.getLENGHT_14());
                     setLenght_plus(dbHelper.getLENGHT_PLUS());
+                    setLenght_minus_minus(dbHelper.getLENGHT_MINUS());
 
             achivites();
         } // прочесть последнюю запись
