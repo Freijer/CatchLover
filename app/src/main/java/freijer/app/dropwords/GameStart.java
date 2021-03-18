@@ -245,19 +245,10 @@ public class GameStart extends AppCompatActivity  {
 
     //Не правильные ответы
     ListView Wrong_answer_1;
-    ListView Wrong_answer_2;
-    ListView Wrong_answer_3;
-    ListView Wrong_answer_4;
 
     ArrayList<String> Wrong_list_1;
-    ArrayList<String> Wrong_list_2;
-    ArrayList<String> Wrong_list_3;
-    ArrayList<String> Wrong_list_4;
 
     ArrayAdapter<String> adapter_wrong_1;
-    ArrayAdapter<String> adapter_wrong_2;
-    ArrayAdapter<String> adapter_wrong_3;
-    ArrayAdapter<String> adapter_wrong_4;
     //
 
     ArrayList<String> bufferReadList;
@@ -303,7 +294,7 @@ public class GameStart extends AppCompatActivity  {
 
     TextView mis_1, mis_2, mis_3;
     protected ProgressBar progressBar;
-    protected TextView lvlview, textClock, score, text_plus, text_minus;
+    protected TextView lvlview, textClock, score, text_plus, text_minus, thisWordShow;
     protected TextView textLvl, textScore, tryChange, clock;
     protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button  quest;
@@ -568,9 +559,7 @@ public class GameStart extends AppCompatActivity  {
         thru_list_4 = new ArrayList<>();
 
         Wrong_list_1 = new ArrayList<>();
-        Wrong_list_2 = new ArrayList<>();
-        Wrong_list_3 = new ArrayList<>();
-        Wrong_list_4 = new ArrayList<>();
+
 
         ChekOut = findViewById(R.id.ChekOut);
 
@@ -616,11 +605,7 @@ public class GameStart extends AppCompatActivity  {
 
         ClockWork();
 
-//        try {
-////            Load_Lenght_plus();
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
+
     }
 
 
@@ -922,7 +907,6 @@ public class GameStart extends AppCompatActivity  {
         SetLiteralsonButtons(); //установка букв на слова
         Creates(); //активация и движеение кнопок
 
-        supportClass.Gos();
         ShowButtons();
         starter.setVisibility(GONE);
 
@@ -941,9 +925,7 @@ public class GameStart extends AppCompatActivity  {
         thru_list_4.clear();
 
         Wrong_list_1.clear();
-        Wrong_list_2.clear();
-        Wrong_list_3.clear();
-        Wrong_list_4.clear();
+
 
         progressBar.setProgress(getCounter());
 
@@ -1240,9 +1222,7 @@ public class GameStart extends AppCompatActivity  {
         AddDB();
         SaveText();
         WriteWrong();
-
             AddDB_lenght();
-
 
         achivites();
 
@@ -1277,10 +1257,6 @@ public class GameStart extends AppCompatActivity  {
     public void onClickStop() {
         running = false;
     } //стоп, пауза
-    public void onClickReset() {
-       // running = false;
-        seconds = 0;
-    } // сброс
     //-------------
 
     protected void ActivatePrBar () {
@@ -1953,9 +1929,9 @@ public class GameStart extends AppCompatActivity  {
 
 
 
-                                         public void achivites() {
+    public void achivites() {
 
-        switch (getList_3()) {
+                                             switch (getList_3()) {
             case 3:
                 taskList.add("Слово из 3 букв собранно 3 раза");
                 Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
@@ -2003,7 +1979,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 4 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_5()) {
                                                  case 2:
                                                      taskList.add("Слово из 5 букв собранно 2 раза");
@@ -2031,7 +2006,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 5 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_6()) {
                                                  case 2:
                                                      taskList.add("Слово из 6 букв собранно 2 раза");
@@ -2059,7 +2033,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 6 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_7()) {
                                                  case 1:
                                                      taskList.add("Слово из 7 букв собранно 1 раза");
@@ -2090,7 +2063,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 7 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_8()) {
                                                  case 1:
                                                      taskList.add("Слово из 8 букв собранно 1 раза");
@@ -2121,7 +2093,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 8 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_9()) {
                                                  case 1:
                                                      taskList.add("Слово из 9 букв собранно 1 раза");
@@ -2152,7 +2123,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 9 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_10()) {
                                                  case 1:
                                                      taskList.add("Слово из 10 букв собранно 1 раза");
@@ -2183,7 +2153,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 10 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_11()) {
                                                  case 1:
                                                      taskList.add("Слово из 11 букв собранно 1 раза");
@@ -2214,7 +2183,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 11 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_12()) {
                                                  case 1:
                                                      taskList.add("Слово из 12 букв собранно 1 раза");
@@ -2245,7 +2213,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 12 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_13()) {
                                                  case 1:
                                                      taskList.add("Слово из 13 букв собранно 1 раза");
@@ -2276,7 +2243,6 @@ public class GameStart extends AppCompatActivity  {
                                                      taskList.add("Слово из 13 букв собранно 100 раз");
                                                      break;
                                              }
-
                                              switch (getList_14()) {
                                                  case 1:
                                                      taskList.add("Слово из 14 букв собранно 1 раза");
@@ -2309,175 +2275,155 @@ public class GameStart extends AppCompatActivity  {
                                              }
     }
 
-
-    public void Dialogus(){                                     // сохранять это в тхт
-
-
-
-        LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View v = li.inflate(R.layout.stats_fragment, null, false);
-
-        taskDoneList = v.findViewById(R.id.taskDoneList);
-
-        OptionDialog = new AlertDialog.Builder(this).create();
-        OptionDialog.setTitle("Статистика");
-
-        adapterDone = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, taskList);
-        taskDoneList.setAdapter(adapterDone);
+        public void Dialogus(){                                     // сохранять это в тхт
 
 
 
-        setNumber_word_3(getList_3());
-        setNumber_word_4(getList_4());
-        setNumber_word_5(getList_5());
-        setNumber_word_6(getList_6());
-        setNumber_word_7(getList_7());
-        setNumber_word_8(getList_8());
-        setNumber_word_9(getList_9());
-        setNumber_word_10(getList_10());
+            LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = li.inflate(R.layout.stats_fragment, null, false);
 
-        butClose =  v.findViewById(R.id.butClose);
+            taskDoneList = v.findViewById(R.id.taskDoneList);
 
-        text_3_inner = v.findViewById(R.id.text_3_inner);
-        text_4_inner = v.findViewById(R.id.text_4_inner);
-        text_5_inner = v.findViewById(R.id.text_5_inner);
-        text_6_inner = v.findViewById(R.id.text_6_inner);
-        text_7_inner = v.findViewById(R.id.text_7_inner);
-        text_8_inner = v.findViewById(R.id.text_8_inner);
-        text_9_inner = v.findViewById(R.id.text_9_inner);
-        text_10_inner = v.findViewById(R.id.text_10_inner);
-        text_11_inner = v.findViewById(R.id.text_11_inner);
-        text_12_inner = v.findViewById(R.id.text_12_inner);
-        text_13_inner = v.findViewById(R.id.text_13_inner);
-        text_14_inner = v.findViewById(R.id.text_14_inner);
+            OptionDialog = new AlertDialog.Builder(this).create();
+            OptionDialog.setTitle("Статистика");
+
+            adapterDone = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskList);
+            taskDoneList.setAdapter(adapterDone);
 
 
-        text_plus = v.findViewById(R.id.text_plus);
-        text_minus = v.findViewById(R.id.text_minus);
 
-        text_3_inner.setText(String.valueOf(getList_3()));
-        text_4_inner.setText(String.valueOf(getList_4()));
-        text_5_inner.setText(String.valueOf(getList_5()));
-        text_6_inner.setText(String.valueOf(getList_6()));
-        text_7_inner.setText(String.valueOf(getList_7()));
-        text_8_inner.setText(String.valueOf(getList_8()));
-        text_9_inner.setText(String.valueOf(getList_9()));
-        text_10_inner.setText(String.valueOf(getList_10()));
-        text_11_inner.setText(String.valueOf(getList_11()));
-        text_12_inner.setText(String.valueOf(getList_12()));
-        text_13_inner.setText(String.valueOf(getList_13()));
-        text_14_inner.setText(String.valueOf(getList_14()));
+            setNumber_word_3(getList_3());
+            setNumber_word_4(getList_4());
+            setNumber_word_5(getList_5());
+            setNumber_word_6(getList_6());
+            setNumber_word_7(getList_7());
+            setNumber_word_8(getList_8());
+            setNumber_word_9(getList_9());
+            setNumber_word_10(getList_10());
+
+            butClose =  v.findViewById(R.id.butClose);
+
+            text_3_inner = v.findViewById(R.id.text_3_inner);
+            text_4_inner = v.findViewById(R.id.text_4_inner);
+            text_5_inner = v.findViewById(R.id.text_5_inner);
+            text_6_inner = v.findViewById(R.id.text_6_inner);
+            text_7_inner = v.findViewById(R.id.text_7_inner);
+            text_8_inner = v.findViewById(R.id.text_8_inner);
+            text_9_inner = v.findViewById(R.id.text_9_inner);
+            text_10_inner = v.findViewById(R.id.text_10_inner);
+            text_11_inner = v.findViewById(R.id.text_11_inner);
+            text_12_inner = v.findViewById(R.id.text_12_inner);
+            text_13_inner = v.findViewById(R.id.text_13_inner);
+            text_14_inner = v.findViewById(R.id.text_14_inner);
 
 
-        text_plus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на +1 букву: ";
-        text_minus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово короче предыдущего на -1 букву: ";
+            text_plus = v.findViewById(R.id.text_plus);
+            text_minus = v.findViewById(R.id.text_minus);
+
+            text_3_inner.setText(String.valueOf(getList_3()));
+            text_4_inner.setText(String.valueOf(getList_4()));
+            text_5_inner.setText(String.valueOf(getList_5()));
+            text_6_inner.setText(String.valueOf(getList_6()));
+            text_7_inner.setText(String.valueOf(getList_7()));
+            text_8_inner.setText(String.valueOf(getList_8()));
+            text_9_inner.setText(String.valueOf(getList_9()));
+            text_10_inner.setText(String.valueOf(getList_10()));
+            text_11_inner.setText(String.valueOf(getList_11()));
+            text_12_inner.setText(String.valueOf(getList_12()));
+            text_13_inner.setText(String.valueOf(getList_13()));
+            text_14_inner.setText(String.valueOf(getList_14()));
 
 
-        text_plus.setText(text_plus_lenght + getLenght_plus());
-        text_minus.setText(text_minus_lenght + getLenght_minus_minus());
+            text_plus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на +1 букву: ";
+            text_minus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово короче предыдущего на -1 букву: ";
 
-        OptionDialog.setView(v);
-        OptionDialog.setCancelable(true);
 
-        butClose.setBackgroundColor(Color.CYAN);
-        butClose.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                onClickStart();
-                OptionDialog.dismiss();
+            text_plus.setText(text_plus_lenght + getLenght_plus());
+            text_minus.setText(text_minus_lenght + getLenght_minus_minus());
+
+            OptionDialog.setView(v);
+            OptionDialog.setCancelable(true);
+
+            butClose.setBackgroundColor(Color.CYAN);
+            butClose.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    onClickStart();
+                    OptionDialog.dismiss();
+                }
+
+            });
+
+            OptionDialog.show();
+        }  // окно статистика
+        public void TaskDialog(){
+            TaskDialog = new AlertDialog.Builder(this).create();
+            LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            View v = tasks.inflate(R.layout.task_fragment, null, false);
+            butCloseTask =  v.findViewById(R.id.butCloseTask);
+
+
+            thisWordShow = v.findViewById(R.id.thisWordShow);
+            Thru_answer_1 = v.findViewById(R.id.Thru_answer_1);
+            Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
+            Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
+            Thru_answer_4 = v.findViewById(R.id.Thru_answer_4);
+            adapter_thru_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_1);
+            adapter_thru_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_2);
+            adapter_thru_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_3);
+            adapter_thru_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_4);
+            Thru_answer_1.setAdapter(adapter_thru_1);
+            Thru_answer_2.setAdapter(adapter_thru_2);
+            Thru_answer_3.setAdapter(adapter_thru_3);
+            Thru_answer_4.setAdapter(adapter_thru_4);
+
+            Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
+            adapter_wrong_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_1);
+            Wrong_answer_1.setAdapter(adapter_wrong_1);
+
+
+
+            TaskDialog.setView(v);
+            TaskDialog.setCancelable(true);
+
+            butCloseTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onClickStart();
+                    TaskDialog.dismiss();
+                }
+            });
+
+            thisWordShow.setText(getControl());
+
+            if (getControl().equalsIgnoreCase("котлисаслон")) {
+                Thru_answer_1.setVisibility(View.VISIBLE);
+                Thru_answer_2.setVisibility(View.GONE);
+                Thru_answer_3.setVisibility(View.GONE);
+                Thru_answer_4.setVisibility(View.GONE);
+                Wrong_answer_1.setVisibility(View.VISIBLE);
+            } else if (getControl().equalsIgnoreCase("распределитель")) {
+                Thru_answer_1.setVisibility(View.GONE);
+                Thru_answer_2.setVisibility(View.VISIBLE);
+                Thru_answer_3.setVisibility(View.GONE);
+                Thru_answer_4.setVisibility(View.GONE);
+                Wrong_answer_1.setVisibility(View.VISIBLE);
+            } else if (getControl().equalsIgnoreCase("стенографистка")) {
+                Thru_answer_1.setVisibility(View.GONE);
+                Thru_answer_2.setVisibility(View.GONE);
+                Thru_answer_3.setVisibility(View.VISIBLE);
+                Thru_answer_4.setVisibility(View.GONE);
+                Wrong_answer_1.setVisibility(View.VISIBLE);
+            } else if (getControl().equalsIgnoreCase("простокваша")) {
+                Thru_answer_1.setVisibility(View.GONE);
+                Thru_answer_2.setVisibility(View.GONE);
+                Thru_answer_3.setVisibility(View.GONE);
+                Thru_answer_4.setVisibility(View.VISIBLE);
+                Wrong_answer_1.setVisibility(View.VISIBLE);
             }
+            TaskDialog.show();
 
-        });
-
-        OptionDialog.show();
-    }  // окно статистика
-    public void TaskDialog(){
-        TaskDialog = new AlertDialog.Builder(this).create();
-        LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View v = tasks.inflate(R.layout.task_fragment, null, false);
-        butCloseTask =  v.findViewById(R.id.butCloseTask);
-
-
-
-        Thru_answer_1 = v.findViewById(R.id.Thru_answer_1);
-        Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
-        Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
-        Thru_answer_4 = v.findViewById(R.id.Thru_answer_4);
-        adapter_thru_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_1);
-        adapter_thru_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_2);
-        adapter_thru_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_3);
-        adapter_thru_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_4);
-        Thru_answer_1.setAdapter(adapter_thru_1);
-        Thru_answer_2.setAdapter(adapter_thru_2);
-        Thru_answer_3.setAdapter(adapter_thru_3);
-        Thru_answer_4.setAdapter(adapter_thru_4);
-
-        Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
-        Wrong_answer_2 = v.findViewById(R.id.Wrong_answer_2);
-        Wrong_answer_3 = v.findViewById(R.id.Wrong_answer_3);
-        Wrong_answer_4 = v.findViewById(R.id.Wrong_answer_4);
-        adapter_wrong_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_1);
-        adapter_wrong_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_2);
-        adapter_wrong_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_3);
-        adapter_wrong_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_4);
-        Wrong_answer_1.setAdapter(adapter_wrong_1);
-        Wrong_answer_2.setAdapter(adapter_wrong_2);
-        Wrong_answer_3.setAdapter(adapter_wrong_3);
-        Wrong_answer_4.setAdapter(adapter_wrong_4);
-
-
-        TaskDialog.setView(v);
-        TaskDialog.setCancelable(true);
-
-        butCloseTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickStart();
-                TaskDialog.dismiss();
-            }
-        });
-
-        if (getControl().equalsIgnoreCase("котлисаслон")) {
-            Thru_answer_1.setVisibility(View.VISIBLE);
-            Thru_answer_2.setVisibility(View.GONE);
-            Thru_answer_3.setVisibility(View.GONE);
-            Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.VISIBLE);
-            Wrong_answer_2.setVisibility(View.GONE);
-            Wrong_answer_3.setVisibility(View.GONE);
-            Wrong_answer_4.setVisibility(View.GONE);
-        } else if (getControl().equalsIgnoreCase("распределитель")) {
-            Thru_answer_1.setVisibility(View.GONE);
-            Thru_answer_2.setVisibility(View.VISIBLE);
-            Thru_answer_3.setVisibility(View.GONE);
-            Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.GONE);
-            Wrong_answer_2.setVisibility(View.VISIBLE);
-            Wrong_answer_3.setVisibility(View.GONE);
-            Wrong_answer_4.setVisibility(View.GONE);
-        } else if (getControl().equalsIgnoreCase("стенографистка")) {
-            Thru_answer_1.setVisibility(View.GONE);
-            Thru_answer_2.setVisibility(View.GONE);
-            Thru_answer_3.setVisibility(View.VISIBLE);
-            Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.GONE);
-            Wrong_answer_2.setVisibility(View.GONE);
-            Wrong_answer_3.setVisibility(View.VISIBLE);
-            Wrong_answer_4.setVisibility(View.GONE);
-        } else if (getControl().equalsIgnoreCase("простокваша")) {
-            Thru_answer_1.setVisibility(View.GONE);
-            Thru_answer_2.setVisibility(View.GONE);
-            Thru_answer_3.setVisibility(View.GONE);
-            Thru_answer_4.setVisibility(View.VISIBLE);
-            Wrong_answer_1.setVisibility(View.GONE);
-            Wrong_answer_2.setVisibility(View.GONE);
-            Wrong_answer_3.setVisibility(View.GONE);
-            Wrong_answer_4.setVisibility(View.VISIBLE);
-        }
-        TaskDialog.show();
-
-    }  // список собранных слов
-
+        }  // список собранных слов
 
     public void AddDB()   {
         String a1, a2, a3;
@@ -2546,7 +2492,7 @@ public class GameStart extends AppCompatActivity  {
                     setLenght_plus(dbHelper.getLENGHT_PLUS());
                     setLenght_minus_minus(dbHelper.getLENGHT_MINUS());
 
-            achivites();
+         //   achivites();
         } // прочесть последнюю запись
     //--
 
@@ -2630,15 +2576,7 @@ public class GameStart extends AppCompatActivity  {
     }
     //-------
     public List<String> Wrong_Switch_answer() {
-            if (getControl().equalsIgnoreCase("котлисаслон")) {
                 this.WrongSwitch = Wrong_list_1;
-            } else if (getControl().equalsIgnoreCase("распределитель")) {
-                this.WrongSwitch = Wrong_list_2;
-            } else if (getControl().equalsIgnoreCase("стенографистка")) {
-                this.WrongSwitch = Wrong_list_3;
-            } else if (getControl().equalsIgnoreCase("простокваша")) {
-                this.WrongSwitch = Wrong_list_4;
-            }
             return this.WrongSwitch;
     }
     private String array2strWrong(List<String> strings){
@@ -2650,15 +2588,7 @@ public class GameStart extends AppCompatActivity  {
     } //запись в тхт НЕ ВЕРНО
     public void WriteWrong(){
         myText = array2strWrong(Wrong_Switch_answer());
-        if (getControl().equalsIgnoreCase("котлисаслон")) {
             this.writeWrong = "text_wrong_dio_1.txt";
-        } else if (getControl().equalsIgnoreCase("распределитель")) {
-            this.writeWrong = "text_wrong_dio_2.txt";
-        } else if (getControl().equalsIgnoreCase("стенографистка")) {
-            this.writeWrong = "text_wrong_dio_3.txt";
-        } else if (getControl().equalsIgnoreCase("простокваша")) {
-            this.writeWrong = "text_wrong_dio_4.txt";
-        }
         try {
             outputStream = openFileOutput(writeWrong, MODE_PRIVATE);
             outputStream.write(myText.getBytes());
@@ -2669,15 +2599,8 @@ public class GameStart extends AppCompatActivity  {
     } //запись в тхт
     public void ReadFromTxtWrong(){
         String lineWrong;
-        if (getControl().equalsIgnoreCase("котлисаслон")) {
             this.readWrong = "text_wrong_dio_1.txt";
-        } else if (getControl().equalsIgnoreCase("распределитель")) {
-            this.readWrong = "text_wrong_dio_2.txt";
-        } else if (getControl().equalsIgnoreCase("стенографистка")) {
-            this.readWrong = "text_wrong_dio_3.txt";
-        } else if (getControl().equalsIgnoreCase("простокваша")) {
-            this.readWrong = "text_wrong_dio_4.txt";
-        }
+
         try {
             FileInputStream in = openFileInput(readWrong);
             InputStreamReader inputStreamReader = new InputStreamReader(in);
@@ -2689,11 +2612,11 @@ public class GameStart extends AppCompatActivity  {
                 if (getControl().equalsIgnoreCase("котлисаслон")) {
                     Wrong_list_1.add(lineWrong);
                 } else if (getControl().equalsIgnoreCase("распределитель")) {
-                    Wrong_list_2.add(lineWrong);
+                    Wrong_list_1.add(lineWrong);
                 } else if (getControl().equalsIgnoreCase("стенографистка")) {
-                    Wrong_list_3.add(lineWrong);
+                    Wrong_list_1.add(lineWrong);
                 } else if (getControl().equalsIgnoreCase("простокваша")) {
-                    Wrong_list_4.add(lineWrong);
+                    Wrong_list_1.add(lineWrong);
                 }
                 inputStreamReader.close();
             }
@@ -2701,49 +2624,7 @@ public class GameStart extends AppCompatActivity  {
             e.printStackTrace();
         }
     }
-    //-------
 
-
-    //-----сохранение-чтение статистики
-//    public void saveText_number_lenght() {
-//        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
-//        SharedPreferences.Editor ed = sPref.edit();
-//        ed.putString(SAVED_TEXT, text_plus_lenght);
-//        ed.commit();
-//    }
-//    public void loadText_number_lenght() {
-//        sPref = getSharedPreferences("MyPref", MODE_PRIVATE);
-//        String savedText = sPref.getString(SAVED_TEXT, "");
-//        text_plus_lenght = savedText;
-//    }
-
-//    public void Save_lenght_plus()  {
-////        //String buf_plus = String.valueOf(getLenght_plus());
-////       try {
-////            outputStream = openFileOutput("txt_plus.txt", MODE_PRIVATE);
-////            outputStream.write(buf_plus.getBytes());
-////            outputStream.close();
-////        } catch (Exception e) {
-////            e.printStackTrace();                   //если КОТЛИСАСЛОН - запись в файл кот.тхт, если другое, то в другое.тхт и показ того же списка.
-////        }
-//    } //запись в тхт
-//    public void Load_Lenght_plus() throws IOException {
-//        String line;
-//       try {
-//            FileInputStream in = openFileInput("txt_plus.txt");
-//            InputStreamReader inputStreamReader = new InputStreamReader(in);
-//            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//            StringBuilder sb = new StringBuilder();
-//            while ((line = bufferedReader.readLine()) != null) {
-//                sb.append(line);
-//
-//               Log.d("RRR", String.valueOf(getLenght_plus()));
-//                inputStreamReader.close();
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
     @Override

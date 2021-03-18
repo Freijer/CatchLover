@@ -11,5 +11,6 @@
     <color name="back_2">#5BEDCC</color>
     <color name="back_3">#EFA561</color>
 
-
+    <color name="colorCard">#80D8FF</color>
+    <color name="colorCardBack">#7C7E7D</color>
 </resources>
