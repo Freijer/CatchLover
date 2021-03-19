@@ -465,7 +465,7 @@ public class GameStart extends AppCompatActivity  {
         this.tryChenge = tryChenge;
     }
 
-    protected TextView text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner, text_11_inner, text_12_inner, text_13_inner, text_14_inner;
+    protected TextView text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner, text_11_inner, text_12_inner, text_13_inner, text_14_inner, text_sum, text_sum_inner;
 
     public Point viewLocatedAt(View v) {
         int[] location = new int[2];
@@ -2275,6 +2275,7 @@ public class GameStart extends AppCompatActivity  {
                                              }
     }
 
+        @SuppressLint("SetTextI18n")
         public void Dialogus(){                                     // сохранять это в тхт
 
 
@@ -2315,6 +2316,7 @@ public class GameStart extends AppCompatActivity  {
             text_12_inner = v.findViewById(R.id.text_12_inner);
             text_13_inner = v.findViewById(R.id.text_13_inner);
             text_14_inner = v.findViewById(R.id.text_14_inner);
+            text_sum_inner= v.findViewById(R.id.text_sum_inner);
 
 
             text_plus = v.findViewById(R.id.text_plus);
@@ -2332,6 +2334,8 @@ public class GameStart extends AppCompatActivity  {
             text_12_inner.setText(String.valueOf(getList_12()));
             text_13_inner.setText(String.valueOf(getList_13()));
             text_14_inner.setText(String.valueOf(getList_14()));
+                String sumWords = String.valueOf(getList_3()+getList_4()+getList_5()+getList_6()+getList_7()+getList_8()+getList_9()+getList_10()+getList_11()+getList_12()+getList_13()+getList_14());
+            text_sum_inner.setText(sumWords);
 
 
             text_plus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на +1 букву: ";

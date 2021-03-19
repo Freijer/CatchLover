@@ -33,7 +33,7 @@
                 android:text=""
                 android:textSize="11sp" />
 
-                    android:layout_toEndOf="@id/text_3"/>
+
                     <TextView
                         android:id="@+id/text_4"
                         android:layout_width="wrap_content"
@@ -221,10 +221,29 @@
                                                                 android:textSize="11sp"
                                                                 android:layout_below="@id/text_13_inner"
                                                                 android:layout_toEndOf="@id/text_14"/>
+                                                                    <TextView
+                                                                        android:id="@+id/text_sum"
+                                                                        android:layout_width="wrap_content"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center"
+                                                                        android:text="Всего слов  "
+                                                                        android:textSize="11sp"
+                                                                        android:layout_below="@id/text_14_inner"/>
+
+                                                                    <TextView
+                                                                        android:id="@+id/text_sum_inner"
+                                                                        android:layout_width="50dp"
+                                                                        android:layout_height="wrap_content"
+                                                                        android:gravity="center"
+                                                                        android:text=""
+                                                                        android:textSize="11sp"
+                                                                        android:layout_below="@id/text_14_inner"
+                                                                        android:layout_toEndOf="@id/text_sum"/>
 
     </RelativeLayout>
 
         <RelativeLayout
+         android:id="@+id/timerLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
@@ -236,42 +255,35 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/back_2"/>
+
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/time_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/taskDoneList"
         android:layout_below="@+id/allLists"
         android:layout_centerHorizontal="true">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="2">
 
             <TextView
                 android:id="@+id/text_plus"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:background="@color/back_3"
                 android:textColor="@color/black"
-                android:layout_weight="1"/>
-
-        <TextView
+                android:textSize="10sp"/>
+            <TextView
             android:id="@+id/text_minus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40sp"
             android:layout_margin="10dp"
             android:background="@color/back_1"
             android:textColor="@color/black"
             android:layout_below="@+id/text_plus"
-            android:layout_weight="1"/>
+            android:textSize="10sp"/>
 
-        </LinearLayout>
 
     </RelativeLayout>
 
@@ -284,7 +296,9 @@
         android:layout_marginEnd="20dp"
         android:layout_centerHorizontal="true"
         android:background="@android:color/holo_blue_light"
+        android:layout_below="@+id/time_layout"
         android:layout_above="@+id/butClose" />
+
     <Button
         android:id="@+id/butClose"
         android:layout_width="wrap_content"
@@ -293,6 +307,7 @@
         android:onClick="Close"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+
         android:text="Закрыть" />
 
 </RelativeLayout>
