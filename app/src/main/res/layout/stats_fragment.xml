@@ -5,15 +5,25 @@
     android:layout_height="match_parent">
 
 
-    <RelativeLayout
-        android:id="@+id/allLists"
+    <TextView
+       android:id="@+id/head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:text="@string/Statistics"
+        android:layout_alignParentTop="true"/>
+
+    <RelativeLayout
+        android:id="@+id/allLists"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
         android:orientation="vertical"
         android:layout_alignParentStart="true"
-        android:textColor="@color/black">
+        android:textColor="@color/black"
+        android:layout_below="@+id/head">
 
 
             <TextView
@@ -26,14 +36,12 @@
                 android:layout_alignParentTop="true"/>
             <TextView
                 android:id="@+id/text_3_inner"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/text_3"
                 android:gravity="center"
                 android:text=""
                 android:textSize="11sp" />
-
-
                     <TextView
                         android:id="@+id/text_4"
                         android:layout_width="wrap_content"
@@ -44,7 +52,7 @@
                         android:layout_below="@id/text_3"/>
                     <TextView
                         android:id="@+id/text_4_inner"
-                        android:layout_width="50dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text=""
@@ -61,7 +69,7 @@
                             android:layout_below="@id/text_4"/>
                         <TextView
                             android:id="@+id/text_5_inner"
-                            android:layout_width="50dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text=""
@@ -78,7 +86,7 @@
                                 android:layout_below="@id/text_5"/>
                             <TextView
                                 android:id="@+id/text_6_inner"
-                                android:layout_width="50dp"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:text=""
@@ -95,7 +103,7 @@
                                     android:layout_below="@id/text_6"/>
                                 <TextView
                                     android:id="@+id/text_7_inner"
-                                    android:layout_width="50dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:text=""
@@ -112,7 +120,7 @@
                                         android:layout_below="@id/text_7"/>
                                     <TextView
                                         android:id="@+id/text_8_inner"
-                                        android:layout_width="50dp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
                                         android:text=""
@@ -129,7 +137,7 @@
                                             android:layout_below="@id/text_8"/>
                                         <TextView
                                             android:id="@+id/text_9_inner"
-                                            android:layout_width="50dp"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:gravity="center"
                                             android:text=""
@@ -146,7 +154,7 @@
                                                 android:layout_below="@id/text_9"/>
                                             <TextView
                                                 android:id="@+id/text_10_inner"
-                                                android:layout_width="50dp"
+                                                android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:gravity="center"
                                                 android:text=""
@@ -163,7 +171,7 @@
                                                     android:layout_below="@id/text_10"/>
                                                 <TextView
                                                     android:id="@+id/text_11_inner"
-                                                    android:layout_width="50dp"
+                                                    android:layout_width="match_parent"
                                                     android:layout_height="wrap_content"
                                                     android:gravity="center"
                                                     android:text=""
@@ -180,7 +188,7 @@
                                                         android:layout_below="@id/text_11"/>
                                                     <TextView
                                                         android:id="@+id/text_12_inner"
-                                                        android:layout_width="50dp"
+                                                        android:layout_width="match_parent"
                                                         android:layout_height="wrap_content"
                                                         android:gravity="center"
                                                         android:text=""
@@ -197,7 +205,7 @@
                                                             android:layout_below="@id/text_12"/>
                                                         <TextView
                                                             android:id="@+id/text_13_inner"
-                                                            android:layout_width="50dp"
+                                                            android:layout_width="match_parent"
                                                             android:layout_height="wrap_content"
                                                             android:gravity="center"
                                                             android:text=""
@@ -214,7 +222,7 @@
                                                                 android:layout_below="@id/text_13"/>
                                                             <TextView
                                                                 android:id="@+id/text_14_inner"
-                                                                android:layout_width="50dp"
+                                                                android:layout_width="match_parent"
                                                                 android:layout_height="wrap_content"
                                                                 android:gravity="center"
                                                                 android:text=""
@@ -229,10 +237,9 @@
                                                                         android:text="Всего слов  "
                                                                         android:textSize="11sp"
                                                                         android:layout_below="@id/text_14_inner"/>
-
                                                                     <TextView
                                                                         android:id="@+id/text_sum_inner"
-                                                                        android:layout_width="50dp"
+                                                                        android:layout_width="match_parent"
                                                                         android:layout_height="wrap_content"
                                                                         android:gravity="center"
                                                                         android:text=""
@@ -242,19 +249,22 @@
 
     </RelativeLayout>
 
-        <RelativeLayout
-         android:id="@+id/timerLayout"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/timerLayout"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
+        android:layout_marginEnd="5dp"
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/time_layout"
-        android:layout_toRightOf="@+id/allLists">
+        android:layout_toEndOf="@+id/allLists"
+        android:layout_below="@+id/head">
 
         <EditText
             android:text="статистика  чего-то там работа с тмаймером"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/back_2"/>
+            android:background="@color/back_2"
+            android:gravity="center"/>
 
     </RelativeLayout>
 
@@ -262,6 +272,8 @@
         android:id="@+id/time_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
         android:layout_below="@+id/allLists"
         android:layout_centerHorizontal="true">
 
@@ -286,7 +298,6 @@
 
 
     </RelativeLayout>
-
 
     <ListView
         android:id="@+id/taskDoneList"

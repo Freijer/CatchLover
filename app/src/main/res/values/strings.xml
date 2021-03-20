@@ -6,6 +6,8 @@
     <string name="Start_the_Game">Начать игру</string>
     <string name="Settings">Параметры игры</string>
 
+    <string name="Statistics">Статистика</string>
+
 
     <string name="Speed">Скорость</string>
     <string name="Total_reset">Сбросить прогресс</string>
