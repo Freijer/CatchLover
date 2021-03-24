@@ -255,59 +255,46 @@
         android:layout_height="match_parent"
         android:layout_marginEnd="5dp"
         android:layout_alignParentEnd="true"
-        android:layout_above="@+id/time_layout"
+        android:layout_above="@+id/recycler_view"
         android:layout_toEndOf="@+id/allLists"
         android:layout_below="@+id/head">
-
-        <EditText
-            android:text="статистика  чего-то там работа с тмаймером"
+        <TextView
+            android:id="@+id/text_plus"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/back_2"
-            android:gravity="center"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/time_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_below="@+id/allLists"
-        android:layout_centerHorizontal="true">
-
-
-            <TextView
-                android:id="@+id/text_plus"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="10dp"
-                android:background="@color/back_3"
-                android:textColor="@color/black"
-                android:textSize="10sp"/>
-            <TextView
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/back_3"
+            android:textColor="@color/black"
+            android:padding="5dp"
+            android:textSize="10sp"/>
+        <TextView
             android:id="@+id/text_minus"
             android:layout_width="match_parent"
-            android:layout_height="40sp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@color/back_1"
             android:textColor="@color/black"
             android:layout_below="@+id/text_plus"
+            android:padding="5dp"
             android:textSize="10sp"/>
-
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/taskDoneList"
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
+        android:layout_height="match_parent"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+
         android:layout_centerHorizontal="true"
         android:background="@android:color/holo_blue_light"
-        android:layout_below="@+id/time_layout"
+        android:layout_below="@+id/allLists"
         android:layout_above="@+id/butClose" />
 
     <Button

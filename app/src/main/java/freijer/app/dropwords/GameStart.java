@@ -15,7 +15,21 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import androidx.recyclerview.widget.RecyclerView;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
@@ -309,13 +323,22 @@ public class GameStart extends AppCompatActivity  {
     protected RelativeLayout chars_layout;
 
 
-    protected ListView taskDoneList;
+    protected RecyclerView recycler_view;
+
+    private int img0, img1, img2, img3, img4, img5, img, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, im17, img18, img19, img20, img21, img22, img23, img324, img25, img26,
+    img27, img28, img29, img30, img31, img32, img33, img34, img35, img36, img37, img38, img39, img40, img41, img42, img43, img44, img45, img46, img47, img48, img49, img50 = R.drawable.star;
+
+    RecyclerViewAdapter adapter;
+    ArrayList<Model> myValues = new ArrayList<>();
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+
+
+
 
 
     protected TextView char_1, char_2, char_3, char_4, char_5, char_6, char_7, char_8, char_9, char_10, char_11, char_12, char_13, char_14;
     protected Button ChekOut;
-
-
     private int indexWord;
     private String word;
     private Random r = new Random();
@@ -604,7 +627,7 @@ public class GameStart extends AppCompatActivity  {
         }
 
         ClockWork();
-
+        createAdapterList();
 
     }
 
@@ -1224,8 +1247,8 @@ public class GameStart extends AppCompatActivity  {
         WriteWrong();
             AddDB_lenght();
 
-        achivites();
-
+        //achivites();
+        howAchivites();
 
     } //проверка
 
@@ -1917,9 +1940,31 @@ public class GameStart extends AppCompatActivity  {
                 break;
         }
     } //сброс кнопок
+
+    int a0 = 0;
+    int a1 = 0;
+    int a2 = 0;
+    int a3 = 0;
+    int a4 = 0;
+    int a5 = 0;
+
     public void ShowStats(View v){
        Dialogus();
        onClickStop();
+
+        img0 = a0;
+        adapter.setImage(img0);
+            img1 = a1;
+            adapter.setImage(img1);
+        img2 = a2;
+        adapter.setImage(img2);
+            img3 = a3;
+            adapter.setImage(img3);
+        img4 = a4;
+        adapter.setImage(img4);
+            img5 = a5;
+            adapter.setImage(img5);
+
     } //открытие статистики
     public void TaskShow(View v){
         TaskDialog();
@@ -1927,353 +1972,296 @@ public class GameStart extends AppCompatActivity  {
     } //кнопка открытия заадний
 
 
-
-
-    public void achivites() {
+    public void howAchivites(){
 
                                              switch (getList_3()) {
             case 3:
-                taskList.add("Слово из 3 букв собранно 3 раза");
-                Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+                a0 = 1;
                 break;
             case 10:
-                taskList.add("Слово из 3 букв собранно 10 раза");
+                a1 = 1;
                 break;
-            case 25:
-                taskList.add("Слово из 3 букв собранно 25 раз");
+            case 40:
+                a2 = 1;
                 break;
-            case 45:
-                taskList.add("Слово из 3 букв собранно 45 раза");
-                break;
-            case 60:
-                taskList.add("Слово из 3 букв собранно 60 раз");
-                break;
-            case 80:
-                taskList.add("Слово из 3 букв собранно 80 раз");
+            case 70:
+                a3 = 1;
                 break;
             case 100:
-                taskList.add("Слово из 3 букв собранно 100 раз");
+                a4 = 1;
                 break;
         }
-                                             switch (getList_4()) {
-                                                 case 3:
-                                                     taskList.add("Слово из 4 букв собранно 3 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 4 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 4 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 4 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 4 букв собранно 60 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 4 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 4 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_5()) {
-                                                 case 2:
-                                                     taskList.add("Слово из 5 букв собранно 2 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 5 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 5 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 5 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 5 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 5 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 5 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 5 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_6()) {
-                                                 case 2:
-                                                     taskList.add("Слово из 6 букв собранно 2 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 6 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 6 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 6 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 6 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 6 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 6 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 6 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_7()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 7 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 7 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 7 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 7 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 7 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 7 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 7 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 7 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 7 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_8()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 8 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 8 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 8 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 8 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 8 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 8 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 8 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 8 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 8 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_9()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 9 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 9 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 9 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 9 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 9 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 9 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 9 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 9 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 9 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_10()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 10 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 10 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 10 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 10 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 10 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 10 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 10 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 10 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 10 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_11()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 11 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 11 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 11 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 11 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 11 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 11 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 11 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 11 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 11 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_12()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 12 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 12 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 12 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 12 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 12 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 12 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 12 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 12 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 12 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_13()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 13 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 13 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 13 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 13 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 13 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 13 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 13 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 13 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 13 букв собранно 100 раз");
-                                                     break;
-                                             }
-                                             switch (getList_14()) {
-                                                 case 1:
-                                                     taskList.add("Слово из 14 букв собранно 1 раза");
-                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
-                                                     break;
-                                                 case 5:
-                                                     taskList.add("Слово из 14 букв собранно 5 раза");
-                                                     break;
-                                                 case 10:
-                                                     taskList.add("Слово из 14 букв собранно 10 раза");
-                                                     break;
-                                                 case 25:
-                                                     taskList.add("Слово из 14 букв собранно 25 раз");
-                                                     break;
-                                                 case 45:
-                                                     taskList.add("Слово из 14 букв собранно 45 раза");
-                                                     break;
-                                                 case 60:
-                                                     taskList.add("Слово из 14 букв собранно 60 раз");
-                                                     break;
-                                                 case 70:
-                                                     taskList.add("Слово из 14 букв собранно 70 раз");
-                                                     break;
-                                                 case 80:
-                                                     taskList.add("Слово из 14 букв собранно 80 раз");
-                                                     break;
-                                                 case 100:
-                                                     taskList.add("Слово из 14 букв собранно 100 раз");
-                                                     break;
-                                             }
     }
+
+
+
+//    public void achivites() {
+//            taskList.add("Войти в игру");
+//                                             switch (getList_3()) {
+//            case 3:
+//                taskList.add("Слово из 3 букв собранно 3 раза");
+//                Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                break;
+//            case 10:
+//                taskList.add("Слово из 3 букв собранно 10 раза");
+//                break;
+//            case 40:
+//                taskList.add("Слово из 3 букв собранно 40 раза");
+//                break;
+//            case 70:
+//                taskList.add("Слово из 3 букв собранно 70 раз");
+//                break;
+//            case 100:
+//                taskList.add("Слово из 3 букв собранно 100 раз");
+//                break;
+//        }
+//                                             switch (getList_4()) {
+//                                                 case 3:
+//                                                     taskList.add("Слово из 4 букв собранно 3 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 4 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 40:
+//                                                     taskList.add("Слово из 4 букв собранно 40 раз");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 4 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 4 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_5()) {
+//                                                 case 2:
+//                                                     taskList.add("Слово из 5 букв собранно 2 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 5 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 25:
+//                                                     taskList.add("Слово из 5 букв собранно 25 раз");
+//                                                     break;
+//                                                 case 50:
+//                                                     taskList.add("Слово из 5 букв собранно 50 раза");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 5 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 5 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 5 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_6()) {
+//                                                 case 2:
+//                                                     taskList.add("Слово из 6 букв собранно 2 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 6 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 25:
+//                                                     taskList.add("Слово из 6 букв собранно 25 раз");
+//                                                     break;
+//                                                 case 50:
+//                                                     taskList.add("Слово из 6 букв собранно 60 раз");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 6 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 6 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 6 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_7()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 7 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 5:
+//                                                     taskList.add("Слово из 7 букв собранно 5 раза");
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 7 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 45:
+//                                                     taskList.add("Слово из 7 букв собранно 45 раза");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 7 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 7 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 7 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_8()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 8 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 5:
+//                                                     taskList.add("Слово из 8 букв собранно 5 раза");
+//                                                     break;
+//                                                 case 25:
+//                                                     taskList.add("Слово из 8 букв собранно 25 раз");
+//                                                     break;
+//                                                 case 50:
+//                                                     taskList.add("Слово из 8 букв собранно 60 раз");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 8 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 8 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 8 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_9()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 9 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 5:
+//                                                     taskList.add("Слово из 9 букв собранно 5 раза");
+//                                                     break;
+//                                                 case 25:
+//                                                     taskList.add("Слово из 9 букв собранно 25 раз");
+//                                                     break;
+//                                                 case 45:
+//                                                     taskList.add("Слово из 9 букв собранно 45 раза");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 9 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 9 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 9 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_10()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 10 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 5:
+//                                                     taskList.add("Слово из 10 букв собранно 5 раза");
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 10 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 45:
+//                                                     taskList.add("Слово из 10 букв собранно 45 раза");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 10 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 10 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 10 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_11()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 11 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 11 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 25:
+//                                                     taskList.add("Слово из 11 букв собранно 25 раз");
+//                                                     break;
+//                                                 case 60:
+//                                                     taskList.add("Слово из 11 букв собранно 60 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 11 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 11 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_12()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 12 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 12 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 25:
+//                                                     taskList.add("Слово из 12 букв собранно 25 раз");
+//                                                     break;
+//                                                 case 60:
+//                                                     taskList.add("Слово из 12 букв собранно 60 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 12 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 12 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_13()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 13 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 13 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 45:
+//                                                     taskList.add("Слово из 13 букв собранно 45 раза");
+//                                                     break;
+//                                                 case 60:
+//                                                     taskList.add("Слово из 13 букв собранно 60 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 13 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 13 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//                                             switch (getList_14()) {
+//                                                 case 1:
+//                                                     taskList.add("Слово из 14 букв собранно 1 раза");
+//                                                     Toast.makeText(this, "Новое достижение!", Toast.LENGTH_SHORT).show();
+//                                                     break;
+//                                                 case 10:
+//                                                     taskList.add("Слово из 14 букв собранно 10 раза");
+//                                                     break;
+//                                                 case 45:
+//                                                     taskList.add("Слово из 14 букв собранно 45 раза");
+//                                                     break;
+//                                                 case 70:
+//                                                     taskList.add("Слово из 14 букв собранно 70 раз");
+//                                                     break;
+//                                                 case 80:
+//                                                     taskList.add("Слово из 14 букв собранно 80 раз");
+//                                                     break;
+//                                                 case 100:
+//                                                     taskList.add("Слово из 14 букв собранно 100 раз");
+//                                                     break;
+//                                             }
+//    }
 
         @SuppressLint("SetTextI18n")
         public void Dialogus(){                                     // сохранять это в тхт
@@ -2282,14 +2270,46 @@ public class GameStart extends AppCompatActivity  {
 
             LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = li.inflate(R.layout.stats_fragment, null, false);
-
-            taskDoneList = v.findViewById(R.id.taskDoneList);
-
             OptionDialog = new AlertDialog.Builder(this).create();
             OptionDialog.setTitle("Статистика");
 
-            adapterDone = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskList);
-            taskDoneList.setAdapter(adapterDone);
+
+            adapter = new RecyclerViewAdapter(img0);
+
+            recyclerView = v.findViewById(R.id.recycler_view);
+            recyclerView.setHasFixedSize(true);
+
+            layoutManager = new GridLayoutManager(this, 2);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(layoutManager);
+            adapter.setList(myValues);
+            butClose = v.findViewById(R.id.butClose);
+            OptionDialog.setView(v);
+            OptionDialog.setCancelable(true);
+            butClose.setBackgroundColor(Color.CYAN);
+            butClose.setOnClickListener(new OnClickListener() {
+                public void onClick(View v) {
+                    OptionDialog.dismiss();
+                }
+            });
+            OptionDialog.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2429,6 +2449,373 @@ public class GameStart extends AppCompatActivity  {
 
         }  // список собранных слов
 
+
+
+    private void createAdapterList() {
+
+                                                     taskList.add("Слово из 5 букв собранно 2 раза");
+                                                     taskList.add("Слово из 5 букв собранно 10 раза");
+                                                     taskList.add("Слово из 5 букв собранно 25 раз");
+                                                     taskList.add("Слово из 5 букв собранно 50 раза");
+                                                     taskList.add("Слово из 5 букв собранно 70 раз");
+                                                     taskList.add("Слово из 5 букв собранно 80 раз");
+                                                     taskList.add("Слово из 5 букв собранно 100 раз");
+                                                         taskList.add("Слово из 6 букв собранно 2 раза");
+                                                         taskList.add("Слово из 6 букв собранно 10 раза");
+                                                         taskList.add("Слово из 6 букв собранно 25 раз");
+                                                         taskList.add("Слово из 6 букв собранно 60 раз");
+                                                         taskList.add("Слово из 6 букв собранно 70 раз");
+                                                         taskList.add("Слово из 6 букв собранно 80 раз");
+                                                         taskList.add("Слово из 6 букв собранно 100 раз");
+                                                     taskList.add("Слово из 7 букв собранно 1 раза");
+                                                     taskList.add("Слово из 7 букв собранно 5 раза");
+                                                     taskList.add("Слово из 7 букв собранно 10 раза");
+                                                     taskList.add("Слово из 7 букв собранно 45 раза");
+                                                     taskList.add("Слово из 7 букв собранно 70 раз");
+                                                     taskList.add("Слово из 7 букв собранно 80 раз");
+                                                     taskList.add("Слово из 7 букв собранно 100 раз");
+                                                         taskList.add("Слово из 8 букв собранно 1 раза");
+                                                         taskList.add("Слово из 8 букв собранно 5 раза");
+                                                         taskList.add("Слово из 8 букв собранно 25 раз");
+                                                         taskList.add("Слово из 8 букв собранно 60 раз");
+                                                         taskList.add("Слово из 8 букв собранно 70 раз");
+                                                         taskList.add("Слово из 8 букв собранно 80 раз");
+                                                         taskList.add("Слово из 8 букв собранно 100 раз");
+                                                     taskList.add("Слово из 9 букв собранно 1 раза");
+                                                     taskList.add("Слово из 9 букв собранно 5 раза");
+                                                     taskList.add("Слово из 9 букв собранно 25 раз");
+                                                     taskList.add("Слово из 9 букв собранно 45 раза");
+                                                     taskList.add("Слово из 9 букв собранно 70 раз");
+                                                     taskList.add("Слово из 9 букв собранно 80 раз");
+                                                     taskList.add("Слово из 9 букв собранно 100 раз");
+                                                         taskList.add("Слово из 10 букв собранно 1 раза");
+                                                         taskList.add("Слово из 10 букв собранно 5 раза");
+                                                         taskList.add("Слово из 10 букв собранно 10 раза");
+                                                         taskList.add("Слово из 10 букв собранно 45 раза");
+                                                         taskList.add("Слово из 10 букв собранно 70 раз");
+                                                         taskList.add("Слово из 10 букв собранно 80 раз");
+                                                         taskList.add("Слово из 10 букв собранно 100 раз");
+                                                     taskList.add("Слово из 11 букв собранно 1 раза");
+                                                     taskList.add("Слово из 11 букв собранно 10 раза");
+                                                     taskList.add("Слово из 11 букв собранно 25 раз");
+                                                     taskList.add("Слово из 11 букв собранно 60 раз");
+                                                     taskList.add("Слово из 11 букв собранно 80 раз");
+                                                     taskList.add("Слово из 11 букв собранно 100 раз");
+                                                         taskList.add("Слово из 12 букв собранно 1 раза");
+                                                         taskList.add("Слово из 12 букв собранно 10 раза");
+                                                         taskList.add("Слово из 12 букв собранно 25 раз");
+                                                         taskList.add("Слово из 12 букв собранно 60 раз");
+                                                         taskList.add("Слово из 12 букв собранно 80 раз");
+                                                         taskList.add("Слово из 12 букв собранно 100 раз");
+                                                     taskList.add("Слово из 13 букв собранно 1 раза");
+                                                     taskList.add("Слово из 13 букв собранно 10 раза");
+                                                     taskList.add("Слово из 13 букв собранно 45 раза");
+                                                     taskList.add("Слово из 13 букв собранно 60 раз");
+                                                     taskList.add("Слово из 13 букв собранно 80 раз");
+                                                     taskList.add("Слово из 13 букв собранно 100 раз");
+                                                         taskList.add("Слово из 14 букв собранно 1 раза");
+                                                         taskList.add("Слово из 14 букв собранно 10 раза");
+                                                         taskList.add("Слово из 14 букв собранно 45 раза");
+                                                         taskList.add("Слово из 14 букв собранно 70 раз");
+                                                         taskList.add("Слово из 14 букв собранно 80 раз");
+                                                         taskList.add("Слово из 14 букв собранно 100 раз");
+
+                Model model = new Model();
+                model.setText("Войти в игру");
+                model.setPeremennaya(0);
+                myValues.add(model);
+            model = new Model();
+            model.setText("Слово из 3 букв собранно 3 раза");
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText("Слово из 3 букв собранно 10 раза");
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText("Слово из 3 букв собранно 25 раз");
+            model.setPeremennaya(0);
+            myValues.add(model);
+                model = new Model();
+                model.setText("Слово из 3 букв собранно 5 раз");
+                model.setPeremennaya(0);
+                myValues.add(model);
+        model = new Model();
+        model.setText("Слово из 3 букв собранно 50 раз");
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText("Слово из 3 букв собранно 75 раз");
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText("Слово из 3 букв собранно 100 раз");
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText("Слово из 4 букв собранно 3 раза");
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText("Слово из 4 букв собранно 10 раза");
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText("Слово из 4 букв собранно 40 раз");
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText("Слово из 4 букв собранно 70 раз");
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText("Слово из 4 букв собранно 100 раз");
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(12));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(13));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(14));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(15));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(16));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(17));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(18));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(19));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(20));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(21));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(22));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(23));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(24));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(25));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(26));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(27));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(5));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(28));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(29));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(5));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(30));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(31));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(32));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(33));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(34));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(35));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(36));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(37));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(38));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(39));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(40));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(41));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(42));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(43));
+            model.setPeremennaya(0);
+            myValues.add(model);
+                model = new Model();
+                model.setText(taskList.get(44));
+                model.setPeremennaya(0);
+                myValues.add(model);
+                    model = new Model();
+                    model.setText(taskList.get(45));
+                    model.setPeremennaya(0);
+                    myValues.add(model);
+                        model = new Model();
+                        model.setText(taskList.get(46));
+                        model.setPeremennaya(0);
+                        myValues.add(model);
+                            model = new Model();
+                            model.setText(taskList.get(47));
+                            model.setPeremennaya(0);
+                            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(48));
+        model.setPeremennaya(0);
+        myValues.add(model);
+        model = new Model();
+            model.setText(taskList.get(49));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(50));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(51));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(52));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(53));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(54));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(55));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(56));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(57));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(58));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(59));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(60));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(61));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(62));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(63));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(64));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(65));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(67));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(68));
+            model.setPeremennaya(0);
+            myValues.add(model);
+        model = new Model();
+        model.setText(taskList.get(69));
+        model.setPeremennaya(0);
+        myValues.add(model);
+            model = new Model();
+            model.setText(taskList.get(70));
+            model.setPeremennaya(0);
+            myValues.add(model);
+
+    }
+
+
     public void AddDB()   {
         String a1, a2, a3;
         a1 = String.valueOf(getCounter()); // очки
@@ -2497,6 +2884,7 @@ public class GameStart extends AppCompatActivity  {
                     setLenght_minus_minus(dbHelper.getLENGHT_MINUS());
 
          //   achivites();
+
         } // прочесть последнюю запись
     //--
 
