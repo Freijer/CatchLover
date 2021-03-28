@@ -2005,7 +2005,7 @@ public class GameStart extends AppCompatActivity  {
     private void createAdapterList() {
         //12*4+1 = 49
         Model model = new Model();
-        model.setText("Войти в игру_0");
+        model.setText("Войти в игру");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
@@ -2021,12 +2021,12 @@ public class GameStart extends AppCompatActivity  {
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 3 букв 50 раза_4");
+        model.setText("Собрать слово из 3 букв 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 4 букв 1 раз_5");
+        model.setText("Собрать слово из 4 букв 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
@@ -2043,7 +2043,7 @@ public class GameStart extends AppCompatActivity  {
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 5 букв 1 раз_9");
+        model.setText("Собрать слово из 5 букв 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();

@@ -165,6 +165,11 @@ public class SettingsAndParams extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 ResetDialog.dismiss();
+                Intent intentBacks = new Intent(SettingsAndParams.this, MainActivity.class);
+                String output_msg =  String.valueOf(getSpeed_settings());
+                intentBacks.putExtra("setSpeed", output_msg);
+                startActivity(intentBacks);
+                finish();
             }
         });
         ResetDialog.show();
