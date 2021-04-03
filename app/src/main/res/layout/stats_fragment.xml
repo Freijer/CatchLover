@@ -23,7 +23,9 @@
         android:orientation="vertical"
         android:layout_alignParentStart="true"
         android:textColor="@color/black"
-        android:layout_below="@+id/head">
+        android:layout_below="@+id/head"
+
+        >
 
 
             <TextView
@@ -252,7 +254,7 @@
     <RelativeLayout
         android:id="@+id/timerLayout"
         android:layout_width="150dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/recycler_view"
@@ -282,28 +284,13 @@
 
 
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:padding="5dp"
-
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/holo_blue_light"
-        android:layout_below="@+id/allLists"
-        android:layout_above="@+id/butClose" />
-
     <Button
         android:id="@+id/butClose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:onClick="Close"
-        android:layout_alignParentBottom="true"
+       android:layout_below="@+id/allLists"
         android:layout_centerHorizontal="true"
 
         android:text="Закрыть" />

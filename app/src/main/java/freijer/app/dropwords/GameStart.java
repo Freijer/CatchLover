@@ -306,11 +306,9 @@ public class GameStart extends AppCompatActivity  {
     ObjectAnimator  button13;
     ObjectAnimator  button14;
 
-    TextView mis_1, mis_2, mis_3;
     protected ProgressBar progressBar;
-    protected TextView lvlview, textClock, score, text_plus, text_minus, thisWordShow;
-    protected TextView textLvl, textScore, tryChange, clock;
-    protected Button progress,  faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
+    protected TextView lvlview, textClock, score, text_plus, text_minus, thisWordShow, timerClock, clock, textLvl, textScore, tryChange;
+    protected Button progress, faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button  quest;
     private ImageView img_nextlvl;
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
@@ -320,24 +318,13 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected Chronometer mChronometer;
-    protected RelativeLayout chars_layout;
+    protected RelativeLayout chars_layout, engine_buttons;
 
 
-    private int img0, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, im17, img18, img19, img20, img21, img22, img23, img324, img25, img26,
-    img27, img28, img29, img30, img31, img32, img33, img34, img35, img36, img37, img38, img39, img40, img41, img42, img43, img44, img45, img46, img47, img48, img49, img50 = R.drawable.star;
+    private int img0, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26,
+    img27, img28, img29, img30, img31, img32, img33, img34, img35, img36, img37, img38 = R.drawable.star;
 
-    int a0 = 0;
-    int a1 = 0;
-    int a2 = 0;
-    int a3 = 0;
-    int a4 = 0;
-    int a5 = 0;
-    int a6 = 0;
-    int a7 = 0;
-    int a8 = 0;
-    int a9 = 0;
-    int a10 = 0;
-    int a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38, a39, a40, a41, a42, a43, a44, a45, a46, a47, a48 = 0;
+    int a0, a1, a2, a3, a4, a5, a6,  a7,  a8,  a9,  a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38 = 0;
 
     RecyclerViewAdapter adapter;
     ArrayList<Model> myValues = new ArrayList<>();
@@ -375,6 +362,9 @@ public class GameStart extends AppCompatActivity  {
     protected int list_12;
     protected int list_13;
     protected int list_14;
+
+
+    protected int list_sum;
 
     protected int speed_a;
         public int getSpeed_a() {
@@ -488,7 +478,12 @@ public class GameStart extends AppCompatActivity  {
     public void setList_14(int list_14) {
         this.list_14 = list_14;
     }
-
+    public int getList_sum() {
+        return list_sum;
+    }
+    public void setList_sum(int list_sum) {
+        this.list_sum = list_sum;
+    }
 
 
     protected int tryChenge = 0;
@@ -499,7 +494,7 @@ public class GameStart extends AppCompatActivity  {
         this.tryChenge = tryChenge;
     }
 
-    protected TextView text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner, text_11_inner, text_12_inner, text_13_inner, text_14_inner, text_sum, text_sum_inner;
+    protected TextView text_3_inner, text_4_inner, text_5_inner, text_6_inner, text_7_inner, text_8_inner, text_9_inner, text_10_inner, text_11_inner, text_12_inner, text_13_inner, text_14_inner, text_sum_inner;
 
     public Point viewLocatedAt(View v) {
         int[] location = new int[2];
@@ -532,6 +527,7 @@ public class GameStart extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_start);
         chars_layout = findViewById(R.id.chars_layout);
+        engine_buttons = findViewById(R.id.engine_buttons);
         quest = findViewById(R.id.quest);
 
         lenght_plus_com = new ArrayList<>();
@@ -557,6 +553,8 @@ public class GameStart extends AppCompatActivity  {
         faq = findViewById(R.id.faq);
         task = findViewById(R.id.task);
         lvlview = findViewById(R.id.lvlview);
+        timerClock = findViewById(R.id.timerClock);
+        clock = findViewById(R.id.clock);
         img_nextlvl = findViewById(R.id.img_nextlvl);
         progress = findViewById(R.id.progress);
         score = findViewById(R.id.score);
@@ -567,7 +565,6 @@ public class GameStart extends AppCompatActivity  {
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
         tryChange = findViewById(R.id.tryChange);
-        clock = findViewById(R.id.clock);
 
         char_1 = findViewById(R.id.char_1);
         char_2 = findViewById(R.id.char_2);
@@ -613,11 +610,16 @@ public class GameStart extends AppCompatActivity  {
 
         score.setVisibility(GONE);
         lvlview.setVisibility(GONE);
+        faq.setVisibility(GONE);
         textClock.setVisibility(GONE);
+        clock.setVisibility(GONE);
         textLvl.setVisibility(GONE);
         textScore.setVisibility(GONE);
         tryChange.setVisibility(GONE);
         progressBar.setVisibility(GONE);
+        timerClock.setVisibility(GONE);
+
+        engine_buttons.setVisibility(GONE);
         prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
 
@@ -926,11 +928,13 @@ public class GameStart extends AppCompatActivity  {
 
         score.setVisibility(VISIBLE);
         lvlview.setVisibility(VISIBLE);
+        faq.setVisibility(VISIBLE);
         textClock.setVisibility(VISIBLE);
+        clock.setVisibility(VISIBLE);
         textLvl.setVisibility(VISIBLE);
         textScore.setVisibility(VISIBLE);
         tryChange.setVisibility(VISIBLE);
-
+        engine_buttons.setVisibility(VISIBLE);
 
         ListXUpFull(); // заполняем листы координат
 //        ControlWordsfinFail(); // читаем проверочные слова
@@ -1970,247 +1974,183 @@ public class GameStart extends AppCompatActivity  {
        Dialogus();
        onClickStop();
 
-        img0 = a0;
-        adapter.setImage(img0);
-            img1 = a1;
-            adapter.setImage(img1);
-        img2 = a2;
-        adapter.setImage(img2);
-            img3 = a3;
-            adapter.setImage(img3);
-        img4 = a4;
-        adapter.setImage(img4);
-            img5 = a5;
-            adapter.setImage(img5);
-        img6 = a6;
-        adapter.setImage(img6);
-            img7 = a7;
-            adapter.setImage(img7);
-        img8 = a8;
-        adapter.setImage(img8);
-            img9 = a9;
-            adapter.setImage(img9);
-        img10 = a10;
-        adapter.setImage(img10);
-            img11 = a11;
-            adapter.setImage(img11);
-        img12 = a12;
-        adapter.setImage(img12);
-            img13 = a13;
-            adapter.setImage(img13);
 
 
     } //открытие статистики
 
     private void createAdapterList() {
-        //12*4+1 = 49
+        //12*3+1 = 37
         Model model = new Model();
         model.setText("Войти в игру");
         model.setPeremennaya(0);
         myValues.add(model);
+
         model = new Model();
-        model.setText("Собрать слово из 3 букв 1 раз");
+        model.setText("3 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 3 букв 5 раз");
+        model.setText("3 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 3 букв 20 раза");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 3 букв 50 раз");
+        model.setText("3 буквы 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 4 букв 1 раз");
+        model.setText("4 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 4 букв 5 раза");
+        model.setText("4 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 4 букв 20 раза");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 4 букв 50 раз");
+        model.setText("4 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 5 букв 1 раз");
+        model.setText("5 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 5 букв 5 раз");
+        model.setText("5 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 5 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 5 букв 50 раз");
+        model.setText("5 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 6 букв 1 раз");
+        model.setText("6 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 6 букв 5 раз");
+        model.setText("6 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 6 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 6 букв 50 раз");
+        model.setText("6 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 7 букв 1 раз");
+        model.setText("7 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 7 букв 5 раз");
+        model.setText("7 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 7 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 7 букв 50 раз");
+        model.setText("7 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 8 букв 1 раз");
+        model.setText("8 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 8 букв 5 раз");
+        model.setText("8 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 8 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 8 букв 50 раз");
+        model.setText("8 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 9 букв 1 раз");
+        model.setText("9 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 9 букв 5 раз");
+        model.setText("9 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 9 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 9 букв 50 раз");
+        model.setText("9 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 10 букв 1 раз");
+        model.setText("10 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 10 букв 5 раз");
+        model.setText("10 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 10 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 10 букв 50 раз");
+        model.setText("10 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 11 букв 1 раз");
+        model.setText("11 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 11 букв 5 раз");
+        model.setText("11 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 11 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 11 букв 50 раз");
+        model.setText("11 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 12 букв 1 раз");
+        model.setText("12 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 12 букв 5 раз");
+        model.setText("12 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 12 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 12 букв 50 раз");
+        model.setText("12 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 13 букв 1 раз");
+        model.setText("13 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 13 букв 5 раз");
+        model.setText("13 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 13 букв 20 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("Собрать слово из 13 букв 50 раз");
+        model.setText("13 букв 100 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         //--
         model = new Model();
-        model.setText("Собрать слово из 14 букв 1 раз");
+        model.setText("14 буквы 1 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 14 букв 5 раз");
+        model.setText("14 буквы 50 раз");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 14 букв 20 раз");
+        model.setText("14 букв 100 раз");
+        model.setPeremennaya(0);
+        myValues.add(model);
+        //--
+        model = new Model();
+        model.setText("50 слов");
         model.setPeremennaya(0);
         myValues.add(model);
         model = new Model();
-        model.setText("Собрать слово из 14 букв 50 раз");
+        model.setText("100 слов");
         model.setPeremennaya(0);
         myValues.add(model);
+        //--
+
     }
 
 
@@ -2227,242 +2167,181 @@ public class GameStart extends AppCompatActivity  {
             case 1:
                 a1 = 1; // 3 буквы 1 раз
                 break;
-            case 5:
-                a1 = 1;
-                a2 = 2; // 3 бквы2 раза
-                break;
-            case 20:
-                a1 = 1;
-                a2 = 2;
-                a3 = 3; // 3 буквы 3 раза
-                break;
             case 50:
                 a1 = 1;
                 a2 = 2;
+                break;
+            case 100:
+                a1 = 1;
+                a2 = 2;
                 a3 = 3;
-                a4 = 4; //3 буквы 4 раза
                 break;
         }
         switch (getList_4()) {
             case 1:
-                a5 = 5;// 4 буквы 1 раз
-                break;
-            case 5:
-                a5 = 5;
-                a6 = 6;
-                break;
-            case 20:
-                a5 = 5;
-                a6 = 6;
-                a7 = 7;
+                a4 = 4; // 4 буквы 1 раз
                 break;
             case 50:
+                a4 = 4;
+                a5 = 6;
+                break;
+            case 100:
+                a4 = 5;
                 a5 = 5;
                 a6 = 6;
-                a7 = 7;
-                a8 = 8;
                 break;
         }
         switch (getList_5()) {
             case 1:
-                a9 = 9;// 5 буквы 1 раз
+                a7 = 6; // 5 буквы 1 раз
                 break;
-            case 5:
-                a9 = 9;
-                a10 = 10;
+            case 50:
+                a7 = 7;
+                a8 = 8;
                 break;
-            case 20:
+            case 100:
+                a7 = 7;
+                a8 = 8;
                 a9 = 9;
+                break;
+        }
+        switch (getList_6()) {
+            case 1:
+                a10 = 10; // 6 буквы 1 раз
+                break;
+            case 50:
                 a10 = 10;
                 a11 = 11;
                 break;
-            case 50:
-                a9 = 9;
+            case 100:
                 a10 = 10;
                 a11 = 11;
                 a12 = 12;
                 break;
         }
-        switch (getList_6()) {
-            case 1:
-                a13 = 13;// 6 буквы 1 раз
-                break;
-            case 5:
-                a13 = 13;
-                a14 = 14;
-                break;
-            case 20:
-                a13 = 13;
-                a14 = 14;
-                a15 = 15;
-                break;
-            case 50:
-                a13 = 13;
-                a14 = 14;
-                a15 = 15;
-                a16 = 16;
-                break;
-        }
         switch (getList_7()) {
             case 1:
-                a17 = 17;// 7 буквы 1 раз
-                break;
-            case 5:
-                a17 = 17;
-                a18 = 18;
-                break;
-            case 20:
-                a17 = 17;
-                a18 = 18;
-                a19 = 19;
+                a13 = 10; // 7 буквы 1 раз
                 break;
             case 50:
-                a17 = 17;
-                a18 = 18;
-                a19 = 19;
-                a20 = 20;
+                a13 = 10;
+                a14 = 14;
+                break;
+            case 100:
+                a13 = 10;
+                a14 = 14;
+                a15 = 15;
                 break;
         }
         switch (getList_8()) {
             case 1:
-                a21 = 21;// 8 буквы 1 раз
+                a16 = 16; // 8 буквы 1 раз
                 break;
-            case 5:
-                a21 = 21;
-                a22 = 22;
+            case 50:
+                a16 = 16;
+                a17 = 17;
                 break;
-            case 20:
+            case 100:
+                a16 = 16;
+                a17 = 17;
+                a18 = 18;
+                break;
+        }
+        switch (getList_9()) {
+            case 1:
+                a19 = 19; // 9 буквы 1 раз
+                break;
+            case 50:
+                a20 = 20;
+                a21 = 20;
+                break;
+            case 100:
+                a20 = 20;
+                a21 = 20;
                 a21 = 21;
+                break;
+        }
+        switch (getList_10()) {
+            case 1:
+                a22 = 22; // 10 буквы 1 раз
+                break;
+            case 50:
                 a22 = 22;
                 a23 = 23;
                 break;
-            case 50:
-                a21 = 21;
+            case 100:
                 a22 = 22;
                 a23 = 23;
                 a24 = 24;
                 break;
         }
-        switch (getList_9()) {
-            case 1:
-                a25 = 25;// 9 буквы 1 раз
-                break;
-            case 5:
-                a25 = 25;
-                a26 = 26;
-                break;
-            case 20:
-                a25 = 25;
-                a26 = 26;
-                a27 = 27;
-                break;
-            case 50:
-                a25 = 25;
-                a26 = 26;
-                a27 = 27;
-                a28 = 28;
-                break;
-        }
-        switch (getList_10()) {
-            case 1:
-                a29 = 29;// 10 буквы 1 раз
-                break;
-            case 5:
-                a29 = 29;
-                a30 = 30;
-                break;
-            case 20:
-                a29 = 29;
-                a30 = 30;
-                a31 = 31;
-                break;
-            case 50:
-                a29 = 29;
-                a30 = 30;
-                a31 = 31;
-                a32 = 32;
-                break;
-        }
         switch (getList_11()) {
             case 1:
-                a33 = 33;// 11 буквы 1 раз
-                break;
-            case 5:
-                a33 = 33;
-                a34 = 34;
-                break;
-            case 20:
-                a33 = 33;
-                a34 = 34;
-                a35 = 35;
+                a25 = 25; // 11 буквы 1 раз
                 break;
             case 50:
-                a33 = 33;
-                a34 = 34;
-                a35 = 35;
-                a36 = 36;
+                a25 = 25;
+                a26 = 26;
+                break;
+            case 100:
+                a25 = 25;
+                a26 = 26;
+                a27 = 27;
                 break;
         }
         switch (getList_12()) {
             case 1:
-                a37 = 37;// 12 буквы 1 раз
-                break;
-            case 5:
-                a37 = 37;
-                a38 = 38;
-                break;
-            case 20:
-                a37 = 37;
-                a38 = 38;
-                a39 = 39;
+                a28 = 28; // 12 буквы 1 раз
                 break;
             case 50:
-                a37 = 37;
-                a38 = 38;
-                a39 = 39;
-                a40 = 40;
+                a28 = 28;
+                a29 = 29;
+                break;
+            case 100:
+                a28 = 28;
+                a29 = 29;
+                a30 = 30;
                 break;
         }
         switch (getList_13()) {
             case 1:
-                a41 = 41;// 13 буквы 1 раз
-                break;
-            case 5:
-                a41 = 41;
-                a42 = 42;
-                break;
-            case 20:
-                a41 = 41;
-                a42 = 42;
-                a43 = 43;
+                a31 = 31; // 13 буквы 1 раз
                 break;
             case 50:
-                a41 = 41;
-                a42 = 42;
-                a43 = 43;
-                a44 = 44;
+                a31 = 31;
+                a32 = 32;
+                break;
+            case 100:
+                a31 = 31;
+                a32 = 32;
+                a33 = 33;
                 break;
         }
         switch (getList_14()) {
             case 1:
-                a45 = 45;// 14 буквы 1 раз
-                break;
-            case 5:
-                a45 = 45;
-                a46 = 46;
-                break;
-            case 20:
-                a45 = 45;
-                a46 = 46;
-                a47 = 47;
+                a34 = 34; // 14 буквы 1 раз
                 break;
             case 50:
-                a45 = 45;
-                a46 = 46;
-                a47 = 47;
-                a48 = 48;
+                a34 = 34;
+                a35 = 35;// 3 буквы 50 раз
+                break;
+            case 100:
+                a34 = 34;
+                a35 = 35;
+                a36 = 36;//3 буквы 4 раза
                 break;
         }
+        switch (getList_sum()) {
+            case 50:
+                a37 = 37;
+                break;
+            case 100:
+                a37 = 37;
+                a38 = 38;
+                break;
+
+        }
+
     }// условия выполения задачний
 
         @SuppressLint("SetTextI18n")
@@ -2474,45 +2353,6 @@ public class GameStart extends AppCompatActivity  {
             View v = li.inflate(R.layout.stats_fragment, null, false);
             OptionDialog = new AlertDialog.Builder(this).create();
             OptionDialog.setTitle("Статистика");
-
-
-            adapter = new RecyclerViewAdapter(img0);
-
-            recyclerView = v.findViewById(R.id.recycler_view);
-            recyclerView.setHasFixedSize(true);
-
-            layoutManager = new GridLayoutManager(this, 2);
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(layoutManager);
-            adapter.setList(myValues);
-            butClose = v.findViewById(R.id.butClose);
-            OptionDialog.setView(v);
-            OptionDialog.setCancelable(true);
-            butClose.setBackgroundColor(Color.CYAN);
-            butClose.setOnClickListener(new OnClickListener() {
-                public void onClick(View v) {
-                    OptionDialog.dismiss();
-                }
-            });
-            OptionDialog.show();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             setNumber_word_3(getList_3());
@@ -2559,7 +2399,7 @@ public class GameStart extends AppCompatActivity  {
                 String sumWords = String.valueOf(getList_3()+getList_4()+getList_5()+getList_6()+getList_7()+getList_8()+getList_9()+getList_10()+getList_11()+getList_12()+getList_13()+getList_14());
             text_sum_inner.setText(sumWords);
 
-            howAchivites();
+//            howAchivites();
 
             text_plus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на +1 букву: ";
             text_minus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово короче предыдущего на -1 букву: ";
@@ -2721,6 +2561,8 @@ public class GameStart extends AppCompatActivity  {
                 setList_12(dbHelper.getLENGHT_12());
                 setList_13(dbHelper.getLENGHT_13());
                 setList_14(dbHelper.getLENGHT_14());
+                int sum = getList_3()+getList_4()+getList_5()+getList_6()+getList_7()+getList_8()+getList_9()+getList_10()+getList_11()+getList_12()+getList_13()+getList_14();
+                setList_sum(sum);
                     setLenght_plus(dbHelper.getLENGHT_PLUS());
                     setLenght_minus_minus(dbHelper.getLENGHT_MINUS());
 
@@ -2875,30 +2717,125 @@ public class GameStart extends AppCompatActivity  {
     public void Mission_random_lenght(View v) {
         MissionDialogStart();
         onClickStop();
+
+        img0 = a0;
+        adapter.setImage(img0);
+        img1 = a1;
+        adapter.setImage(img1);
+        img2 = a2;
+        adapter.setImage(img2);
+        img3 = a3;
+        adapter.setImage(img3);
+        img4 = a4;
+        adapter.setImage(img4);
+        img5 = a5;
+        adapter.setImage(img5);
+        img6 = a6;
+        adapter.setImage(img6);
+        img7 = a7;
+        adapter.setImage(img7);
+        img8 = a8;
+        adapter.setImage(img8);
+        img9 = a9;
+        adapter.setImage(img9);
+        img10 = a10;
+        adapter.setImage(img10);
+        img11 = a11;
+        adapter.setImage(img11);
+        img12 = a12;
+        adapter.setImage(img12);
+        img13 = a13;
+        adapter.setImage(img13);
+        img14 = a14;
+        adapter.setImage(img14);
+        img15 = a15;
+        adapter.setImage(img15);
+        img16 = a16;
+        adapter.setImage(img15);
+        img17 = a17;
+        adapter.setImage(img17);
+        img18 = a18;
+        adapter.setImage(img18);
+        img19 = a19;
+        adapter.setImage(img19);
+        img20 = a20;
+        adapter.setImage(img20);
+        img21 = a21;
+        adapter.setImage(img21);
+        img22 = a22;
+        adapter.setImage(img22);
+        img23 = a23;
+        adapter.setImage(img23);
+        img24 = a24;
+        adapter.setImage(img24);
+        img25 = a25;
+        adapter.setImage(img25);
+        img26 = a26;
+        adapter.setImage(img26);
+        img27 = a27;
+        adapter.setImage(img27);
+        img28 = a28;
+        adapter.setImage(img28);
+        img29 = a29;
+        adapter.setImage(img29);
+        img30 = a30;
+        adapter.setImage(img30);
+        img31 = a31;
+        adapter.setImage(img31);
+        img32 = a32;
+        adapter.setImage(img32);
+        img33 = a33;
+        adapter.setImage(img33);
+        img34 = a34;
+        adapter.setImage(img34);
+        img35 = a35;
+        adapter.setImage(img35);
+        img36 = a36;
+        adapter.setImage(img36);
+        img37 = a37;
+        adapter.setImage(img37);
+        img38 = a38;
+        adapter.setImage(img38);
+
+
     }
     public void MissionDialogStart(){
+
+        LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View tasks = li.inflate(R.layout.achivs_fragment, null, false);
+
         MissionsDialog = new AlertDialog.Builder(this).create();
-        LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        View missions = tasks.inflate(R.layout.activity_missions, null, false);
-        butClose_mission =  missions.findViewById(R.id.butClose_mission);
+        MissionsDialog.setTitle("Статистика");
+        butClose_mission =  tasks.findViewById(R.id.butClose);
 
 
-            mis_1 = missions.findViewById(R.id.mis_1);
-            mis_2 = missions.findViewById(R.id.mis_2);
-            mis_3 = missions.findViewById(R.id.mis_3);
-
-
-            mis_1.setText("Слово из 3 букв");
-            mis_2.setText("Слово из 4 букв");
-            mis_3.setText("С * Р А"); //СЕРА
+        MissionsDialog = new AlertDialog.Builder(this).create();
 
 
 
-        MissionsDialog.setView(missions);
+        adapter = new RecyclerViewAdapter(img0);
+
+        recyclerView = tasks.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        layoutManager = new GridLayoutManager(this, 3);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter.setList(myValues);
+        butClose = tasks.findViewById(R.id.butClose);
+        MissionsDialog.setView(tasks);
         MissionsDialog.setCancelable(true);
+        butClose.setBackgroundColor(Color.CYAN);
+        butClose.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                MissionsDialog.dismiss();
+            }
+        });
+        MissionsDialog.show();
 
-        butClose_mission.setOnClickListener(new View.OnClickListener() {
+        howAchivites();
+
+        butClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickStart();
@@ -2907,7 +2844,6 @@ public class GameStart extends AppCompatActivity  {
         });
 
 
-        MissionsDialog.show();
 
     }
 
