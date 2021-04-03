@@ -152,8 +152,7 @@
             android:id="@+id/starter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/img_nextlvl"
-            android:layout_centerHorizontal="true"
+           android:layout_centerInParent="true"
             android:layout_marginTop="36dp"
             android:background="@drawable/startgame"
             android:onClick="LetsGo" />
@@ -575,7 +574,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="0dp"
-            android:layout_marginEnd="15dp"
+
             android:layout_centerInParent="true"
             android:onClick="Chek_1"
             android:textColor="@color/black"
@@ -589,7 +588,8 @@
         android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_toEndOf="@id/ChekOut" />
+        android:layout_toEndOf="@id/ChekOut"
+       />
 
         <Button
             android:id="@+id/task"
@@ -601,27 +601,29 @@
             android:layout_marginStart="5dp"
             android:layout_below="@+id/progress"
             android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@id/ChekOut"/>
+            android:layout_toEndOf="@id/ChekOut"
+           />
 
     <Button
         android:id="@+id/reset"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="15dp"
         android:layout_marginEnd="5dp"
+        android:layout_alignParentEnd="true"
         android:background="@drawable/wordnew"
         android:onClick="ResTart"
         android:layout_marginBottom="5dp"
-        android:layout_toEndOf="@id/progress"/>
+        />
 
         <Button
             android:id="@+id/quest"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_marginEnd="5dp"
             android:background="@drawable/quest"
-            android:layout_toEndOf="@+id/task"
+            android:layout_alignParentEnd="true"
             android:layout_below="@id/reset"
             android:layout_marginBottom="5dp"
             android:onClick="Mission_random_lenght"/>

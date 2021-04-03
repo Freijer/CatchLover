@@ -618,8 +618,10 @@ public class GameStart extends AppCompatActivity  {
         tryChange.setVisibility(GONE);
         progressBar.setVisibility(GONE);
         timerClock.setVisibility(GONE);
+        //--
 
-        engine_buttons.setVisibility(GONE);
+
+
         prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
 
@@ -934,7 +936,9 @@ public class GameStart extends AppCompatActivity  {
         textLvl.setVisibility(VISIBLE);
         textScore.setVisibility(VISIBLE);
         tryChange.setVisibility(VISIBLE);
-        engine_buttons.setVisibility(VISIBLE);
+
+
+
 
         ListXUpFull(); // заполняем листы координат
 //        ControlWordsfinFail(); // читаем проверочные слова
