@@ -1,174 +1,122 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/papers">
 
-    android:background="@drawable/bookstage">
-
-
-    <Button
-        android:id="@+id/butCloseTask"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/thrue"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@drawable/textstyle1"
-            android:gravity="center"
-
-            android:padding="5sp"
-            android:text="Верно"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:background="@drawable/textstyle_false"
-            android:gravity="center"
-            android:padding="5sp"
-            android:text="Не верно"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/papers"
-        android:orientation="horizontal"
-        android:weightSum="4"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="0.068">
 
 
         <TextView
             android:id="@+id/thisWordShow"
             android:layout_width="150dp"
             android:layout_height="30dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.033"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
             android:textColor="@color/black"
             android:background="@color/colorSpeed"/>
 
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textstyle1"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Правильные слова"
+            android:textSize="12sp"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_alignParentStart="true"
+
+            />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textstyle_false"
+            android:gravity="center"
+            android:layout_marginEnd="10dp"
+            android:padding="5sp"
+            android:text="Не верные слова"
+            android:textSize="12sp"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_alignParentEnd="true"
+            />
+
+
+
+
+
+
         <ListView
             android:id="@+id/Thru_answer_1"
-            android:layout_width="120dp"
-            android:layout_height="300dp"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.024"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp"
-            android:background="@drawable/listtruepng" />
+            android:background="@drawable/listtruepng"
+            android:layout_below="@+id/textView"/>
         <ListView
             android:id="@+id/Thru_answer_2"
-            android:layout_width="120dp"
-            android:layout_height="300dp"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.024"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp"
-            android:background="@drawable/listtruepng"/>
+            android:background="@drawable/listtruepng"
+            android:layout_below="@+id/textView"/>
         <ListView
             android:id="@+id/Thru_answer_3"
-            android:layout_width="120dp"
-            android:layout_height="300dp"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.024"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp"
-            android:background="@drawable/listtruepng"/>
+            android:background="@drawable/listtruepng"
+            android:layout_below="@+id/textView"/>
         <ListView
             android:id="@+id/Thru_answer_4"
-            android:layout_width="120dp"
-            android:layout_height="300dp"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.024"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp"
-            android:background="@drawable/listtruepng"/>
+            android:background="@drawable/listtruepng"
+            android:layout_below="@+id/textView"/>
 
         <ListView
             android:id="@+id/Wrong_answer_1"
-            android:layout_width="120dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="50dp"
+            android:layout_width="140dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="80dp"
             android:visibility="visible"
             android:textAlignment="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.975"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp"
-            android:background="@drawable/listtruepng"/>
+            android:background="@drawable/listtruepng"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentEnd="true"
+
+            />
 
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/butCloseTask"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/thrue"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
