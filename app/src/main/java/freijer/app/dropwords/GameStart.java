@@ -21,6 +21,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.AlteredCharSequence;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -58,6 +60,9 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -91,6 +96,8 @@ public class GameStart extends AppCompatActivity  {
 
     protected int lenght_minus_minus;
     private int lenght_plus; //переменная отвечающая за хранение последовательносит увеличения длинны слов на +1
+
+
     //переменная отвечающая за хранение последовательносит уменьшения длинны слов на -1
         public int getLenght_plus() {
             return lenght_plus;
@@ -309,7 +316,7 @@ public class GameStart extends AppCompatActivity  {
     protected ProgressBar progressBar;
     protected TextView lvlview, textClock, score, text_plus, text_minus, thisWordShow, timerClock, clock, textLvl, textScore, tryChange;
     protected Button progress, faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
-    protected Button  quest;
+    protected Button  quest, resetWord;
     private ImageView img_nextlvl;
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
@@ -561,6 +568,7 @@ public class GameStart extends AppCompatActivity  {
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
         mChronometer = findViewById(R.id.chronometer);
+        resetWord = findViewById(R.id.resetWord);
 
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
@@ -619,8 +627,12 @@ public class GameStart extends AppCompatActivity  {
         progressBar.setVisibility(GONE);
         timerClock.setVisibility(GONE);
         //--
-
-
+        resetWord.setVisibility(GONE);
+        ChekOut.setVisibility(GONE);
+        progress.setVisibility(GONE);
+        task.setVisibility(GONE);
+        reset.setVisibility(GONE);
+        quest.setVisibility(GONE);
 
         prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -936,6 +948,14 @@ public class GameStart extends AppCompatActivity  {
         textLvl.setVisibility(VISIBLE);
         textScore.setVisibility(VISIBLE);
         tryChange.setVisibility(VISIBLE);
+        //--
+        resetWord.setVisibility(VISIBLE);
+        ChekOut.setVisibility(VISIBLE);
+        progress.setVisibility(VISIBLE);
+        task.setVisibility(VISIBLE);
+        reset.setVisibility(VISIBLE);
+        quest.setVisibility(VISIBLE);
+
 
 
 
@@ -979,6 +999,8 @@ public class GameStart extends AppCompatActivity  {
         ReadFromTxtWrong();
 
         onClickStart();//старт часов
+
+
     }  // СТАРТ, часы
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -1280,8 +1302,12 @@ public class GameStart extends AppCompatActivity  {
         char_12.setVisibility(GONE);
         char_13.setVisibility(GONE);
         char_14.setVisibility(GONE);
+                //--Показ очков сразу при получении авчивки
+        score.setText(""+getCounter()); // ФИНАЛЬНЫЕ данные очки
+        textClock.setText(""+getTryChenge());// ФИНАЛЬНЫЕ данные попыток смены
+        lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
 
-
+        AddDB();
     } //проверка
 
 
@@ -2164,184 +2190,299 @@ public class GameStart extends AppCompatActivity  {
     } //кнопка открытия заадний
 
 
+    @SuppressLint("SetTextI18n")
     public void howAchivites(){
 
 
         switch (getList_3()) {
             case 1:
                 a1 = 1; // 3 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a1 = 1;
                 a2 = 2;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a1 = 1;
                 a2 = 2;
                 a3 = 3;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_4()) {
             case 1:
                 a4 = 4; // 4 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a4 = 4;
                 a5 = 6;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a4 = 5;
                 a5 = 5;
                 a6 = 6;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_5()) {
             case 1:
                 a7 = 6; // 5 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a7 = 7;
                 a8 = 8;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a7 = 7;
                 a8 = 8;
                 a9 = 9;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_6()) {
             case 1:
                 a10 = 10; // 6 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a10 = 10;
                 a11 = 11;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a10 = 10;
                 a11 = 11;
                 a12 = 12;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_7()) {
             case 1:
                 a13 = 10; // 7 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a13 = 10;
                 a14 = 14;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a13 = 10;
                 a14 = 14;
                 a15 = 15;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_8()) {
             case 1:
                 a16 = 16; // 8 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a16 = 16;
                 a17 = 17;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a16 = 16;
                 a17 = 17;
                 a18 = 18;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_9()) {
             case 1:
                 a19 = 19; // 9 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a20 = 20;
                 a21 = 20;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a20 = 20;
                 a21 = 20;
                 a21 = 21;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_10()) {
             case 1:
                 a22 = 22; // 10 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a22 = 22;
                 a23 = 23;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a22 = 22;
                 a23 = 23;
                 a24 = 24;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_11()) {
             case 1:
                 a25 = 25; // 11 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a25 = 25;
                 a26 = 26;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a25 = 25;
                 a26 = 26;
                 a27 = 27;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_12()) {
             case 1:
                 a28 = 28; // 12 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a28 = 28;
                 a29 = 29;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a28 = 28;
                 a29 = 29;
                 a30 = 30;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_13()) {
             case 1:
                 a31 = 31; // 13 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a31 = 31;
                 a32 = 32;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a31 = 31;
                 a32 = 32;
                 a33 = 33;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_14()) {
             case 1:
                 a34 = 34; // 14 буквы 1 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 50:
                 a34 = 34;
                 a35 = 35;// 3 буквы 50 раз
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a34 = 34;
                 a35 = 35;
                 a36 = 36;//3 буквы 4 раза
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
         }
         switch (getList_sum()) {
             case 50:
                 a37 = 37;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
             case 100:
                 a37 = 37;
                 a38 = 38;
+                setCounter(getCounter()+20);
+                setTryChenge(getTryChenge()+1);
+                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
                 break;
 
         }
@@ -2439,17 +2580,17 @@ public class GameStart extends AppCompatActivity  {
             Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
             Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
             Thru_answer_4 = v.findViewById(R.id.Thru_answer_4);
-            adapter_thru_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_1);
-            adapter_thru_2 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_2);
-            adapter_thru_3 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_3);
-            adapter_thru_4 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, thru_list_4);
+            adapter_thru_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_1);
+            adapter_thru_2 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_2);
+            adapter_thru_3 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_3);
+            adapter_thru_4 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_4);
             Thru_answer_1.setAdapter(adapter_thru_1);
             Thru_answer_2.setAdapter(adapter_thru_2);
             Thru_answer_3.setAdapter(adapter_thru_3);
             Thru_answer_4.setAdapter(adapter_thru_4);
 
             Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
-            adapter_wrong_1 = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, Wrong_list_1);
+            adapter_wrong_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, Wrong_list_1);
             Wrong_answer_1.setAdapter(adapter_wrong_1);
 
 

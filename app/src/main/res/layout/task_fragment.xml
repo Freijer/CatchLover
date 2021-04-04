@@ -98,7 +98,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp" />
+            tools:layout_conversion_absoluteWidth="155dp"
+            android:background="@drawable/listtruepng" />
         <ListView
             android:id="@+id/Thru_answer_2"
             android:layout_width="120dp"
@@ -113,7 +114,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp" />
+            tools:layout_conversion_absoluteWidth="155dp"
+            android:background="@drawable/listtruepng"/>
         <ListView
             android:id="@+id/Thru_answer_3"
             android:layout_width="120dp"
@@ -128,7 +130,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp" />
+            tools:layout_conversion_absoluteWidth="155dp"
+            android:background="@drawable/listtruepng"/>
         <ListView
             android:id="@+id/Thru_answer_4"
             android:layout_width="120dp"
@@ -143,7 +146,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp" />
+            tools:layout_conversion_absoluteWidth="155dp"
+            android:background="@drawable/listtruepng"/>
 
         <ListView
             android:id="@+id/Wrong_answer_1"
@@ -152,6 +156,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginEnd="10dp"
             android:visibility="visible"
+            android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.975"
@@ -159,7 +164,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
             tools:layout_conversion_absoluteHeight="380dp"
-            tools:layout_conversion_absoluteWidth="155dp"/>
+            tools:layout_conversion_absoluteWidth="155dp"
+            android:background="@drawable/listtruepng"/>
 
 
 
