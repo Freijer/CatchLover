@@ -1454,7 +1454,7 @@ public class GameStart extends AppCompatActivity  {
     public void Creates(){
 
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), 850),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
                 PropertyValuesHolder.ofFloat("y", Colo.getHeight()/Colo.getHeight(), Colo.getHeight()-55*10));
 
         button1.setDuration(6000 +getSpeed_a());
@@ -1465,7 +1465,7 @@ public class GameStart extends AppCompatActivity  {
 //2 кнопка
         button2 = ObjectAnimator.ofPropertyValuesHolder(pr2,
                 PropertyValuesHolder.ofFloat("x", 200, 400),
-                PropertyValuesHolder.ofFloat("y", 140, 1050));
+                PropertyValuesHolder.ofFloat("y", Colo.getHeight()/Colo.getHeight()+50, Colo.getHeight()-55*10));
         button2.setDuration(6300+getSpeed_a());
         button2.setRepeatCount(ObjectAnimator.INFINITE);
         button2.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1489,7 +1489,7 @@ public class GameStart extends AppCompatActivity  {
 //5 кнопка
         button5 = ObjectAnimator.ofPropertyValuesHolder(pr5,
                 PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
-                PropertyValuesHolder.ofFloat("y", 900, 850));
+                PropertyValuesHolder.ofFloat("y", 900, Colo.getHeight()-55*10));
         button5.setDuration(5300+getSpeed_a());
         button5.setRepeatCount(ObjectAnimator.INFINITE);
         button5.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1513,7 +1513,7 @@ public class GameStart extends AppCompatActivity  {
 //8 кнопка
         button8 = ObjectAnimator.ofPropertyValuesHolder(pr8,
                 PropertyValuesHolder.ofFloat("x", 200, 650),
-                PropertyValuesHolder.ofFloat("y", 1050, 140));
+                PropertyValuesHolder.ofFloat("y", Colo.getHeight()-55*10, 100));
         button8.setDuration(3900 +getSpeed_a());
         button8.setRepeatCount(ObjectAnimator.INFINITE);
         button8.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1521,7 +1521,7 @@ public class GameStart extends AppCompatActivity  {
 //9 кнопка не настроил
         button9 = ObjectAnimator.ofPropertyValuesHolder(pr9,
                 PropertyValuesHolder.ofFloat("x", 800, 800),
-                PropertyValuesHolder.ofFloat("y", 1050, 140));
+                PropertyValuesHolder.ofFloat("y", Colo.getHeight()-55*10, 140));
         button9.setDuration(4100 +getSpeed_a());
         button9.setRepeatCount(ObjectAnimator.INFINITE);
         button9.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1529,7 +1529,7 @@ public class GameStart extends AppCompatActivity  {
 //10 кнопка
         button10 = ObjectAnimator.ofPropertyValuesHolder(pr10,
                 PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), 250),
-                PropertyValuesHolder.ofFloat("y", 1050, 140));
+                PropertyValuesHolder.ofFloat("y", Colo.getHeight()-55*10, 140));
         button10.setDuration(4500 +getSpeed_a());
         button10.setRepeatCount(ObjectAnimator.INFINITE);
         button10.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1537,7 +1537,7 @@ public class GameStart extends AppCompatActivity  {
 //11 кнопка
         button11 = ObjectAnimator.ofPropertyValuesHolder(pr11,
                 PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, 100),
-                PropertyValuesHolder.ofFloat("y", 140, 950));
+                PropertyValuesHolder.ofFloat("y", 140, Colo.getHeight()-55*10));
         button11.setDuration(5700 +getSpeed_a());
         button11.setRepeatCount(ObjectAnimator.INFINITE);
         button11.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1545,7 +1545,7 @@ public class GameStart extends AppCompatActivity  {
 //12 кнопка
         button12 = ObjectAnimator.ofPropertyValuesHolder(pr12,
                 PropertyValuesHolder.ofFloat("x", 700, 400),
-                PropertyValuesHolder.ofFloat("y", 140, 1050));
+                PropertyValuesHolder.ofFloat("y", 140, Colo.getHeight()-55*10));
         button12.setDuration(3600 +getSpeed_a());
         button12.setRepeatCount(ObjectAnimator.INFINITE);
         button12.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1554,7 +1554,7 @@ public class GameStart extends AppCompatActivity  {
 //13 кнопка
         button13 = ObjectAnimator.ofPropertyValuesHolder(pr13,
                 PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, Colo.getWidth()/Colo.getWidth()),
-                PropertyValuesHolder.ofFloat("y", 1100, 1050));
+                PropertyValuesHolder.ofFloat("y", 1100, Colo.getHeight()-55*10));
         button13.setDuration(5100 +getSpeed_a());
         button13.setRepeatCount(ObjectAnimator.INFINITE);
         button13.setRepeatMode(ObjectAnimator.REVERSE);
@@ -1562,7 +1562,7 @@ public class GameStart extends AppCompatActivity  {
 //14 кнопка
         button14 = ObjectAnimator.ofPropertyValuesHolder(pr14,
                 PropertyValuesHolder.ofFloat("x", 500, 500),
-                PropertyValuesHolder.ofFloat("y", 140, 1050));
+                PropertyValuesHolder.ofFloat("y", 140, Colo.getHeight()-55*10));
         button14.setDuration(4800 +getSpeed_a());
         button14.setRepeatCount(ObjectAnimator.INFINITE);
         button14.setRepeatMode(ObjectAnimator.REVERSE);
