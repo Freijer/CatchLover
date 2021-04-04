@@ -129,12 +129,9 @@
         android:id="@+id/Colo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:background="@drawable/desk_fore"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="0dp"
         android:layout_below="@+id/topLayout"
         android:layout_above="@+id/chars_layout">
 
@@ -142,8 +139,8 @@
 
         <ImageView
             android:id="@+id/img_nextlvl"
-            android:layout_width="207dp"
-            android:layout_height="212dp"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
             android:alpha="0"
             android:layout_centerInParent="true"
             app:srcCompat="@drawable/nextlvl" />
@@ -161,184 +158,103 @@
             android:id="@+id/pr1"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton1"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.284"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.294" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr10"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton10"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.33"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.181" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr13"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton13"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.711"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.187" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr2"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton2"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.33"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.366" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr3"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton3"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.485"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.279" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr4"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton4"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.175"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.366" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr5"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton5"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.175"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.279" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr7"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton7"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.641"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.275" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr8"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton8"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.796"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.279" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr9"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton9"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.485"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.368" />
+            android:textSize="14sp" />
         <Button
             android:id="@+id/pr14"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton14"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.641"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.363" />
+            />
         <Button
             android:id="@+id/pr11"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton11"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.166"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.187" />
+            />
         <Button
             android:id="@+id/pr12"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton12"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.522"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.183" />
+          />
         <Button
             android:id="@+id/pr6"
             android:layout_width="55dp"
             android:layout_height="55dp"
-            android:background="@drawable/forlessbutton"
+            android:background="@drawable/circlepr"
             android:onClick="ClickButton6"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.796"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.366" />
+            android:textSize="14sp" />
 
 
     </RelativeLayout>

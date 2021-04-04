@@ -1421,43 +1421,41 @@ public class GameStart extends AppCompatActivity  {
     } //показать уведомление о новом уровне
     protected void EneblendButtonsAffterPress(){
         pr1.setEnabled(true);
-        pr1.setBackgroundResource(R.drawable.forlessbutton);
+        pr1.setBackgroundResource(R.drawable.circlepr);
         pr2.setEnabled(true);
-        pr2.setBackgroundResource(R.drawable.forlessbutton);
+        pr2.setBackgroundResource(R.drawable.circlepr);
         pr3.setEnabled(true);
-        pr3.setBackgroundResource(R.drawable.forlessbutton);
+        pr3.setBackgroundResource(R.drawable.circlepr);
         pr4.setEnabled(true);
-        pr4.setBackgroundResource(R.drawable.forlessbutton);
+        pr4.setBackgroundResource(R.drawable.circlepr);
         pr5.setEnabled(true);
-        pr5.setBackgroundResource(R.drawable.forlessbutton);
+        pr5.setBackgroundResource(R.drawable.circlepr);
         pr6.setEnabled(true);
-        pr6.setBackgroundResource(R.drawable.forlessbutton);
+        pr6.setBackgroundResource(R.drawable.circlepr);
         pr7.setEnabled(true);
-        pr7.setBackgroundResource(R.drawable.forlessbutton);
+        pr7.setBackgroundResource(R.drawable.circlepr);
         pr8.setEnabled(true);
-        pr8.setBackgroundResource(R.drawable.forlessbutton);
+        pr8.setBackgroundResource(R.drawable.circlepr);
         pr9.setEnabled(true);
-        pr9.setBackgroundResource(R.drawable.forlessbutton);
+        pr9.setBackgroundResource(R.drawable.circlepr);
         pr10.setEnabled(true);
-        pr10.setBackgroundResource(R.drawable.forlessbutton);
+        pr10.setBackgroundResource(R.drawable.circlepr);
         pr11.setEnabled(true);
-        pr11.setBackgroundResource(R.drawable.forlessbutton);
+        pr11.setBackgroundResource(R.drawable.circlepr);
         pr12.setEnabled(true);
-        pr12.setBackgroundResource(R.drawable.forlessbutton);
+        pr12.setBackgroundResource(R.drawable.circlepr);
         pr13.setEnabled(true);
-        pr13.setBackgroundResource(R.drawable.forlessbutton);
+        pr13.setBackgroundResource(R.drawable.circlepr);
         pr14.setEnabled(true);
-        pr14.setBackgroundResource(R.drawable.forlessbutton);
+        pr14.setBackgroundResource(R.drawable.circlepr);
     } //кнопки снова активны и имеют исходный стиль
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void Creates(){
 
-
-
         button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
-                PropertyValuesHolder.ofFloat("x", 0, 850),
-                PropertyValuesHolder.ofFloat("y", 140, 1050));
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), 850),
+                PropertyValuesHolder.ofFloat("y", Colo.getHeight()/Colo.getHeight(), Colo.getHeight()-55*10));
 
         button1.setDuration(6000 +getSpeed_a());
         button1.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1474,7 +1472,7 @@ public class GameStart extends AppCompatActivity  {
 //        button2.start();
 //3 кнопка
         button3 = ObjectAnimator.ofPropertyValuesHolder(pr3,
-                PropertyValuesHolder.ofFloat("x", 0, 910),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
                 PropertyValuesHolder.ofFloat("y", 140, 140));
         button3.setDuration(7500+getSpeed_a());
         button3.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1482,7 +1480,7 @@ public class GameStart extends AppCompatActivity  {
 //        button3.start();
 //4 кнопка
         button4 = ObjectAnimator.ofPropertyValuesHolder(pr4,
-                PropertyValuesHolder.ofFloat("x", 0, 910),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
                 PropertyValuesHolder.ofFloat("y", 500, 500));
         button4.setDuration(8000+getSpeed_a());
         button4.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1490,15 +1488,15 @@ public class GameStart extends AppCompatActivity  {
 //        button4.start();
 //5 кнопка
         button5 = ObjectAnimator.ofPropertyValuesHolder(pr5,
-                PropertyValuesHolder.ofFloat("x", 0, 910),
-                PropertyValuesHolder.ofFloat("y", 900, 900));
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
+                PropertyValuesHolder.ofFloat("y", 900, 850));
         button5.setDuration(5300+getSpeed_a());
         button5.setRepeatCount(ObjectAnimator.INFINITE);
         button5.setRepeatMode(ObjectAnimator.REVERSE);
 //        button5.start();
 //6 кнопка
         button6 = ObjectAnimator.ofPropertyValuesHolder(pr6,
-                PropertyValuesHolder.ofFloat("x", 910, 0),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
                 PropertyValuesHolder.ofFloat("y", 300, 300));
         button6.setDuration(5600 +getSpeed_a());
         button6.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1506,7 +1504,7 @@ public class GameStart extends AppCompatActivity  {
 //        button6.start();
 //7 кнопка
         button7 = ObjectAnimator.ofPropertyValuesHolder(pr7,
-                PropertyValuesHolder.ofFloat("x", 910, 0),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, Colo.getWidth()/Colo.getWidth()),
                 PropertyValuesHolder.ofFloat("y", 700, 700));
         button7.setDuration(4400 +getSpeed_a());
         button7.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1530,7 +1528,7 @@ public class GameStart extends AppCompatActivity  {
 //        button9.start();
 //10 кнопка
         button10 = ObjectAnimator.ofPropertyValuesHolder(pr10,
-                PropertyValuesHolder.ofFloat("x", 0, 250),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), 250),
                 PropertyValuesHolder.ofFloat("y", 1050, 140));
         button10.setDuration(4500 +getSpeed_a());
         button10.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1538,7 +1536,7 @@ public class GameStart extends AppCompatActivity  {
 //        button10.start();
 //11 кнопка
         button11 = ObjectAnimator.ofPropertyValuesHolder(pr11,
-                PropertyValuesHolder.ofFloat("x", 910, 100),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, 100),
                 PropertyValuesHolder.ofFloat("y", 140, 950));
         button11.setDuration(5700 +getSpeed_a());
         button11.setRepeatCount(ObjectAnimator.INFINITE);
@@ -1555,7 +1553,7 @@ public class GameStart extends AppCompatActivity  {
 
 //13 кнопка
         button13 = ObjectAnimator.ofPropertyValuesHolder(pr13,
-                PropertyValuesHolder.ofFloat("x", 910, 0),
+                PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, Colo.getWidth()/Colo.getWidth()),
                 PropertyValuesHolder.ofFloat("y", 1100, 1050));
         button13.setDuration(5100 +getSpeed_a());
         button13.setRepeatCount(ObjectAnimator.INFINITE);
