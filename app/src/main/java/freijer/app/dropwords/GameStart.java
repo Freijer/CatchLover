@@ -2,57 +2,39 @@ package freijer.app.dropwords;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
-import android.os.Bundle;
-import android.text.AlteredCharSequence;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
-import android.os.Build;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.os.Looper;
-import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.BounceInterpolator;
 import android.view.animation.TranslateAnimation;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -60,26 +42,17 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-
 import freijer.app.dropwords.DataBase.DataHelper;
-
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
@@ -115,11 +88,7 @@ public class GameStart extends AppCompatActivity  {
     ArrayList<String> lenght_plus_com;
     ArrayList<String> lenght_minus_com;
 
-
     Supports supportClass = new Supports();
-    SharedPreferences sPref;
-    final String SAVED_TEXT = "saved_text";
-    protected int  number_max_lenght= 0;
 
     String read = "";
     String readWrong = "";
@@ -135,8 +104,7 @@ public class GameStart extends AppCompatActivity  {
 
     protected int flag = 0;
     protected int exp = 0;
-    protected int time_word;
-    private List<Integer> addScore = new ArrayList<>();
+
 
 
     public int getFlag() {
@@ -154,12 +122,6 @@ public class GameStart extends AppCompatActivity  {
 
 
     protected int number_change_word = 5;
-    public int getNumber_change_word() {
-        return number_change_word;
-    }
-    public void setNumber_change_word(int number_change_word) {
-        this.number_change_word = number_change_word;
-    }
 
     int number_word_3 = 0;
     int number_word_4 = 0;
@@ -242,9 +204,6 @@ public class GameStart extends AppCompatActivity  {
     public void setNumber_word_10(int number_word_10) {
         this.number_word_10 = number_word_10;
     }
-
-
-    ArrayAdapter<String> adapterDone;
 
 
     //Правильные ответы
@@ -525,14 +484,20 @@ public class GameStart extends AppCompatActivity  {
     private int seconds = 0;
     private boolean running;
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
 
         dbHelper = new DataHelper(this);
         setTextFlag(1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_start);
+
+        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         chars_layout = findViewById(R.id.chars_layout);
         engine_buttons = findViewById(R.id.engine_buttons);
         quest = findViewById(R.id.quest);
