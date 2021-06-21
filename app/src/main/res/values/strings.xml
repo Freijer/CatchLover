@@ -10,7 +10,8 @@
 
 
     <string name="Speed">Скорость</string>
-    <string name="Total_reset">Сбросить прогресс</string>
+    <string name="Total_reset">Сбросить</string>
+    <string name="ressets">прогресс</string>
 
     <string name="Game_standart">Стандартная игра</string>
     <string name="Game_time">Игра на время</string>
@@ -32,6 +33,18 @@
     <string name="score_15">15</string>
 
     <string name="achives">Собрать слова: </string>
+
+    <string name="speed_game">Скорость игры</string>
+    <string name="type_game">Режим игры</string>
+
+    <string name="lang">Русский</string>
+
+    <string name="standart">Стандартная</string>
+    <string name="onTime">На время</string>
+    <string name="bells">Уведомления</string>
+    <string name="recent">Оставить</string>
+        <string name="recent2">отзыв</string>
+
 
 
 

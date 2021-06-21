@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorSpeed"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/settings_background"
     android:screenOrientation="portrait" >
 
     <Button
@@ -12,8 +12,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
-        android:text="@string/Reset_no"
-        android:background="@drawable/forlessbutton" />
+        android:background="@drawable/setting_standart_game" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Reset_no"
+            android:layout_below="@+id/reset_no"
+            android:textStyle="italic"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp"
+            android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/reset_yes"
@@ -21,10 +29,17 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/reset_no"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:text="@string/Reset_yes"
-        android:background="@drawable/resetbutton"/>
+        android:layout_marginTop="35dp"
+        android:background="@drawable/setting_reset_progres"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Reset_yes"
+            android:layout_below="@+id/reset_yes"
+            android:textStyle="italic"
+            android:textSize="11sp"
+            android:layout_marginTop="2dp"
+            android:layout_centerHorizontal="true"/>
 
 
 

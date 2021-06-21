@@ -5,33 +5,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bookstage"
+    android:background="@drawable/main_background"
     tools:context=".MainActivity"
     android:screenOrientation="portrait" >
 
     <Button
         android:id="@+id/play"
-        android:layout_width="165dp"
-        android:layout_height="88dp"
-        android:background="@drawable/forlessbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_play"
         android:fontFamily="@font/antic"
         android:onClick="Play"
-        android:text="@string/Start_the_Game"
-        android:textSize="18sp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+
+        android:layout_marginTop="320dp"/>
 
     <Button
         android:id="@+id/settings_game"
-        android:layout_width="165dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/forlessbutton"
-        android:fontFamily="@font/antic"
+        android:layout_width="51dp"
+        android:layout_height="51dp"
+        android:background="@drawable/main_settings"
         android:onClick="Settings_and_params"
-        android:text="@string/Settings"
-        android:textSize="18sp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/play"/>
+        android:layout_alignParentBottom="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginBottom="40dp"
+            android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

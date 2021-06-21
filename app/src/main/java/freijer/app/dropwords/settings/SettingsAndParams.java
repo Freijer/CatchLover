@@ -1,19 +1,23 @@
 package freijer.app.dropwords.settings;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -26,10 +30,10 @@ import freijer.app.dropwords.R;
 
 public class SettingsAndParams extends AppCompatActivity {
 
-    protected Button fast, medium, slow, reset_no, reset_yes;
-    protected ImageView fast_view, medium_view, slow_view;
-    protected Button speed_game, total_resset, standart_game, time_game, languache_game, no_idea_game;
-    private AlertDialog SpeedDialog, ResetDialog;
+    protected Button reset_no, reset_yes;
+    protected Button total_resset, standart_game, time_game, no_idea_game;
+    protected SwitchCompat switch_fast, switch_slow, switch_mediun;
+    private AlertDialog ResetDialog;
 
 
 
@@ -45,7 +49,15 @@ public class SettingsAndParams extends AppCompatActivity {
 
 
 
+    public void notNow(View v){
+        Toast toast = Toast.makeText(this, "В разработке!",Toast.LENGTH_SHORT);
+        toast.show();
+    }
 
+    public void sentRecent(View v){
+        Intent telegram = new Intent(Intent.ACTION_VIEW , Uri.parse("https://t.me/Freijer"));
+        startActivity(telegram);
+    }
 
 
 
@@ -54,11 +66,16 @@ public class SettingsAndParams extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_and_params);
 
-        speed_game = findViewById(R.id.speed_game);
+        switch_fast = findViewById(R.id.switch_fast);
+        switch_slow = findViewById(R.id.switch_slow);
+        switch_mediun = findViewById(R.id.switch_mediun);
+
+
+
                 total_resset = findViewById(R.id. total_resset);
         standart_game = findViewById(R.id.standart_game);
                 time_game = findViewById(R.id.time_game);
-        languache_game = findViewById(R.id.languache_game);
+
                 no_idea_game = findViewById(R.id.no_idea_game);
 
         Bundle bundle = getIntent().getExtras();
@@ -67,70 +84,65 @@ public class SettingsAndParams extends AppCompatActivity {
             setSpeed_settings(Integer.parseInt(income1));
             Log.d("SPEED2", ""+getSpeed_settings());
         }
-    }
-
-    public void Change_speed(View v) {
-        SpeedDialog = new AlertDialog.Builder(this).create();
-        LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        assert tasks != null;
-        @SuppressLint("InflateParams") View view = tasks.inflate(R.layout.speed_dialog, null, false);
-        fast = view.findViewById(R.id.fast);
-        medium = view.findViewById(R.id.medium);
-        slow = view.findViewById(R.id.slow);
-        fast_view = view.findViewById(R.id.fast_view);
-        medium_view = view.findViewById(R.id.medium_view);
-        slow_view = view.findViewById(R.id.slow_view);
-
-        SpeedDialog.setView(view);
-        SpeedDialog.setCancelable(true);
-
-        fast_view.setVisibility(View.GONE);
-        medium_view.setVisibility(View.GONE);
-        slow_view.setVisibility(View.GONE);
-
-        fast.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSpeed_settings(-2500);
-                Log.d("speed_f", String.valueOf(getSpeed_settings()));
-                SpeedDialog.dismiss();
-            }
-        });
-
-        medium.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSpeed_settings(0);
-                Log.d("speed_f", String.valueOf(getSpeed_settings()));
-                SpeedDialog.dismiss();
-            }
-        });
-
-        slow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSpeed_settings(5500);
-                Log.d("speed_f", String.valueOf(getSpeed_settings()));
-                SpeedDialog.dismiss();
-            }
-        });
 
         if (getSpeed_settings() == 5500) {
-            fast_view.setVisibility(View.GONE);
-            medium_view.setVisibility(View.GONE);
-            slow_view.setVisibility(View.VISIBLE);
+            switch_mediun.setChecked(false);
+            switch_fast.setChecked(false);
+            switch_slow.setChecked(true);
         } else if (getSpeed_settings() == 0) {
-            fast_view.setVisibility(View.GONE);
-            medium_view.setVisibility(View.VISIBLE);
-            slow_view.setVisibility(View.GONE);
+            switch_fast.setChecked(false);
+            switch_slow.setChecked(false);
+            switch_mediun.setChecked(true);
         } else if (getSpeed_settings() == -2500) {
-            fast_view.setVisibility(View.VISIBLE);
-            medium_view.setVisibility(View.GONE);
-            slow_view.setVisibility(View.GONE);
-         }
-            SpeedDialog.show();
-        }  // список собранных слов
+            switch_mediun.setChecked(false);
+            switch_slow.setChecked(false);
+            switch_fast.setChecked(true);
+        }
+
+        switch_slow.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    switch_mediun.setChecked(false);
+                    switch_fast.setChecked(false);
+                    setSpeed_settings(5500);
+                }else if(!switch_fast.isChecked() &!switch_slow.isChecked()) {
+                    switch_mediun.setChecked(true);
+                }
+            }
+        });
+
+        switch_mediun.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    switch_fast.setChecked(false);
+                    switch_slow.setChecked(false);
+                    setSpeed_settings(0);
+                } else if(!switch_fast.isChecked() &!switch_slow.isChecked()) {
+                    switch_mediun.setChecked(true);
+                }
+            }
+        });
+
+        switch_fast.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    switch_mediun.setChecked(false);
+                    switch_slow.setChecked(false);
+                    setSpeed_settings(-2500);
+                }else if(!switch_fast.isChecked() &!switch_slow.isChecked()) {
+                    switch_mediun.setChecked(true);
+                }
+            }
+        });
+    }
+
+
+
+
+
 
 
 
