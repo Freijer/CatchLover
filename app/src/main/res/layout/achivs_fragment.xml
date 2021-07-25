@@ -23,41 +23,39 @@
         android:onClick="Close"/>
 
 
+        <ImageView
+            android:id="@+id/word_img_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/butClose"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_all" />
 
-    <ImageView
-        android:id="@+id/word_img_all"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="1dp"
-        android:layout_below="@+id/butClose"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
-    <ProgressBar
-        android:id="@+id/word_bar_all"
-        android:layout_width="wrap_content"
-        android:layout_height="15dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginEnd="5dp"
-        android:layout_alignBottom="@+id/word_img_all"
-        android:layout_toEndOf="@+id/word_img_all"
-        android:layout_toStartOf="@+id/word_stat_img_all"
-        android:indeterminateDrawable="@color/white"
-        style="@android:style/Widget.ProgressBar.Horizontal"
+        <ProgressBar
+            android:id="@+id/word_bar_all"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="12dp"
+            android:layout_alignBottom="@+id/word_img_all"
+            android:layout_marginStart="3dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_toStartOf="@+id/word_stat_img_all"
+            android:layout_toEndOf="@+id/word_img_all"
+            android:indeterminateDrawable="@color/white" />
 
-
-        />
         <TextView
             android:id="@+id/word_name_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/word_img_all"
             android:layout_alignBottom="@+id/word_img_all"
-            android:layout_marginBottom="20dp"
-            android:textSize="13sp"
-            android:text="Всего собранных слов"/>
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toEndOf="@+id/word_img_all"
+            android:text="Всего собранных слов"
+            android:textSize="13sp" />
     <ImageView
         android:id="@+id/word_stat_img_all"
         android:layout_width="wrap_content"
@@ -90,15 +88,15 @@
         android:id="@+id/word_img_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/word_img_all"
         android:layout_alignParentStart="true"
         android:background="@drawable/achives_3"/>
     <ProgressBar
         android:id="@+id/word_bar_3"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -110,9 +108,11 @@
         android:id="@+id/word_name_3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_bar_3"
         android:layout_toEndOf="@+id/word_img_3"
-        android:layout_alignTop="@+id/word_img_3"
+
         android:text="Слов из 3 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_3"
@@ -141,19 +141,19 @@
             android:text="@string/word_3"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_3"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_3"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_4" />
     <ProgressBar
         android:id="@+id/word_bar_4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -165,9 +165,10 @@
         android:id="@+id/word_name_4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
         android:layout_toEndOf="@+id/word_img_4"
-        android:layout_alignTop="@+id/word_img_4"
+            android:layout_alignBottom="@+id/word_img_4"
         android:text="Слов из 4 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_4"
@@ -196,19 +197,19 @@
             android:text="@string/word_4"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_4"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_4"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_5" />
     <ProgressBar
         android:id="@+id/word_bar_5"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -220,9 +221,11 @@
             android:id="@+id/word_name_5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+
             android:layout_toEndOf="@+id/word_img_5"
-            android:layout_alignTop="@+id/word_img_5"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_img_5"
             android:text="Слов из 5 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_5"
@@ -251,19 +254,19 @@
             android:text="@string/word_5"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_5"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_5"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_6" />
     <ProgressBar
         android:id="@+id/word_bar_6"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -276,8 +279,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_img_6"
             android:layout_toEndOf="@+id/word_img_6"
-            android:layout_alignTop="@+id/word_img_6"
+
             android:text="Слов из 6 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_6"
@@ -306,19 +311,19 @@
             android:text="@string/word_6"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_6"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_6"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_7" />
     <ProgressBar
         android:id="@+id/word_bar_7"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -331,8 +336,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_img_7"
             android:layout_toEndOf="@+id/word_img_7"
-            android:layout_alignTop="@+id/word_img_7"
+
             android:text="Слов из 7 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_7"
@@ -361,19 +368,19 @@
             android:text="@string/word_7"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_7"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_7"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_8" />
     <ProgressBar
         android:id="@+id/word_bar_8"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -387,7 +394,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/word_img_8"
-            android:layout_alignTop="@+id/word_img_8"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_img_8"
             android:text="Слов из 8 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_8"
@@ -416,19 +424,19 @@
             android:text="@string/word_8"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_8"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_8"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_9" />
     <ProgressBar
         android:id="@+id/word_bar_9"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -441,8 +449,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_img_9"
             android:layout_toEndOf="@+id/word_img_9"
-            android:layout_alignTop="@+id/word_img_9"
             android:text="Слов из 9 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_9"
@@ -471,19 +480,19 @@
             android:text="@string/word_9"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_9"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_9"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_10" />
     <ProgressBar
         android:id="@+id/word_bar_10"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -496,8 +505,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_img_10"
             android:layout_toEndOf="@+id/word_img_10"
-            android:layout_alignTop="@+id/word_img_10"
+
             android:text="Слов из 10 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_10"
@@ -526,19 +537,19 @@
             android:text="@string/word_10"/>
 
 
-    <ImageView
-        android:id="@+id/word_img_11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/word_img_10"
-        android:layout_alignParentStart="true"
-        android:background="@drawable/achives_3"/>
+        <ImageView
+            android:id="@+id/word_img_11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/word_img_10"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_11" />
     <ProgressBar
         android:id="@+id/word_bar_11"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="12dp"
         android:layout_marginTop="15dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
@@ -551,8 +562,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_alignBottom="@+id/word_img_11"
             android:layout_toEndOf="@+id/word_img_11"
-            android:layout_alignTop="@+id/word_img_11"
             android:text="Слов из 11 букв"/>
     <ImageView
         android:id="@+id/word_stat_img_11"
@@ -584,15 +596,15 @@
             android:id="@+id/word_img_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
             android:layout_below="@+id/word_img_11"
             android:layout_alignParentStart="true"
-            android:background="@drawable/achives_3"/>
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_12" />
         <ProgressBar
             android:id="@+id/word_bar_12"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="12dp"
             android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -604,9 +616,11 @@
             android:id="@+id/word_name_12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_alignBottom="@+id/word_img_12"
             android:layout_toEndOf="@+id/word_img_12"
-            android:layout_alignTop="@+id/word_img_12"
+
             android:text="Слов из 12 букв"/>
         <ImageView
             android:id="@+id/word_stat_img_12"
@@ -638,15 +652,15 @@
             android:id="@+id/word_img_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginStart="5dp"
             android:layout_below="@+id/word_img_12"
             android:layout_alignParentStart="true"
-            android:background="@drawable/achives_3"/>
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/achives_13" />
         <ProgressBar
             android:id="@+id/word_bar_13"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="12dp"
             android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -658,9 +672,10 @@
             android:id="@+id/word_name_13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_alignBottom="@+id/word_img_13"
             android:layout_toEndOf="@+id/word_img_13"
-            android:layout_alignTop="@+id/word_img_13"
             android:text="Слов из 13 букв"/>
         <ImageView
             android:id="@+id/word_stat_img_13"
@@ -692,15 +707,15 @@
             android:id="@+id/word_img_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@+id/word_img_13"
             android:layout_alignParentStart="true"
             android:background="@drawable/achives_3"/>
         <ProgressBar
             android:id="@+id/word_bar_14"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="12dp"
             android:layout_marginTop="15dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
@@ -712,9 +727,10 @@
             android:id="@+id/word_name_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="15dp"
+                android:layout_alignBottom="@+id/word_img_14"
             android:layout_toEndOf="@+id/word_img_14"
-            android:layout_alignTop="@+id/word_img_14"
             android:text="Слов из 14 букв"/>
         <ImageView
             android:id="@+id/word_stat_img_14"
@@ -745,7 +761,7 @@
         <ImageView
             android:layout_width="1dp"
             android:layout_height="1dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="5dp"
             android:layout_marginStart="5dp"
             android:layout_below="@+id/word_bar_14"
             android:layout_alignParentStart="true" />
