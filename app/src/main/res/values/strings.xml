@@ -43,11 +43,22 @@
     <string name="onTime">На время</string>
     <string name="bells">Уведомления</string>
     <string name="recent">Оставить</string>
-        <string name="recent2">отзыв</string>
+    <string name="recent2">отзыв</string>
 
+    <string name="word_all">/3141</string>
 
-
-
+    <string name="word_3">/511</string>
+    <string name="word_4">/765</string>
+    <string name="word_5">/792</string>
+    <string name="word_6">/534</string>
+    <string name="word_7">/307</string>
+    <string name="word_8">/158</string>
+    <string name="word_9">/40</string>
+    <string name="word_10">/21</string>
+    <string name="word_11">/1</string>
+    <string name="word_12">/12</string>
+    <string name="word_13">/5</string>
+    <string name="word_14">/3</string>
 
 
 </resources>

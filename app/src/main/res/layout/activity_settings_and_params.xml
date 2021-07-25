@@ -16,7 +16,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:background="@drawable/settings_settings"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/type_game"
@@ -126,7 +127,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_below="@+id/switch_mediun"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="35dp"
         android:layout_centerHorizontal="true"/>
         <ImageView
             android:id="@+id/set_game_right"
@@ -135,7 +136,7 @@
             android:background="@drawable/settings_right"
             android:layout_toEndOf="@id/type_game"
             android:layout_below="@+id/switch_mediun"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="45dp"
             android:layout_marginStart="30dp"
             android:layout_centerHorizontal="true"/>
         <ImageView
@@ -145,19 +146,19 @@
             android:background="@drawable/settings_left"
             android:layout_toStartOf="@id/type_game"
             android:layout_below="@+id/switch_mediun"
-            android:layout_marginTop="35dp"
+            android:layout_marginTop="45dp"
             android:layout_marginEnd="30dp"
             android:layout_centerHorizontal="true"/>
 
 
     <Button
         android:id="@+id/standart_game"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/setting_standart_game"
-        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/time_game"
         android:layout_below="@+id/set_game"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="50dp"
         android:layout_marginTop="20dp"
         android:onClick="notNow"/>
         <TextView
@@ -165,19 +166,18 @@
             android:layout_height="wrap_content"
             android:text="@string/standart"
             android:layout_below="@+id/standart_game"
-            android:layout_marginStart="20dp"
+            android:layout_marginEnd="50dp"
             android:textStyle="italic"
             android:textSize="11sp"
-            android:layout_alignParentStart="true"/>
+            android:layout_toStartOf="@+id/time_game"/>
 
     <Button
         android:id="@+id/time_game"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/setting_time_game"
         android:layout_below="@+id/set_game"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:onClick="notNow"/>
         <TextView
@@ -185,20 +185,20 @@
             android:layout_height="wrap_content"
             android:text="@string/onTime"
             android:layout_below="@+id/standart_game"
-            android:layout_marginStart="20dp"
+
             android:textStyle="italic"
             android:textSize="11sp"
             android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/total_resset"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:onClick="Totaly_reset_progress"
         android:background="@drawable/setting_reset_progres"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/set_game"
-        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/time_game"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"/>
         <TextView
             android:id="@+id/textResset"
@@ -206,69 +206,69 @@
             android:layout_height="wrap_content"
             android:text="@string/Total_reset"
             android:layout_below="@+id/standart_game"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="50dp"
             android:textStyle="italic"
             android:textSize="11sp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_toEndOf="@+id/time_game"
+            android:layout_marginStart="50dp"/>
         <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ressets"
         android:layout_below="@+id/textResset"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="50dp"
         android:textStyle="italic"
         android:textSize="11sp"
-        android:layout_alignParentEnd="true"/>
+            android:layout_toEndOf="@+id/time_game"
+            android:layout_marginStart="50dp"/>
 
     <Button
         android:id="@+id/no_idea_game"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/setting_develop"
-        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/bell_game"
         android:layout_below="@+id/time_game"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="40dp"
         android:onClick="notNow"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Game_no_idea"
             android:layout_below="@+id/no_idea_game"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="50dp"
             android:textStyle="italic"
             android:textSize="11sp"
             android:layout_alignParentStart="true"/>
 
     <Button
         android:id="@+id/bell_game"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/setting_bell"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/time_game"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:onClick="notNow"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/bells"
             android:layout_below="@+id/bell_game"
-            android:layout_marginStart="20dp"
             android:textStyle="italic"
             android:textSize="11sp"
             android:layout_centerHorizontal="true"/>
 
     <Button
         android:id="@+id/aboute_game"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:background="@drawable/setting_aboute"
-        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/bell_game"
         android:layout_below="@+id/time_game"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
         android:onClick="sentRecent"/>
             <TextView
             android:id="@+id/textRecent"
@@ -276,19 +276,18 @@
             android:layout_height="wrap_content"
             android:text="@string/recent"
             android:layout_below="@+id/aboute_game"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="50dp"
             android:textStyle="italic"
             android:textSize="11sp"
-            android:layout_alignParentEnd="true"/>
+                android:layout_toEndOf="@+id/bell_game"/>
              <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/recent2"
-                android:layout_below="@+id/textRecent"
-                android:layout_marginEnd="20dp"
+                android:layout_below="@+id/textRecent" android:layout_marginStart="50dp"
                 android:textStyle="italic"
                 android:textSize="11sp"
-                android:layout_alignParentEnd="true"/>
+                 android:layout_toEndOf="@+id/bell_game"/>
 
     <Button
         android:id="@+id/back"

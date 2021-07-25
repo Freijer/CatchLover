@@ -2,109 +2,129 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/papers"
+    android:background="@drawable/take_words"
     android:screenOrientation="portrait" >
 
 
 
         <TextView
             android:id="@+id/thisWordShow"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:background="@color/colorSpeed"/>
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:background="@drawable/take_words_down"/>
 
 
-        <TextView
-            android:id="@+id/textView"
+
+
+
+
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/textstyle1"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:padding="5sp"
-            android:text="Правильные слова"
-            android:textSize="12sp"
             android:layout_below="@+id/thisWordShow"
-            android:layout_alignParentStart="true"
-
-            />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/textstyle_false"
-            android:gravity="center"
-            android:layout_marginEnd="10dp"
-            android:padding="5sp"
-            android:text="Не верные слова"
-            android:textSize="12sp"
-            android:layout_below="@+id/thisWordShow"
-            android:layout_alignParentEnd="true"
-            />
-
-
-
+            android:layout_marginTop="30dp"
+            android:background="@drawable/take_word_left"
+            android:layout_toStartOf="@+id/central"
+            android:layout_marginEnd="1dp"/>
 
 
 
         <ListView
             android:id="@+id/Thru_answer_1"
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="160dp"
+            android:layout_height="450dp"
             android:visibility="visible"
-            android:background="@drawable/listtruepng"
-            android:layout_below="@+id/textView"/>
+            android:layout_marginTop="90dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_toStartOf="@+id/central"
+            android:dividerHeight="0dp"
+            android:divider="@android:color/transparent"
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
         <ListView
             android:id="@+id/Thru_answer_2"
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="160dp"
+            android:layout_height="450dp"
             android:visibility="visible"
-            android:background="@drawable/listtruepng"
-            android:layout_below="@+id/textView"/>
+            android:layout_marginTop="90dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_toStartOf="@+id/central"
+            android:dividerHeight="0dp"
+            android:divider="@android:color/transparent"
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
         <ListView
             android:id="@+id/Thru_answer_3"
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="160dp"
+            android:layout_height="450dp"
             android:visibility="visible"
-            android:background="@drawable/listtruepng"
-            android:layout_below="@+id/textView"/>
+            android:layout_marginTop="90dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_toStartOf="@+id/central"
+            android:dividerHeight="0dp"
+            android:divider="@android:color/transparent"
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
         <ListView
             android:id="@+id/Thru_answer_4"
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="160dp"
+            android:layout_height="450dp"
             android:visibility="visible"
-            android:background="@drawable/listtruepng"
-            android:layout_below="@+id/textView"/>
+            android:layout_marginTop="90dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_toStartOf="@+id/central"
+            android:dividerHeight="0dp"
+            android:divider="@android:color/transparent"
+            android:textAlignment="center"
+            android:textColor="@color/white"/>
+
+
+        <ImageView
+            android:id="@+id/central"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+
+
+
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_toEndOf="@+id/central"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/take_word_right"
+            android:layout_marginStart="1dp"/>
 
         <ListView
             android:id="@+id/Wrong_answer_1"
-            android:layout_width="140dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="80dp"
+            android:layout_width="160dp"
+            android:layout_height="450dp"
             android:visibility="visible"
+            android:layout_marginTop="90dp"
+            android:layout_below="@+id/thisWordShow"
+            android:layout_toEndOf="@+id/central"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="10dp"
+            android:dividerHeight="0dp"
+            android:divider="@android:color/transparent"
             android:textAlignment="center"
-            android:background="@drawable/listtruepng"
-            android:layout_below="@+id/textView2"
-            android:layout_alignParentEnd="true"
-
+            android:textColor="@color/white"
             />
 
 
@@ -112,12 +132,15 @@
 
     <Button
         android:id="@+id/butCloseTask"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/thrue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/take_words_up"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:text="Вернуться в игру"/>
 
 
 </RelativeLayout>

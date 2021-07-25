@@ -17,8 +17,8 @@
         android:fontFamily="@font/antic"
         android:onClick="Play"
         android:layout_centerHorizontal="true"
-
-        android:layout_marginTop="320dp"/>
+        android:layout_above="@+id/settings_game"
+        android:layout_marginBottom="100dp"/>
 
     <Button
         android:id="@+id/settings_game"
@@ -27,7 +27,8 @@
         android:background="@drawable/main_settings"
         android:onClick="Settings_and_params"
         android:layout_alignParentBottom="true"
-            android:layout_marginStart="40dp"
+        android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp"
             android:layout_marginBottom="40dp"
             android:layout_centerHorizontal="true"/>
 

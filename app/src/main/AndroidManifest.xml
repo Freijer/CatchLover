@@ -8,39 +8,40 @@
         android:icon="@mipmap/ic_launcher"
         android:label="Словопадения"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:screenOrientation="portrait"
-        tools:ignore="LockedOrientationActivity"
-
-        >
-        <activity android:name=".settings.SettingsAndParams"
-            android:screenOrientation="portrait"  />
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait" >
+        tools:ignore="LockedOrientationActivity">
+        <activity android:name=".achives_stats"></activity>
+        <activity
+            android:name=".settings.SettingsAndParams"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".GameStart"
-            android:screenOrientation="portrait" >
+        <activity
+            android:name=".GameStart"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name=".GameStart" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".SetingsActivity"
             android:parentActivityName=".GameStart"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GameStart"
-                android:screenOrientation="portrait" />
+                android:screenOrientation="portrait"
+                android:value=".GameStart" />
         </activity>
 
         <meta-data

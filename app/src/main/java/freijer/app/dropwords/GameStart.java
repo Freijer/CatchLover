@@ -12,6 +12,10 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+
+import androidx.constraintlayout.motion.widget.MotionLayout;
+import androidx.constraintlayout.motion.widget.MotionScene;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -67,23 +71,28 @@ public class GameStart extends AppCompatActivity  {
 
 
 
+    protected ArrayList<Integer> list_lvl;
+    protected int currentMaxProgress = 0;
+    int currentLVL = 0;
+
+
     protected int lenght_minus_minus;
     private int lenght_plus; //переменная отвечающая за хранение последовательносит увеличения длинны слов на +1
 
 
     //переменная отвечающая за хранение последовательносит уменьшения длинны слов на -1
-        public int getLenght_plus() {
-            return lenght_plus;
-        }
-        public void setLenght_plus(int lenght_plus) {
-            this.lenght_plus = lenght_plus;
-        }
-            public int getLenght_minus_minus() {
-                return lenght_minus_minus;
-            }
-            public void setLenght_minus_minus(int lenght_minus_minus) {
-                this.lenght_minus_minus = lenght_minus_minus;
-            }
+    public int getLenght_plus() {
+        return lenght_plus;
+    }
+    public void setLenght_plus(int lenght_plus) {
+        this.lenght_plus = lenght_plus;
+    }
+    public int getLenght_minus_minus() {
+        return lenght_minus_minus;
+    }
+    public void setLenght_minus_minus(int lenght_minus_minus) {
+        this.lenght_minus_minus = lenght_minus_minus;
+    }
 
     ArrayList<String> lenght_plus_com;
     ArrayList<String> lenght_minus_com;
@@ -243,7 +252,7 @@ public class GameStart extends AppCompatActivity  {
     String  myText;
 
     protected Button butClose, butCloseTask, butClose_mission;
-    private AlertDialog OptionDialog, TaskDialog, MissionsDialog;
+    private AlertDialog OptionDialog, TaskDialog, MissionsDialog, OptionMenuDialog;
 
 
     protected int textFlag;
@@ -272,11 +281,12 @@ public class GameStart extends AppCompatActivity  {
     ObjectAnimator  button13;
     ObjectAnimator  button14;
 
-    protected ProgressBar progressBar;
-    protected TextView lvlview, textClock, score, text_plus, text_minus, thisWordShow, timerClock, clock, textLvl, textScore, tryChange;
-    protected Button progress, faq, task, starter, reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
-    protected Button  quest, resetWord;
-    private ImageView img_nextlvl;
+    protected ProgressBar progressBar, word_bar_all, word_bar_3, word_bar_4, word_bar_5, word_bar_6, word_bar_7, word_bar_8, word_bar_9, word_bar_10, word_bar_11, word_bar_12, word_bar_13, word_bar_14;
+    protected TextView lvlview, textClock, score, thisWordShow, textLvl, textScore, tryChange, word_stat_lit_all,
+            word_stat_lit_3, word_stat_lit_4,word_stat_lit_5,word_stat_lit_6,word_stat_lit_7,word_stat_lit_8,word_stat_lit_9,word_stat_lit_10,word_stat_lit_11,word_stat_lit_12,word_stat_lit_13,word_stat_lit_14;
+    protected Button menu, starter, faq, task,  reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
+    protected Button  quest, resetWord, butCloseOption;
+    private ImageView img_nextlvl, change_img, score_img;
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
     protected ArrayList<Integer> LineY_1 = new ArrayList<Integer>();
@@ -284,11 +294,11 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> listControl;
     protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected Chronometer mChronometer;
-    protected RelativeLayout chars_layout, engine_buttons;
+    protected RelativeLayout chars_layout, engine_buttons, topLayout;
 
 
     private int img0, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26,
-    img27, img28, img29, img30, img31, img32, img33, img34, img35, img36, img37, img38 = R.drawable.star;
+            img27, img28, img29, img30, img31, img32, img33, img34, img35, img36, img37, img38 = R.drawable.star;
 
     int a0, a1, a2, a3, a4, a5, a6,  a7,  a8,  a9,  a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23, a24, a25, a26, a27, a28, a29, a30, a31, a32, a33, a34, a35, a36, a37, a38 = 0;
 
@@ -302,7 +312,6 @@ public class GameStart extends AppCompatActivity  {
 
 
     protected TextView char_1, char_2, char_3, char_4, char_5, char_6, char_7, char_8, char_9, char_10, char_11, char_12, char_13, char_14;
-    protected Button ChekOut;
     private int indexWord;
     private String word;
     private Random r = new Random();
@@ -310,7 +319,7 @@ public class GameStart extends AppCompatActivity  {
     protected String[] OriginalWord; //бавзовое слово
     protected String[] MixedleWord; //смешение
     protected String Control;
-    private RelativeLayout Colo;
+    private MotionLayout Colo;
     private final int USERID = 6000;
     private int countID;
     protected int numsofliteralsinword;
@@ -333,12 +342,12 @@ public class GameStart extends AppCompatActivity  {
     protected int list_sum;
 
     protected int speed_a;
-        public int getSpeed_a() {
-            return speed_a;
-        }
-        public void setSpeed_a(int speed_a) {
-            this.speed_a = speed_a;
-        }
+    public int getSpeed_a() {
+        return speed_a;
+    }
+    public void setSpeed_a(int speed_a) {
+        this.speed_a = speed_a;
+    }
 
     public String getControl() {
         return Control;
@@ -348,11 +357,11 @@ public class GameStart extends AppCompatActivity  {
     }
 
 
-                        protected int stepOnNextLvl = 0; // ЧТЕНИЕ и ЗАПИСЬ В БД сохрание Уровня
-                        public int getStepOnNextLvl() {
+    protected int stepOnNextLvl = currentLVL; // ЧТЕНИЕ и ЗАПИСЬ В БД сохрание Уровня
+    public int getStepOnNextLvl() {
         return stepOnNextLvl;
     }
-                        public void setStepOnNextLvl(int stepOnNextLvl) {
+    public void setStepOnNextLvl(int stepOnNextLvl) {
         this.stepOnNextLvl = stepOnNextLvl;
     }
 
@@ -472,34 +481,24 @@ public class GameStart extends AppCompatActivity  {
 
     List<String> taskList = new ArrayList<>();
 
-    int nextLvl;
-    public int getNextLvl() {
-        return nextLvl;
-    }
-    public void setNextLvl(int nextLvl) {
-        this.nextLvl = nextLvl;
-    }
+
     SharedPreferences prefs = null;
 
     private int seconds = 0;
     private boolean running;
 
-    @SuppressLint("SourceLockedOrientationActivity")
+    @SuppressLint({"SourceLockedOrientationActivity", "SetTextI18n"})
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
 
         dbHelper = new DataHelper(this);
         setTextFlag(1);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.game_start);
-
-        setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
         chars_layout = findViewById(R.id.chars_layout);
         engine_buttons = findViewById(R.id.engine_buttons);
+        topLayout = findViewById(R.id.topLayout);
         quest = findViewById(R.id.quest);
 
         lenght_plus_com = new ArrayList<>();
@@ -525,16 +524,19 @@ public class GameStart extends AppCompatActivity  {
         faq = findViewById(R.id.faq);
         task = findViewById(R.id.task);
         lvlview = findViewById(R.id.lvlview);
-        timerClock = findViewById(R.id.timerClock);
-        clock = findViewById(R.id.clock);
-        img_nextlvl = findViewById(R.id.img_nextlvl);
-        progress = findViewById(R.id.progress);
+
         score = findViewById(R.id.score);
+
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
         mChronometer = findViewById(R.id.chronometer);
         resetWord = findViewById(R.id.resetWord);
 
+        change_img = findViewById(R.id.change_img);
+//        score_img = findViewById(R.id.score_img);
+
+
+        menu = findViewById(R.id.menu);
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
         tryChange = findViewById(R.id.tryChange);
@@ -564,13 +566,19 @@ public class GameStart extends AppCompatActivity  {
 
         Wrong_list_1 = new ArrayList<>();
 
+        list_lvl = new ArrayList();
+        list_lvl.add(0);
+        list_lvl.add(20);
+        list_lvl.add(50);
+        list_lvl.add(80);
+        list_lvl.add(110);
+        list_lvl.add(150);
 
-        ChekOut = findViewById(R.id.ChekOut);
 
-      bufferReadList = new ArrayList<>();
+        bufferReadList = new ArrayList<>();
 
-      Alfas = new ArrayList<>();
-      WrongSwitch= new ArrayList<>();
+        Alfas = new ArrayList<>();
+        WrongSwitch= new ArrayList<>();
 
 
         TYU = new ArrayList<>();
@@ -579,25 +587,17 @@ public class GameStart extends AppCompatActivity  {
 
 
         progressBar = findViewById(R.id.progressBar);
-        progressBar.setMax(5);
 
-        score.setVisibility(GONE);
-        lvlview.setVisibility(GONE);
-        faq.setVisibility(GONE);
-        textClock.setVisibility(GONE);
-        clock.setVisibility(GONE);
-        textLvl.setVisibility(GONE);
-        textScore.setVisibility(GONE);
-        tryChange.setVisibility(GONE);
-        progressBar.setVisibility(GONE);
-        timerClock.setVisibility(GONE);
-        //--
-        resetWord.setVisibility(GONE);
-        ChekOut.setVisibility(GONE);
-        progress.setVisibility(GONE);
-        task.setVisibility(GONE);
-        reset.setVisibility(GONE);
-        quest.setVisibility(GONE);
+        progressBar.setProgress(getCounter());
+        newLvlFromProgressBar();
+        ProgressBarNextLvl();
+
+//        resetWord.setVisibility(GONE);
+//        menu.setVisibility(GONE);
+//        reset.setVisibility(GONE);
+
+//        engine_buttons.setVisibility(GONE);
+//        chars_layout.setVisibility(GONE);
 
         prefs = android.preference.PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -619,9 +619,98 @@ public class GameStart extends AppCompatActivity  {
         }
 
         ClockWork();
-        createAdapterList();
+
+
 
     }
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void LetsGo(View v){
+
+
+
+        score.setText(getCounter()+"/"+progressBar.getMax());
+        textClock.setText(""+getTryChenge());
+        lvlview.setText(""+getStepOnNextLvl());
+
+        ReadfromDB();
+        ReadfromDB_lenght();
+
+        score.setText(getCounter()+"/"+progressBar.getMax());
+        textClock.setText(""+getTryChenge());
+        lvlview.setText(""+getStepOnNextLvl());
+
+        newLvlFromProgressBar();
+        ProgressBarNextLvl();
+//        score.setVisibility(VISIBLE);
+//        lvlview.setVisibility(VISIBLE);
+//
+//        textClock.setVisibility(VISIBLE);
+//
+//
+//        textLvl.setVisibility(VISIBLE);
+//        textScore.setVisibility(VISIBLE);
+//        tryChange.setVisibility(VISIBLE);
+        //--
+//        resetWord.setVisibility(VISIBLE);
+//        menu.setVisibility(VISIBLE);
+//        reset.setVisibility(VISIBLE);
+
+//        topLayout.setVisibility(VISIBLE);
+//        engine_buttons.setVisibility(VISIBLE);
+//        chars_layout.setVisibility(VISIBLE);
+
+
+
+
+
+        ListXUpFull(); // заполняем листы координат
+//        ControlWordsfinFail(); // читаем проверочные слова
+//        ReadWords(); // читаем ключевык
+//        Randomizator(); // разиваем на буквы
+        GoneButnnons(); //все кнопки изначально не видимы
+
+        SetLiteralsonButtons(); //установка букв на слова
+      //  Creates(); //активация и движеение кнопок
+
+        ShowButtons();
+        starter.setVisibility(GONE);
+
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                f001 = viewLocatedAt(chars_layout).y - (chars_layout.getHeight()/8);
+                LineY_1.clear();
+                LineY_1.add(f001);
+            }
+        }, 500);
+
+        thru_list_1.clear();
+        thru_list_2.clear();
+        thru_list_3.clear();
+        thru_list_4.clear();
+
+        Wrong_list_1.clear();
+
+
+
+
+        try {
+            LoadText();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ReadFromTxtWrong();
+
+        onClickStart();//старт часов
+
+
+
+    }  // СТАРТ, часы
+
+
 
 
     @Override
@@ -662,7 +751,7 @@ public class GameStart extends AppCompatActivity  {
     } // отработка нажтий на МЕНЮ элементе 2
 
     public void ListXUpFull(){
-        ListCoordinateX_1.add(ChekOut.getHeight()/8);
+        ListCoordinateX_1.add(chars_layout.getHeight()/8);
         ListCoordinateX_1.add(200);
         ListCoordinateX_1.add(200);
         ListCoordinateX_1.add(200);
@@ -705,7 +794,7 @@ public class GameStart extends AppCompatActivity  {
 
     } //убрать кнопки с экрана
     public void ShowButtons(){
-        progressBar.setVisibility(VISIBLE);
+
         switch (numsofliteralsinword){
             case 11:
                 pr1.setVisibility(VISIBLE);
@@ -720,17 +809,17 @@ public class GameStart extends AppCompatActivity  {
                 pr10.setVisibility(VISIBLE);
                 pr11.setVisibility(VISIBLE);
                 //--
-                button1.start();
-                button2.start();
-                button3.start();
-                button4.start();
-                button5.start();
-                button6.start();
-                button7.start();
-                button8.start();
-                button9.start();
-                button10.start();
-                button11.start();
+//                button1.start();
+//                button2.start();
+//                button3.start();
+//                button4.start();
+//                button5.start();
+//                button6.start();
+//                button7.start();
+//                button8.start();
+//                button9.start();
+//                button10.start();
+//                button11.start();
                 break;
             case 14:
                 pr1.setVisibility(VISIBLE);
@@ -748,27 +837,29 @@ public class GameStart extends AppCompatActivity  {
                 pr13.setVisibility(VISIBLE);
                 pr14.setVisibility(VISIBLE);
                 //--
-                button1.start();
-                button2.start();
-                button3.start();
-                button4.start();
-                button5.start();
-                button6.start();
-                button7.start();
-                button8.start();
-                button9.start();
-                button10.start();
-                button11.start();
-                button12.start();
-                button13.start();
-                button14.start();
+//                button1.start();
+//                button2.start();
+//                button3.start();
+//                button4.start();
+//                button5.start();
+//                button6.start();
+//                button7.start();
+//                button8.start();
+//                button9.start();
+//                button10.start();
+//                button11.start();
+//                button12.start();
+//                button13.start();
+//                button14.start();
                 break;
 
         }
+
         starter.setVisibility(GONE);
         char_1.setVisibility(VISIBLE);
         char_2.setVisibility(VISIBLE);
         char_3.setVisibility(VISIBLE);
+
         //--
 
     } // показ кнопок на экране
@@ -871,14 +962,13 @@ public class GameStart extends AppCompatActivity  {
         AlertDialog.Builder builder = new AlertDialog.Builder(GameStart.this);
         builder.setTitle("     Инструкция")
                 .setMessage("По экрану движутся кнопки, нажимая на них нужно собрать слово" + "\n"  +
-                        "3 буквы +1 очко " + "\n"  +
-                        "4 буквы +2 очка" + "\n"  +
-                        "5 букв +3 очка" + "\n"  +
-                        "6 букв и больше +4 очка " + "\n"  +
-                        "каждое не правильное слово -1 очко " + "\n"  +
-                         "Вы мсжете поменять  набор букв в любой момент. Это стоит -1 очко замены." + "\n"  +
-                                "Каждое очко замены дается при достижения новый ачивки и нового уровня"
-                        )
+                        "за каждое правильно собранное слово  " + "\n"  +
+                        "Вы получаете очки" + "\n"  +
+                        "и очки смены слова." + "\n"  +
+                        "За не верные слова и повторные " + "\n"  +
+                        "вы теряете -1 очко " + "\n"  +
+                        "При смене слова вы рандомно получете новый набор букв." + "\n"
+                )
                 .setCancelable(false)
                 .setNegativeButton("Все понятно, создатель этого приложения гений!",
                         new DialogInterface.OnClickListener() {
@@ -890,100 +980,24 @@ public class GameStart extends AppCompatActivity  {
         alert.show();
     } //Всплывающая инструкция
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void LetsGo(View v){
 
-        score.setText(""+getCounter());
-        textClock.setText(""+getTryChenge());
-        lvlview.setText(""+getStepOnNextLvl());
-
-        ReadfromDB();
-         ReadfromDB_lenght();
-
-        score.setText(""+getCounter());
-        textClock.setText(""+getTryChenge());
-        lvlview.setText(""+getStepOnNextLvl());
-
-
-        score.setVisibility(VISIBLE);
-        lvlview.setVisibility(VISIBLE);
-        faq.setVisibility(VISIBLE);
-        textClock.setVisibility(VISIBLE);
-        clock.setVisibility(VISIBLE);
-        textLvl.setVisibility(VISIBLE);
-        textScore.setVisibility(VISIBLE);
-        tryChange.setVisibility(VISIBLE);
-        //--
-        resetWord.setVisibility(VISIBLE);
-        ChekOut.setVisibility(VISIBLE);
-        progress.setVisibility(VISIBLE);
-        task.setVisibility(VISIBLE);
-        reset.setVisibility(VISIBLE);
-        quest.setVisibility(VISIBLE);
-
-
-
-
-
-        ListXUpFull(); // заполняем листы координат
-//        ControlWordsfinFail(); // читаем проверочные слова
-//        ReadWords(); // читаем ключевык
-//        Randomizator(); // разиваем на буквы
-        GoneButnnons(); //все кнопки изначально не видимы
-
-        SetLiteralsonButtons(); //установка букв на слова
-        Creates(); //активация и движеение кнопок
-
-        ShowButtons();
-        starter.setVisibility(GONE);
-
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-               f001 = viewLocatedAt(ChekOut).y - (ChekOut.getHeight()/8);
-                LineY_1.clear();
-                LineY_1.add(f001);
-            }
-        }, 500);
-
-        thru_list_1.clear();
-        thru_list_2.clear();
-        thru_list_3.clear();
-        thru_list_4.clear();
-
-        Wrong_list_1.clear();
-
-
-        progressBar.setProgress(getCounter());
-
-        try {
-            LoadText();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ReadFromTxtWrong();
-
-        onClickStart();//старт часов
-
-
-    }  // СТАРТ, часы
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void NewWord(){
-        starter.setVisibility(GONE);
+
         ControlWordsfinFail(); // читаем проверочные слова
         ReadWords(); // читаем ключевык
         Randomizator(); // разиваем на буквы
         SetLiteralsonButtons(); //установка букв на слова
         ListXUpFull(); // заполняем листы координат
         ShowButtons(); // услвие появление кнопок зависитот кол-ва букв в слове
-        Creates(); //активация и движеение кнопок
+      //  Creates(); //активация и движеение кнопок
     } // следующее слово
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void ResTart(View v){
         EneblendButtonsAffterPress();
         if (getTryChenge()> 0){
-            reset.setEnabled(true);
+//            reset.setEnabled(true);
             NewWord();
             setTryChenge(getTryChenge()-1);
             Toast.makeText(this, "Слово сменилось", Toast.LENGTH_SHORT).show();
@@ -991,7 +1005,7 @@ public class GameStart extends AppCompatActivity  {
             Toast.makeText(this, "Нет попыток, добудте еще ачивку", Toast.LENGTH_SHORT).show();
         }
         textClock.setText(""+getTryChenge());//2
-
+        ressetChars();
     }  //Включить новое слово
     @SuppressLint("SetTextI18n")
 
@@ -1075,12 +1089,12 @@ public class GameStart extends AppCompatActivity  {
     protected void howLenght_plus(String keyWord_lenght){
 //        String[] listWord_lenght = MainListWord.toArray(new String[0]);
 //        String keyWord_lenght = (String.join("", listWord_lenght));
-                lenght_plus_com.add(keyWord_lenght);
-                setLenght_plus(supportClass.CountCorrectSeqLen(lenght_plus_com));
-                    lenght_minus_com.add(keyWord_lenght);
-                    setLenght_minus_minus(supportClass.countWordMinus(lenght_minus_com));
+        lenght_plus_com.add(keyWord_lenght);
+        setLenght_plus(supportClass.CountCorrectSeqLen(lenght_plus_com));
+        lenght_minus_com.add(keyWord_lenght);
+        setLenght_minus_minus(supportClass.countWordMinus(lenght_minus_com));
 
-                    Log.d("uuui_plus", String.valueOf(getLenght_plus()));
+        Log.d("uuui_plus", String.valueOf(getLenght_plus()));
     } //Если я читаю это секйчас, пожалуйста, не думай зачем я это все писал. Главное, что это работает
 
     protected void howLenght_minus(String keyWord_lenght){
@@ -1104,7 +1118,7 @@ public class GameStart extends AppCompatActivity  {
 //режим повтора - сначала или в обратном порядке
         animation.setRepeatMode(Animation.REVERSE);
 //режим повтора (бесконечно)
-       animation.setRepeatCount(0);
+        animation.setRepeatCount(0);
 
 
 //анимация альфа канала (прозрачности от 0 до 1)
@@ -1122,77 +1136,47 @@ public class GameStart extends AppCompatActivity  {
         String[] ArrayListWord = MainListWord.toArray(new String[0]);
         String KeyWord = (String.join("", ArrayListWord));
 
-       // Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord) && !Switch_answer().contains(KeyWord)) {
             ListXUpFull();
             HowScore(ArrayListWord.length); // Передача ОЧКОВ
             HowLenght(ArrayListWord.length);
-                    howLenght_plus(KeyWord);
-                    howLenght_minus(KeyWord);
+            howLenght_plus(KeyWord);
+            howLenght_minus(KeyWord);
             Switch_answer().add(KeyWord);
             setCounter(getCounter()+1);
             setExp(getExp()+4);
-            if (progressBar.getProgress() >= progressBar.getMax()) {
-                ShowNewLvl();
-                setFlag(1);
-                int newlvls =0;
-                newlvls = newlvls+1;
-                setNextLvl(newlvls);
-                setExp(getExp()-2);
-                switch(progressBar.getMax()) {
-                    case 5:
-                        this.nextLvl = 1;
-                        break;
-                    case 8:
-                        this.nextLvl = 2;
-                        break;
-                    case 15:
-                        this.nextLvl = 3;
-                        break;
-                    case 21:
-                        this.nextLvl = 4;
-                        break;
-                    case 32:
-                        this.nextLvl = 5;
-                        break;
-                    case 45:
-                        this.nextLvl = 6;
-                        break;
-                    case 60:
-                        this.nextLvl = 7;
-                        break;
-                    case 80:
-                        this.nextLvl = 8;
-                        break;
-                    case 100:
-                        this.nextLvl = 9;
-                        break;
-                    case 150:
-                        this.nextLvl = 10;
-                        break;
-                }
-            }
-            ActivatePrBar();
+
+            progressBar.setProgress(getCounter());
+            newLvlFromProgressBar();
             ProgressBarNextLvl();
-            ChekOut.startAnimation(animation);
+
+
+            chars_layout.startAnimation(animation);
         } else if (listBuffer.contains(KeyWord)){
             ListXUpFull();
             setCounter(getCounter()-1);
             setExp(getExp()-2);
-            ActivatePrBar();
+            progressBar.setProgress(getCounter());
+            newLvlFromProgressBar();
             ProgressBarNextLvl();
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
             Wrong_Switch_answer().add(KeyWord);
-            ChekOut.startAnimation(animation2);
+            chars_layout.startAnimation(animation2);
+            ressetChars();
         } else{
             ListXUpFull();
             setCounter(getCounter()-1);
             setExp(getExp()-1);
-            ActivatePrBar();
+            progressBar.setProgress(getCounter());
+            newLvlFromProgressBar();
             ProgressBarNextLvl();
             Wrong_Switch_answer().add(KeyWord);
-            ChekOut.startAnimation(animation2);
+            chars_layout.startAnimation(animation2);
+            ressetChars();
         }
+
+
         EneblendButtonsAffterPress();
         listBuffer.add(KeyWord);
         MainListWord.removeAll(MainListWord);
@@ -1211,49 +1195,22 @@ public class GameStart extends AppCompatActivity  {
         char_11.setText("");
         char_12.setText("");
         char_13.setText("");
-        char_13.setText("");
+        char_14.setText("");
 
-        ChekOut.setText("Собери слово");
+
         supportClass.ShowTaskWelDone(taskList);
 
-        switch(supportClass.taskDone.size()){
-            case 1:
-                setTryChenge(getTryChenge()+1);
-                setCounter(getCounter()+2);
-                break;
-            case 2:
-                setTryChenge(getTryChenge()+1);
-                setCounter(getCounter()+2);
-                break;
-            case 3:
-                setTryChenge(getTryChenge()+1);
-                setCounter(getCounter()+2);
-                break;
-            case 4:
-                setTryChenge(getTryChenge()+1);
-                setCounter(getCounter()+2);
-                break;
-            case 5:
-                setTryChenge(getTryChenge()+1);
-                setCounter(getCounter()+2);
-                break;
-            case 6:
-                setTryChenge(getTryChenge()+1);
-                setCounter(getCounter()+2);
-                break;
-        }
 
-
-        score.setText(""+getCounter()); // ФИНАЛЬНЫЕ данные очки
+        score.setText(getCounter()+"/"+progressBar.getMax()); // ФИНАЛЬНЫЕ данные очки
         textClock.setText(""+getTryChenge());// ФИНАЛЬНЫЕ данные попыток смены
         lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
 
         AddDB();
         SaveText();
         WriteWrong();
-            AddDB_lenght();
+        AddDB_lenght();
 
-        howAchivites();
+//        howAchivites();
 
 
         char_4.setVisibility(GONE);
@@ -1267,12 +1224,13 @@ public class GameStart extends AppCompatActivity  {
         char_12.setVisibility(GONE);
         char_13.setVisibility(GONE);
         char_14.setVisibility(GONE);
-                //--Показ очков сразу при получении авчивки
-        score.setText(""+getCounter()); // ФИНАЛЬНЫЕ данные очки
+        //--Показ очков сразу при получении авчивки
+        score.setText(getCounter()+"/"+progressBar.getMax()); // ФИНАЛЬНЫЕ данные очки
         textClock.setText(""+getTryChenge());// ФИНАЛЬНЫЕ данные попыток смены
         lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
 
         AddDB();
+
     } //проверка
 
 
@@ -1288,7 +1246,7 @@ public class GameStart extends AppCompatActivity  {
                 int secs = seconds%60;
                 String time = String.format(Locale.getDefault(),
                         "%d:%02d:%02d", hours, minutes, secs);
-                clock.setText(time);
+
                 if (running) {
                     seconds++;
                 }
@@ -1305,234 +1263,216 @@ public class GameStart extends AppCompatActivity  {
     } //стоп, пауза
     //-------------
 
-    protected void ActivatePrBar () {
-        if (getFlag()==1){
-            setFlag(0);
+
+
+
+    public void ProgressBarNextLvl() {
+        progressBar.setProgress(getCounter());
+       if (progressBar.getProgress() >= 10){
+           progressBar.setMax(20);
+           setCounter(0);
+           progressBar.setProgress(getCounter());
+           setTryChenge(getTryChenge()+5);
+           setStepOnNextLvl(1);
+       } else if (progressBar.getProgress() >= 20){
+            progressBar.setMax(35);
+            setCounter(0);
+           progressBar.setProgress(getCounter());
+            setStepOnNextLvl(2);
+           setTryChenge(getTryChenge()+5);
+       } else if (progressBar.getProgress() >= 35){
+           progressBar.setMax(50);
+           setCounter(0);
+           progressBar.setProgress(getCounter());
+           setStepOnNextLvl(3);
+           setTryChenge(getTryChenge()+5);
+       }
+    }
+
+    public void newLvlFromProgressBar() {
+        switch (progressBar.getMax()){
+            case 10:
+                progressBar.setMax(20);
+                break;
+            case 20:
+                progressBar.setMax(35);
+                break;
+            case 35:
+                progressBar.setMax(50);
+                break;
         }
-    } //работа с прогрессбаром
-
-    int inProgressWeaTrust;
-    public void ProgressBarNextLvl(){
-
-        inProgressWeaTrust = getCounter();
-        progressBar.setProgress(inProgressWeaTrust);
-        if (progressBar.getProgress() == progressBar.getMax()){
-            switch (progressBar.getMax()){
-                case 5:
-                    setStepOnNextLvl(1);
-                    setTryChenge(getTryChenge()+1);
-                    progressBar.setMax(8);
-                    break;
-                case 8:
-                    setStepOnNextLvl(2);
-                    setTryChenge(getTryChenge()+1);
-                    progressBar.setMax(15);
-                    break;
-                case 15:
-                    progressBar.setMax(21);
-                    setStepOnNextLvl(3);
-                    break;
-                case 21:
-                    progressBar.setMax(32);
-                    setStepOnNextLvl(4);
-                    break;
-                case 32:
-                    progressBar.setMax(45);
-                    setStepOnNextLvl(5);
-                    break;
-                case 45:
-                    progressBar.setMax(60);
-                    setStepOnNextLvl(6);
-                    break;
-                case 60:
-                    progressBar.setMax(80);
-                    setStepOnNextLvl(7);
-                    break;
-                case 80:
-                    progressBar.setMax(100);
-                    setStepOnNextLvl(8);
-                    break;
-                case 100:
-                    progressBar.setMax(150);
-                    setStepOnNextLvl(9);
-                    break;
-                case 150:
-                    progressBar.setMax(200);
-                    setStepOnNextLvl(10);
-                    break;
-            }
-            ShowNewLvl();
-            progressBar.setProgress(0);
-
-        } // новый уровень
-
-    } // добавление прогресс бара
-    protected void ShowNewLvl(){
-
-        ObjectAnimator scaleXAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleX", 0.3f, 2.5f);
-        scaleXAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        scaleXAnimation.setDuration(1900);
-        ObjectAnimator scaleYAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleY", 0.3f, 2.5f);
-        scaleYAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        scaleYAnimation.setDuration(1900);
-        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(img_nextlvl, "alpha", 1F, 0F);
-        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-        alphaAnimation.setDuration(2500);
+    }
 
 
-        AnimatorSet animationSet = new AnimatorSet();
-        animationSet.play(scaleXAnimation).with(scaleYAnimation).with(alphaAnimation);
-        animationSet.start();
-    } //показать уведомление о новом уровне
+//    protected void ShowNewLvl(){
+//        setTryChenge(getTryChenge()+5);
+//        ObjectAnimator scaleXAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleX", 0.3f, 2.5f);
+//        scaleXAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+//        scaleXAnimation.setDuration(1900);
+//        ObjectAnimator scaleYAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleY", 0.3f, 2.5f);
+//        scaleYAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+//        scaleYAnimation.setDuration(1900);
+//        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(img_nextlvl, "alpha", 1F, 0F);
+//        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+//        alphaAnimation.setDuration(2500);
+//
+//
+//        AnimatorSet animationSet = new AnimatorSet();
+//        animationSet.play(scaleXAnimation).with(scaleYAnimation).with(alphaAnimation);
+//        animationSet.start();
+//    } //показать уведомление о новом уровне
+
     protected void EneblendButtonsAffterPress(){
         pr1.setEnabled(true);
-        pr1.setBackgroundResource(R.drawable.circlepr);
+        pr1.setBackgroundResource(R.drawable.main_note_press);
         pr2.setEnabled(true);
-        pr2.setBackgroundResource(R.drawable.circlepr);
+        pr2.setBackgroundResource(R.drawable.main_note_press);
         pr3.setEnabled(true);
-        pr3.setBackgroundResource(R.drawable.circlepr);
+        pr3.setBackgroundResource(R.drawable.main_note_press);
         pr4.setEnabled(true);
-        pr4.setBackgroundResource(R.drawable.circlepr);
+        pr4.setBackgroundResource(R.drawable.main_note_press);
         pr5.setEnabled(true);
-        pr5.setBackgroundResource(R.drawable.circlepr);
+        pr5.setBackgroundResource(R.drawable.main_note_press);
         pr6.setEnabled(true);
-        pr6.setBackgroundResource(R.drawable.circlepr);
+        pr6.setBackgroundResource(R.drawable.main_note_press);
         pr7.setEnabled(true);
-        pr7.setBackgroundResource(R.drawable.circlepr);
+        pr7.setBackgroundResource(R.drawable.main_note_press);
         pr8.setEnabled(true);
-        pr8.setBackgroundResource(R.drawable.circlepr);
+        pr8.setBackgroundResource(R.drawable.main_note_press);
         pr9.setEnabled(true);
-        pr9.setBackgroundResource(R.drawable.circlepr);
+        pr9.setBackgroundResource(R.drawable.main_note_press);
         pr10.setEnabled(true);
-        pr10.setBackgroundResource(R.drawable.circlepr);
+        pr10.setBackgroundResource(R.drawable.main_note_press);
         pr11.setEnabled(true);
-        pr11.setBackgroundResource(R.drawable.circlepr);
+        pr11.setBackgroundResource(R.drawable.main_note_press);
         pr12.setEnabled(true);
-        pr12.setBackgroundResource(R.drawable.circlepr);
+        pr12.setBackgroundResource(R.drawable.main_note_press);
         pr13.setEnabled(true);
-        pr13.setBackgroundResource(R.drawable.circlepr);
+        pr13.setBackgroundResource(R.drawable.main_note_press);
         pr14.setEnabled(true);
-        pr14.setBackgroundResource(R.drawable.circlepr);
+        pr14.setBackgroundResource(R.drawable.main_note_press);
     } //кнопки снова активны и имеют исходный стиль
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void Creates(){
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    public void Creates(){
+//
+//        button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
+//                PropertyValuesHolder.ofFloat("x", 0, 850),
+//                PropertyValuesHolder.ofFloat("y", 140, 1050));
+//                    button1.setDuration(6000 +getSpeed_a());
+//                        button1.setRepeatCount(ObjectAnimator.INFINITE);
+//                        button1.setRepeatMode(ObjectAnimator.REVERSE);
+//
+////        button1.start();
+////2 кнопка
+//        button2 = ObjectAnimator.ofPropertyValuesHolder(pr2,
+//                PropertyValuesHolder.ofFloat("x", 200, 400),
+//                PropertyValuesHolder.ofFloat("y", 140, 1050));
+//        button2.setDuration(6300+getSpeed_a());
+//        button2.setRepeatCount(ObjectAnimator.INFINITE);
+//        button2.setRepeatMode(ObjectAnimator.REVERSE);
+////        button2.start();
+////3 кнопка
+//        button3 = ObjectAnimator.ofPropertyValuesHolder(pr3,
+//                PropertyValuesHolder.ofFloat("x", 0, 850),
+//                PropertyValuesHolder.ofFloat("y", 140, 140));
+//        button3.setDuration(7500+getSpeed_a());
+//        button3.setRepeatCount(ObjectAnimator.INFINITE);
+//        button3.setRepeatMode(ObjectAnimator.REVERSE);
+////        button3.start();
+////4 кнопка
+//        button4 = ObjectAnimator.ofPropertyValuesHolder(pr4,
+//                PropertyValuesHolder.ofFloat("x", 0, 850),
+//                PropertyValuesHolder.ofFloat("y", 500, 500));
+//        button4.setDuration(8000+getSpeed_a());
+//        button4.setRepeatCount(ObjectAnimator.INFINITE);
+//        button4.setRepeatMode(ObjectAnimator.REVERSE);
+////        button4.start();
+////5 кнопка
+//        button5 = ObjectAnimator.ofPropertyValuesHolder(pr5,
+//                PropertyValuesHolder.ofFloat("x", 0, 850),
+//                PropertyValuesHolder.ofFloat("y", 900, 900));
+//        button5.setDuration(5300+getSpeed_a());
+//        button5.setRepeatCount(ObjectAnimator.INFINITE);
+//        button5.setRepeatMode(ObjectAnimator.REVERSE);
+////        button5.start();
+////6 кнопка
+//        button6 = ObjectAnimator.ofPropertyValuesHolder(pr6,
+//                PropertyValuesHolder.ofFloat("x", 850, 0),
+//                PropertyValuesHolder.ofFloat("y", 300, 300));
+//        button6.setDuration(5600 +getSpeed_a());
+//        button6.setRepeatCount(ObjectAnimator.INFINITE);
+//        button6.setRepeatMode(ObjectAnimator.REVERSE);
+////        button6.start();
+////7 кнопка
+//        button7 = ObjectAnimator.ofPropertyValuesHolder(pr7,
+//                PropertyValuesHolder.ofFloat("x", 850, 0),
+//                PropertyValuesHolder.ofFloat("y", 700, 700));
+//        button7.setDuration(4400 +getSpeed_a());
+//        button7.setRepeatCount(ObjectAnimator.INFINITE);
+//        button7.setRepeatMode(ObjectAnimator.REVERSE);
+////        button7.start();
+////8 кнопка
+//        button8 = ObjectAnimator.ofPropertyValuesHolder(pr8,
+//                PropertyValuesHolder.ofFloat("x", 200, 650),
+//                PropertyValuesHolder.ofFloat("y", 1050, 140));
+//        button8.setDuration(3900 +getSpeed_a());
+//        button8.setRepeatCount(ObjectAnimator.INFINITE);
+//        button8.setRepeatMode(ObjectAnimator.REVERSE);
+////        button8.start();
+////9 кнопка не настроил
+//        button9 = ObjectAnimator.ofPropertyValuesHolder(pr9,
+//                PropertyValuesHolder.ofFloat("x", 800, 800),
+//                PropertyValuesHolder.ofFloat("y", 1050, 140));
+//        button9.setDuration(4100 +getSpeed_a());
+//        button9.setRepeatCount(ObjectAnimator.INFINITE);
+//        button9.setRepeatMode(ObjectAnimator.REVERSE);
+////        button9.start();
+////10 кнопка
+//        button10 = ObjectAnimator.ofPropertyValuesHolder(pr10,
+//                PropertyValuesHolder.ofFloat("x", 0, 250),
+//                PropertyValuesHolder.ofFloat("y", 1050, 140));
+//        button10.setDuration(4500 +getSpeed_a());
+//        button10.setRepeatCount(ObjectAnimator.INFINITE);
+//        button10.setRepeatMode(ObjectAnimator.REVERSE);
+////        button10.start();
+////11 кнопка
+//        button11 = ObjectAnimator.ofPropertyValuesHolder(pr11,
+//                PropertyValuesHolder.ofFloat("x", 850, 100),
+//                PropertyValuesHolder.ofFloat("y", 140, 950));
+//        button11.setDuration(5700 +getSpeed_a());
+//        button11.setRepeatCount(ObjectAnimator.INFINITE);
+//        button11.setRepeatMode(ObjectAnimator.REVERSE);
+////        button11.start();
+////12 кнопка
+//        button12 = ObjectAnimator.ofPropertyValuesHolder(pr12,
+//                PropertyValuesHolder.ofFloat("x", 700, 400),
+//                PropertyValuesHolder.ofFloat("y", 140, 1050));
+//        button12.setDuration(3600 +getSpeed_a());
+//        button12.setRepeatCount(ObjectAnimator.INFINITE);
+//        button12.setRepeatMode(ObjectAnimator.REVERSE);
+////        button12.start();
+//
+////13 кнопка
+//        button13 = ObjectAnimator.ofPropertyValuesHolder(pr13,
+//                PropertyValuesHolder.ofFloat("x", 850, 0),
+//                PropertyValuesHolder.ofFloat("y", 1100, 1050));
+//        button13.setDuration(5100 +getSpeed_a());
+//        button13.setRepeatCount(ObjectAnimator.INFINITE);
+//        button13.setRepeatMode(ObjectAnimator.REVERSE);
+////        button13.start();
+////14 кнопка
+//        button14 = ObjectAnimator.ofPropertyValuesHolder(pr14,
+//                PropertyValuesHolder.ofFloat("x", 500, 500),
+//                PropertyValuesHolder.ofFloat("y", 140, 1050));
+//        button14.setDuration(4800 +getSpeed_a());
+//        button14.setRepeatCount(ObjectAnimator.INFINITE);
+//        button14.setRepeatMode(ObjectAnimator.REVERSE);
+////        button14.start();
+//    } //движение кнопок
 
-        button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
-                PropertyValuesHolder.ofFloat("y", Colo.getHeight()/Colo.getHeight(), Colo.getHeight()-55*10));
 
-        button1.setDuration(6000 +getSpeed_a());
-        button1.setRepeatCount(ObjectAnimator.INFINITE);
-        button1.setRepeatMode(ObjectAnimator.REVERSE);
 
-//        button1.start();
-//2 кнопка
-        button2 = ObjectAnimator.ofPropertyValuesHolder(pr2,
-                PropertyValuesHolder.ofFloat("x", 200, 400),
-                PropertyValuesHolder.ofFloat("y", Colo.getHeight()/Colo.getHeight()+50, Colo.getHeight()-55*10));
-        button2.setDuration(6300+getSpeed_a());
-        button2.setRepeatCount(ObjectAnimator.INFINITE);
-        button2.setRepeatMode(ObjectAnimator.REVERSE);
-//        button2.start();
-//3 кнопка
-        button3 = ObjectAnimator.ofPropertyValuesHolder(pr3,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
-                PropertyValuesHolder.ofFloat("y", 140, 140));
-        button3.setDuration(7500+getSpeed_a());
-        button3.setRepeatCount(ObjectAnimator.INFINITE);
-        button3.setRepeatMode(ObjectAnimator.REVERSE);
-//        button3.start();
-//4 кнопка
-        button4 = ObjectAnimator.ofPropertyValuesHolder(pr4,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
-                PropertyValuesHolder.ofFloat("y", 500, 500));
-        button4.setDuration(8000+getSpeed_a());
-        button4.setRepeatCount(ObjectAnimator.INFINITE);
-        button4.setRepeatMode(ObjectAnimator.REVERSE);
-//        button4.start();
-//5 кнопка
-        button5 = ObjectAnimator.ofPropertyValuesHolder(pr5,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
-                PropertyValuesHolder.ofFloat("y", 900, Colo.getHeight()-55*10));
-        button5.setDuration(5300+getSpeed_a());
-        button5.setRepeatCount(ObjectAnimator.INFINITE);
-        button5.setRepeatMode(ObjectAnimator.REVERSE);
-//        button5.start();
-//6 кнопка
-        button6 = ObjectAnimator.ofPropertyValuesHolder(pr6,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), Colo.getWidth()-55*3),
-                PropertyValuesHolder.ofFloat("y", 300, 300));
-        button6.setDuration(5600 +getSpeed_a());
-        button6.setRepeatCount(ObjectAnimator.INFINITE);
-        button6.setRepeatMode(ObjectAnimator.REVERSE);
-//        button6.start();
-//7 кнопка
-        button7 = ObjectAnimator.ofPropertyValuesHolder(pr7,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, Colo.getWidth()/Colo.getWidth()),
-                PropertyValuesHolder.ofFloat("y", 700, 700));
-        button7.setDuration(4400 +getSpeed_a());
-        button7.setRepeatCount(ObjectAnimator.INFINITE);
-        button7.setRepeatMode(ObjectAnimator.REVERSE);
-//        button7.start();
-//8 кнопка
-        button8 = ObjectAnimator.ofPropertyValuesHolder(pr8,
-                PropertyValuesHolder.ofFloat("x", 200, 650),
-                PropertyValuesHolder.ofFloat("y", Colo.getHeight()-55*10, 100));
-        button8.setDuration(3900 +getSpeed_a());
-        button8.setRepeatCount(ObjectAnimator.INFINITE);
-        button8.setRepeatMode(ObjectAnimator.REVERSE);
-//        button8.start();
-//9 кнопка не настроил
-        button9 = ObjectAnimator.ofPropertyValuesHolder(pr9,
-                PropertyValuesHolder.ofFloat("x", 800, 800),
-                PropertyValuesHolder.ofFloat("y", Colo.getHeight()-55*10, 140));
-        button9.setDuration(4100 +getSpeed_a());
-        button9.setRepeatCount(ObjectAnimator.INFINITE);
-        button9.setRepeatMode(ObjectAnimator.REVERSE);
-//        button9.start();
-//10 кнопка
-        button10 = ObjectAnimator.ofPropertyValuesHolder(pr10,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()/Colo.getWidth(), 250),
-                PropertyValuesHolder.ofFloat("y", Colo.getHeight()-55*10, 140));
-        button10.setDuration(4500 +getSpeed_a());
-        button10.setRepeatCount(ObjectAnimator.INFINITE);
-        button10.setRepeatMode(ObjectAnimator.REVERSE);
-//        button10.start();
-//11 кнопка
-        button11 = ObjectAnimator.ofPropertyValuesHolder(pr11,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, 100),
-                PropertyValuesHolder.ofFloat("y", 140, Colo.getHeight()-55*10));
-        button11.setDuration(5700 +getSpeed_a());
-        button11.setRepeatCount(ObjectAnimator.INFINITE);
-        button11.setRepeatMode(ObjectAnimator.REVERSE);
-//        button11.start();
-//12 кнопка
-        button12 = ObjectAnimator.ofPropertyValuesHolder(pr12,
-                PropertyValuesHolder.ofFloat("x", 700, 400),
-                PropertyValuesHolder.ofFloat("y", 140, Colo.getHeight()-55*10));
-        button12.setDuration(3600 +getSpeed_a());
-        button12.setRepeatCount(ObjectAnimator.INFINITE);
-        button12.setRepeatMode(ObjectAnimator.REVERSE);
-//        button12.start();
-
-//13 кнопка
-        button13 = ObjectAnimator.ofPropertyValuesHolder(pr13,
-                PropertyValuesHolder.ofFloat("x", Colo.getWidth()-55*3, Colo.getWidth()/Colo.getWidth()),
-                PropertyValuesHolder.ofFloat("y", 1100, Colo.getHeight()-55*10));
-        button13.setDuration(5100 +getSpeed_a());
-        button13.setRepeatCount(ObjectAnimator.INFINITE);
-        button13.setRepeatMode(ObjectAnimator.REVERSE);
-//        button13.start();
-//14 кнопка
-        button14 = ObjectAnimator.ofPropertyValuesHolder(pr14,
-                PropertyValuesHolder.ofFloat("x", 500, 500),
-                PropertyValuesHolder.ofFloat("y", 140, Colo.getHeight()-55*10));
-        button14.setDuration(4800 +getSpeed_a());
-        button14.setRepeatCount(ObjectAnimator.INFINITE);
-        button14.setRepeatMode(ObjectAnimator.REVERSE);
-//        button14.start();
-    } //движение кнопок
     protected void SwitchTextField(){
 //        switch(getTextFlag()){
 //            case 1:
@@ -1573,236 +1513,236 @@ public class GameStart extends AppCompatActivity  {
         // старое назначение букв на вывод на виюшку
 
 
-            if (MainListWord.size() == 1){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText("");
-                char_3.setText("");
-                char_4.setText("");
-                char_5.setText("");
-                char_6.setText("");
-                char_7.setText("");
-                char_8.setText("");
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-            } else if (MainListWord.size() == 2){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText("");
-                char_4.setText("");
-                char_5.setText("");
-                char_6.setText("");
-                char_7.setText("");
-                char_8.setText("");
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-            } else if (MainListWord.size() == 3){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText("");
-                char_5.setText("");
-                char_6.setText("");
-                char_7.setText("");
-                char_8.setText("");
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                char_4.setVisibility(VISIBLE);
-            } else if (MainListWord.size() == 4){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText("");
-                char_6.setText("");
-                char_7.setText("");
-                char_8.setText("");
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                char_5.setVisibility(VISIBLE);
-            } else if (MainListWord.size() == 5){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText("");
-                char_7.setText("");
-                char_8.setText("");
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                char_6.setVisibility(VISIBLE);
-            } else if (MainListWord.size() == 6){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText("");
-                char_8.setText("");
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                char_7.setVisibility(VISIBLE);
-            } else if (MainListWord.size() == 7){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText("");
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                char_8.setVisibility(VISIBLE);
-            } else if (MainListWord.size() == 8){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText(MainListWord.get(7));
-                char_9.setText("");
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                char_9.setVisibility(VISIBLE);
-            } else if (MainListWord.size() == 9){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText(MainListWord.get(7));
-                char_9.setText(MainListWord.get(8));
-                char_10.setText("");
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                char_10.setVisibility(VISIBLE);
-            }else if (MainListWord.size() == 10){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText(MainListWord.get(7));
-                char_9.setText(MainListWord.get(8));
-                char_10.setText(MainListWord.get(9));
-                char_11.setText("");
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                if (numsofliteralsinword > 10) {
-                    char_11.setVisibility(VISIBLE);
-                }
-            } else if (MainListWord.size() == 11){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText(MainListWord.get(7));
-                char_9.setText(MainListWord.get(8));
-                char_10.setText(MainListWord.get(9));
-                char_11.setText(MainListWord.get(10));
-                char_12.setText("");
-                char_13.setText("");
-                char_13.setText("");
-                if (numsofliteralsinword == 14) {
-                    char_12.setVisibility(VISIBLE);
-                }
-            } else if (MainListWord.size() == 12){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText(MainListWord.get(7));
-                char_9.setText(MainListWord.get(8));
-                char_10.setText(MainListWord.get(9));
-                char_11.setText(MainListWord.get(10));
-                char_12.setText(MainListWord.get(11));
-                char_13.setText("");
-                char_13.setText("");
-                if (numsofliteralsinword == 14) {
-                    char_13.setVisibility(VISIBLE);
-                }
-            } else if (MainListWord.size() == 13){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText(MainListWord.get(7));
-                char_9.setText(MainListWord.get(8));
-                char_10.setText(MainListWord.get(9));
-                char_11.setText(MainListWord.get(10));
-                char_12.setText(MainListWord.get(11));
-                char_13.setText(MainListWord.get(12));
-                char_13.setText("");
-                if (numsofliteralsinword == 14) {
-                    char_14.setVisibility(VISIBLE);
-                }
-            } else if (MainListWord.size() == 14){
-                char_1.setText(MainListWord.get(0));
-                char_2.setText(MainListWord.get(1));
-                char_3.setText(MainListWord.get(2));
-                char_4.setText(MainListWord.get(3));
-                char_5.setText(MainListWord.get(4));
-                char_6.setText(MainListWord.get(5));
-                char_7.setText(MainListWord.get(6));
-                char_8.setText(MainListWord.get(7));
-                char_9.setText(MainListWord.get(8));
-                char_10.setText(MainListWord.get(9));
-                char_11.setText(MainListWord.get(10));
-                char_12.setText(MainListWord.get(11));
-                char_13.setText(MainListWord.get(12));
-                char_13.setText(MainListWord.get(13));
+        if (MainListWord.size() == 1){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText("");
+            char_3.setText("");
+            char_4.setText("");
+            char_5.setText("");
+            char_6.setText("");
+            char_7.setText("");
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+        } else if (MainListWord.size() == 2){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText("");
+            char_4.setText("");
+            char_5.setText("");
+            char_6.setText("");
+            char_7.setText("");
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+        } else if (MainListWord.size() == 3){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText("");
+            char_5.setText("");
+            char_6.setText("");
+            char_7.setText("");
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            char_4.setVisibility(VISIBLE);
+        } else if (MainListWord.size() == 4){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText("");
+            char_6.setText("");
+            char_7.setText("");
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            char_5.setVisibility(VISIBLE);
+        } else if (MainListWord.size() == 5){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText("");
+            char_7.setText("");
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            char_6.setVisibility(VISIBLE);
+        } else if (MainListWord.size() == 6){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText("");
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            char_7.setVisibility(VISIBLE);
+        } else if (MainListWord.size() == 7){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText("");
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            char_8.setVisibility(VISIBLE);
+        } else if (MainListWord.size() == 8){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText(MainListWord.get(7));
+            char_9.setText("");
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            char_9.setVisibility(VISIBLE);
+        } else if (MainListWord.size() == 9){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText(MainListWord.get(7));
+            char_9.setText(MainListWord.get(8));
+            char_10.setText("");
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            char_10.setVisibility(VISIBLE);
+        }else if (MainListWord.size() == 10){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText(MainListWord.get(7));
+            char_9.setText(MainListWord.get(8));
+            char_10.setText(MainListWord.get(9));
+            char_11.setText("");
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            if (numsofliteralsinword > 10) {
+                char_11.setVisibility(VISIBLE);
             }
+        } else if (MainListWord.size() == 11){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText(MainListWord.get(7));
+            char_9.setText(MainListWord.get(8));
+            char_10.setText(MainListWord.get(9));
+            char_11.setText(MainListWord.get(10));
+            char_12.setText("");
+            char_13.setText("");
+            char_14.setText("");
+            if (numsofliteralsinword == 14) {
+                char_12.setVisibility(VISIBLE);
+            }
+        } else if (MainListWord.size() == 12){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText(MainListWord.get(7));
+            char_9.setText(MainListWord.get(8));
+            char_10.setText(MainListWord.get(9));
+            char_11.setText(MainListWord.get(10));
+            char_12.setText(MainListWord.get(11));
+            char_13.setText("");
+            char_14.setText("");
+            if (numsofliteralsinword == 14) {
+                char_13.setVisibility(VISIBLE);
+            }
+        } else if (MainListWord.size() == 13){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText(MainListWord.get(7));
+            char_9.setText(MainListWord.get(8));
+            char_10.setText(MainListWord.get(9));
+            char_11.setText(MainListWord.get(10));
+            char_12.setText(MainListWord.get(11));
+            char_13.setText(MainListWord.get(12));
+            char_14.setText("");
+            if (numsofliteralsinword == 14) {
+                char_14.setVisibility(VISIBLE);
+            }
+        } else if (MainListWord.size() == 14){
+            char_1.setText(MainListWord.get(0));
+            char_2.setText(MainListWord.get(1));
+            char_3.setText(MainListWord.get(2));
+            char_4.setText(MainListWord.get(3));
+            char_5.setText(MainListWord.get(4));
+            char_6.setText(MainListWord.get(5));
+            char_7.setText(MainListWord.get(6));
+            char_8.setText(MainListWord.get(7));
+            char_9.setText(MainListWord.get(8));
+            char_10.setText(MainListWord.get(9));
+            char_11.setText(MainListWord.get(10));
+            char_12.setText(MainListWord.get(11));
+            char_13.setText(MainListWord.get(12));
+            char_14.setText(MainListWord.get(13));
+        }
 
     } // изменение флага печати текста
 
@@ -1810,7 +1750,7 @@ public class GameStart extends AppCompatActivity  {
 
         countID++;
         MainListWord.add(pr1.getText().toString());
-        pr1.setBackgroundResource(R.drawable.acceptbutton);
+        pr1.setBackgroundResource(R.drawable.main_press);
         pr1.setEnabled(false);
 
         SwitchTextField();
@@ -1821,7 +1761,7 @@ public class GameStart extends AppCompatActivity  {
 
         countID++;
         MainListWord.add(pr2.getText().toString());
-        pr2.setBackgroundResource(R.drawable.acceptbutton);
+        pr2.setBackgroundResource(R.drawable.main_press);
         pr2.setEnabled(false);
 
         SwitchTextField();
@@ -1830,7 +1770,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton3(View v){
         countID++;
         MainListWord.add(pr3.getText().toString());
-        pr3.setBackgroundResource(R.drawable.acceptbutton);
+        pr3.setBackgroundResource(R.drawable.main_press);
         pr3.setEnabled(false);
 
         SwitchTextField();
@@ -1840,7 +1780,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton4(View v){
         countID++;
         MainListWord.add(pr4.getText().toString());
-        pr4.setBackgroundResource(R.drawable.acceptbutton);
+        pr4.setBackgroundResource(R.drawable.main_press);
         pr4.setEnabled(false);
 
         SwitchTextField();
@@ -1849,7 +1789,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton5(View v){
         countID++;
         MainListWord.add(pr5.getText().toString());
-        pr5.setBackgroundResource(R.drawable.acceptbutton);
+        pr5.setBackgroundResource(R.drawable.main_press);
         pr5.setEnabled(false);
 
         SwitchTextField();
@@ -1858,7 +1798,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton6(View v){
         countID++;
         MainListWord.add(pr6.getText().toString());
-        pr6.setBackgroundResource(R.drawable.acceptbutton);
+        pr6.setBackgroundResource(R.drawable.main_press);
         pr6.setEnabled(false);
 
         SwitchTextField();
@@ -1867,7 +1807,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton7(View v){
         countID++;
         MainListWord.add(pr7.getText().toString());
-        pr7.setBackgroundResource(R.drawable.acceptbutton);
+        pr7.setBackgroundResource(R.drawable.main_press);
         pr7.setEnabled(false);
 
         SwitchTextField();
@@ -1876,7 +1816,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton8(View v){
         countID++;
         MainListWord.add(pr8.getText().toString());
-        pr8.setBackgroundResource(R.drawable.acceptbutton);
+        pr8.setBackgroundResource(R.drawable.main_press);
         pr8.setEnabled(false);
 
         SwitchTextField();
@@ -1885,7 +1825,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton9(View v){
         countID++;
         MainListWord.add(pr9.getText().toString());
-        pr9.setBackgroundResource(R.drawable.acceptbutton);
+        pr9.setBackgroundResource(R.drawable.main_press);
         pr9.setEnabled(false);
 
         SwitchTextField();
@@ -1894,7 +1834,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton10(View v){
         countID++;
         MainListWord.add(pr10.getText().toString());
-        pr10.setBackgroundResource(R.drawable.acceptbutton);
+        pr10.setBackgroundResource(R.drawable.main_press);
         pr10.setEnabled(false);
 
         SwitchTextField();
@@ -1903,7 +1843,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton11(View v){
         countID++;
         MainListWord.add(pr11.getText().toString());
-        pr11.setBackgroundResource(R.drawable.acceptbutton);
+        pr11.setBackgroundResource(R.drawable.main_press);
         pr11.setEnabled(false);
 
         SwitchTextField();
@@ -1912,7 +1852,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton12(View v){
         countID++;
         MainListWord.add(pr12.getText().toString());
-        pr12.setBackgroundResource(R.drawable.acceptbutton);
+        pr12.setBackgroundResource(R.drawable.main_press);
         pr12.setEnabled(false);
 
         SwitchTextField();
@@ -1921,7 +1861,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton13(View v){
         countID++;
         MainListWord.add(pr13.getText().toString());
-        pr13.setBackgroundResource(R.drawable.acceptbutton);
+        pr13.setBackgroundResource(R.drawable.main_press);
         pr13.setEnabled(false);
 
         SwitchTextField();
@@ -1930,7 +1870,7 @@ public class GameStart extends AppCompatActivity  {
     public void ClickButton14(View v){
         countID++;
         MainListWord.add(pr14.getText().toString());
-        pr14.setBackgroundResource(R.drawable.acceptbutton);
+        pr14.setBackgroundResource(R.drawable.main_press);
         pr14.setEnabled(false);
 
         SwitchTextField();
@@ -1939,6 +1879,10 @@ public class GameStart extends AppCompatActivity  {
 
 
     public void ResetField(View v){
+        ressetChars();
+    } //сброс кнопок
+
+    private void ressetChars(){
         MainListWord.clear();
         char_1.setText("");
         char_2.setText("");
@@ -1953,198 +1897,26 @@ public class GameStart extends AppCompatActivity  {
         char_11.setText("");
         char_12.setText("");
         char_13.setText("");
-        char_13.setText("");
+        char_14.setText("");
 
         EneblendButtonsAffterPress();
-        switch (getTextFlag()){
-            case 1:
-                ChekOut.setText("Собери слово");
-                break;
-        }
-    } //сброс кнопок
 
-    public void ShowStats(View v){
-       Dialogus();
-       onClickStop();
-
-
-
-    } //открытие статистики
-
-    private void createAdapterList() {
-        //12*3+1 = 37
-        Model model = new Model();
-        model.setText("Войти в игру");
-        model.setPeremennaya(0);
-        myValues.add(model);
-
-        model = new Model();
-        model.setText("3 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("3 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("3 буквы 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("4 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("4 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("4 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("5 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("5 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("5 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("6 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("6 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("6 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("7 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("7 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("7 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("8 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("8 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("8 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("9 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("9 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("9 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("10 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("10 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("10 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("11 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("11 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("11 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("12 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("12 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("12 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("13 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("13 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("13 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("14 буквы 1 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("14 буквы 50 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("14 букв 100 раз");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-        model = new Model();
-        model.setText("50 слов");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        model = new Model();
-        model.setText("100 слов");
-        model.setPeremennaya(0);
-        myValues.add(model);
-        //--
-
+        char_4.setVisibility(GONE);
+        char_5.setVisibility(GONE);
+        char_6.setVisibility(GONE);
+        char_7.setVisibility(GONE);
+        char_8.setVisibility(GONE);
+        char_9.setVisibility(GONE);
+        char_10.setVisibility(GONE);
+        char_11.setVisibility(GONE);
+        char_12.setVisibility(GONE);
+        char_13.setVisibility(GONE);
+        char_14.setVisibility(GONE);
     }
+
+
+
+
 
 
     public void TaskShow(View v){
@@ -2153,452 +1925,78 @@ public class GameStart extends AppCompatActivity  {
     } //кнопка открытия заадний
 
 
-    @SuppressLint("SetTextI18n")
-    public void howAchivites(){
-
-
-        switch (getList_3()) {
-            case 1:
-                a1 = 1; // 3 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a1 = 1;
-                a2 = 2;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a1 = 1;
-                a2 = 2;
-                a3 = 3;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_4()) {
-            case 1:
-                a4 = 4; // 4 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a4 = 4;
-                a5 = 6;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a4 = 5;
-                a5 = 5;
-                a6 = 6;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_5()) {
-            case 1:
-                a7 = 6; // 5 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a7 = 7;
-                a8 = 8;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a7 = 7;
-                a8 = 8;
-                a9 = 9;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_6()) {
-            case 1:
-                a10 = 10; // 6 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a10 = 10;
-                a11 = 11;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a10 = 10;
-                a11 = 11;
-                a12 = 12;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_7()) {
-            case 1:
-                a13 = 10; // 7 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a13 = 10;
-                a14 = 14;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a13 = 10;
-                a14 = 14;
-                a15 = 15;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_8()) {
-            case 1:
-                a16 = 16; // 8 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a16 = 16;
-                a17 = 17;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a16 = 16;
-                a17 = 17;
-                a18 = 18;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_9()) {
-            case 1:
-                a19 = 19; // 9 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a20 = 20;
-                a21 = 20;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a20 = 20;
-                a21 = 20;
-                a21 = 21;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_10()) {
-            case 1:
-                a22 = 22; // 10 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a22 = 22;
-                a23 = 23;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a22 = 22;
-                a23 = 23;
-                a24 = 24;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_11()) {
-            case 1:
-                a25 = 25; // 11 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a25 = 25;
-                a26 = 26;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a25 = 25;
-                a26 = 26;
-                a27 = 27;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_12()) {
-            case 1:
-                a28 = 28; // 12 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a28 = 28;
-                a29 = 29;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a28 = 28;
-                a29 = 29;
-                a30 = 30;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_13()) {
-            case 1:
-                a31 = 31; // 13 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a31 = 31;
-                a32 = 32;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a31 = 31;
-                a32 = 32;
-                a33 = 33;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_14()) {
-            case 1:
-                a34 = 34; // 14 буквы 1 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 50:
-                a34 = 34;
-                a35 = 35;// 3 буквы 50 раз
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a34 = 34;
-                a35 = 35;
-                a36 = 36;//3 буквы 4 раза
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-        }
-        switch (getList_sum()) {
-            case 50:
-                a37 = 37;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-            case 100:
-                a37 = 37;
-                a38 = 38;
-                setCounter(getCounter()+20);
-                setTryChenge(getTryChenge()+1);
-                Toast.makeText(this, "Достижение! Получено 20 очков и 1 смена слова", Toast.LENGTH_SHORT).show();
-                break;
-
-        }
-
-    }// условия выполения задачний
-
-        @SuppressLint("SetTextI18n")
-        public void Dialogus(){                                     // сохранять это в тхт
 
 
 
-            LayoutInflater li = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = li.inflate(R.layout.stats_fragment, null, false);
-            OptionDialog = new AlertDialog.Builder(this).create();
-            OptionDialog.setTitle("Статистика");
+    public void TaskDialog(){
+        TaskDialog = new AlertDialog.Builder(this).create();
+        LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View v = tasks.inflate(R.layout.task_fragment, null, false);
+        butCloseTask =  v.findViewById(R.id.butCloseTask);
 
 
-            setNumber_word_3(getList_3());
-            setNumber_word_4(getList_4());
-            setNumber_word_5(getList_5());
-            setNumber_word_6(getList_6());
-            setNumber_word_7(getList_7());
-            setNumber_word_8(getList_8());
-            setNumber_word_9(getList_9());
-            setNumber_word_10(getList_10());
+        thisWordShow = v.findViewById(R.id.thisWordShow);
+        Thru_answer_1 = v.findViewById(R.id.Thru_answer_1);
+        Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
+        Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
+        Thru_answer_4 = v.findViewById(R.id.Thru_answer_4);
+        adapter_thru_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_1);
+        adapter_thru_2 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_2);
+        adapter_thru_3 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_3);
+        adapter_thru_4 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_4);
+        Thru_answer_1.setAdapter(adapter_thru_1);
+        Thru_answer_2.setAdapter(adapter_thru_2);
+        Thru_answer_3.setAdapter(adapter_thru_3);
+        Thru_answer_4.setAdapter(adapter_thru_4);
 
-            butClose =  v.findViewById(R.id.butClose);
-
-            text_3_inner = v.findViewById(R.id.text_3_inner);
-            text_4_inner = v.findViewById(R.id.text_4_inner);
-            text_5_inner = v.findViewById(R.id.text_5_inner);
-            text_6_inner = v.findViewById(R.id.text_6_inner);
-            text_7_inner = v.findViewById(R.id.text_7_inner);
-            text_8_inner = v.findViewById(R.id.text_8_inner);
-            text_9_inner = v.findViewById(R.id.text_9_inner);
-            text_10_inner = v.findViewById(R.id.text_10_inner);
-            text_11_inner = v.findViewById(R.id.text_11_inner);
-            text_12_inner = v.findViewById(R.id.text_12_inner);
-            text_13_inner = v.findViewById(R.id.text_13_inner);
-            text_14_inner = v.findViewById(R.id.text_14_inner);
-            text_sum_inner= v.findViewById(R.id.text_sum_inner);
-
-
-            text_plus = v.findViewById(R.id.text_plus);
-            text_minus = v.findViewById(R.id.text_minus);
-
-            text_3_inner.setText(String.valueOf(getList_3()));
-            text_4_inner.setText(String.valueOf(getList_4()));
-            text_5_inner.setText(String.valueOf(getList_5()));
-            text_6_inner.setText(String.valueOf(getList_6()));
-            text_7_inner.setText(String.valueOf(getList_7()));
-            text_8_inner.setText(String.valueOf(getList_8()));
-            text_9_inner.setText(String.valueOf(getList_9()));
-            text_10_inner.setText(String.valueOf(getList_10()));
-            text_11_inner.setText(String.valueOf(getList_11()));
-            text_12_inner.setText(String.valueOf(getList_12()));
-            text_13_inner.setText(String.valueOf(getList_13()));
-            text_14_inner.setText(String.valueOf(getList_14()));
-                String sumWords = String.valueOf(getList_3()+getList_4()+getList_5()+getList_6()+getList_7()+getList_8()+getList_9()+getList_10()+getList_11()+getList_12()+getList_13()+getList_14());
-            text_sum_inner.setText(sumWords);
-
-//            howAchivites();
-
-            text_plus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово длинее предыдущего на +1 букву: ";
-            text_minus_lenght = "Максимальная последовательность собранных слов. Каждое следующее слово короче предыдущего на -1 букву: ";
-
-
-            text_plus.setText(text_plus_lenght + getLenght_plus());
-            text_minus.setText(text_minus_lenght + getLenght_minus_minus());
-
-            OptionDialog.setView(v);
-            OptionDialog.setCancelable(true);
-
-            butClose.setBackgroundColor(Color.CYAN);
-            butClose.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    onClickStart();
-                    OptionDialog.dismiss();
-                }
-
-            });
-
-            OptionDialog.show();
-        }  // окно статистика
-        public void TaskDialog(){
-            TaskDialog = new AlertDialog.Builder(this).create();
-            LayoutInflater tasks = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            View v = tasks.inflate(R.layout.task_fragment, null, false);
-            butCloseTask =  v.findViewById(R.id.butCloseTask);
-
-
-            thisWordShow = v.findViewById(R.id.thisWordShow);
-            Thru_answer_1 = v.findViewById(R.id.Thru_answer_1);
-            Thru_answer_2 = v.findViewById(R.id.Thru_answer_2);
-            Thru_answer_3 = v.findViewById(R.id.Thru_answer_3);
-            Thru_answer_4 = v.findViewById(R.id.Thru_answer_4);
-            adapter_thru_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_1);
-            adapter_thru_2 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_2);
-            adapter_thru_3 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_3);
-            adapter_thru_4 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, thru_list_4);
-            Thru_answer_1.setAdapter(adapter_thru_1);
-            Thru_answer_2.setAdapter(adapter_thru_2);
-            Thru_answer_3.setAdapter(adapter_thru_3);
-            Thru_answer_4.setAdapter(adapter_thru_4);
-
-            Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
-            adapter_wrong_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, Wrong_list_1);
-            Wrong_answer_1.setAdapter(adapter_wrong_1);
+        Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
+        adapter_wrong_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, Wrong_list_1);
+        Wrong_answer_1.setAdapter(adapter_wrong_1);
 
 
 
-            TaskDialog.setView(v);
-            TaskDialog.setCancelable(true);
+        TaskDialog.setView(v);
+        TaskDialog.setCancelable(true);
 
-            butCloseTask.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickStart();
-                    TaskDialog.dismiss();
-                }
-            });
-
-            thisWordShow.setText(getControl());
-
-            if (getControl().equalsIgnoreCase("котлисаслон")) {
-                Thru_answer_1.setVisibility(View.VISIBLE);
-                Thru_answer_2.setVisibility(View.GONE);
-                Thru_answer_3.setVisibility(View.GONE);
-                Thru_answer_4.setVisibility(View.GONE);
-                Wrong_answer_1.setVisibility(View.VISIBLE);
-            } else if (getControl().equalsIgnoreCase("распределитель")) {
-                Thru_answer_1.setVisibility(View.GONE);
-                Thru_answer_2.setVisibility(View.VISIBLE);
-                Thru_answer_3.setVisibility(View.GONE);
-                Thru_answer_4.setVisibility(View.GONE);
-                Wrong_answer_1.setVisibility(View.VISIBLE);
-            } else if (getControl().equalsIgnoreCase("стенографистка")) {
-                Thru_answer_1.setVisibility(View.GONE);
-                Thru_answer_2.setVisibility(View.GONE);
-                Thru_answer_3.setVisibility(View.VISIBLE);
-                Thru_answer_4.setVisibility(View.GONE);
-                Wrong_answer_1.setVisibility(View.VISIBLE);
-            } else if (getControl().equalsIgnoreCase("простокваша")) {
-                Thru_answer_1.setVisibility(View.GONE);
-                Thru_answer_2.setVisibility(View.GONE);
-                Thru_answer_3.setVisibility(View.GONE);
-                Thru_answer_4.setVisibility(View.VISIBLE);
-                Wrong_answer_1.setVisibility(View.VISIBLE);
+        butCloseTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickStart();
+                TaskDialog.dismiss();
             }
-            TaskDialog.show();
+        });
 
-        }  // список собранных слов
+        thisWordShow.setText(getControl());
+
+        if (getControl().equalsIgnoreCase("котлисаслон")) {
+            Thru_answer_1.setVisibility(View.VISIBLE);
+            Thru_answer_2.setVisibility(View.GONE);
+            Thru_answer_3.setVisibility(View.GONE);
+            Thru_answer_4.setVisibility(View.GONE);
+            Wrong_answer_1.setVisibility(View.VISIBLE);
+        } else if (getControl().equalsIgnoreCase("распределитель")) {
+            Thru_answer_1.setVisibility(View.GONE);
+            Thru_answer_2.setVisibility(View.VISIBLE);
+            Thru_answer_3.setVisibility(View.GONE);
+            Thru_answer_4.setVisibility(View.GONE);
+            Wrong_answer_1.setVisibility(View.VISIBLE);
+        } else if (getControl().equalsIgnoreCase("стенографистка")) {
+            Thru_answer_1.setVisibility(View.GONE);
+            Thru_answer_2.setVisibility(View.GONE);
+            Thru_answer_3.setVisibility(View.VISIBLE);
+            Thru_answer_4.setVisibility(View.GONE);
+            Wrong_answer_1.setVisibility(View.VISIBLE);
+        } else if (getControl().equalsIgnoreCase("простокваша")) {
+            Thru_answer_1.setVisibility(View.GONE);
+            Thru_answer_2.setVisibility(View.GONE);
+            Thru_answer_3.setVisibility(View.GONE);
+            Thru_answer_4.setVisibility(View.VISIBLE);
+            Wrong_answer_1.setVisibility(View.VISIBLE);
+        }
+        TaskDialog.show();
+
+    }  // список собранных слов
 
 
 
@@ -2612,15 +2010,15 @@ public class GameStart extends AppCompatActivity  {
         a3 = String.valueOf(getTryChenge()); // попыток смены
         dbHelper.WriteDB(a1, a2, a3);
         //dbHelper.UpdateDB(a1, a2, a3);
-       // Toast.makeText(this, a1+" "+a2+" "+a3, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, a1+" "+a2+" "+a3, Toast.LENGTH_SHORT).show();
     } // добавить запись
     public void ReadfromDB() {
         dbHelper.ReadDB();
-            setCounter(dbHelper.getValueScore());
-            setStepOnNextLvl(dbHelper.getValueLvl());
-            setTryChenge(dbHelper.getValueTrys());
+        setCounter(dbHelper.getValueScore());
+        setStepOnNextLvl(dbHelper.getValueLvl());
+        setTryChenge(dbHelper.getValueTrys());
 
-                Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
+        Log.d("prob", ""+getCounter()+""+getTryChenge() + ""+getStepOnNextLvl());
     } // прочесть последнюю запись
     public void DeleteDB(View v) {
         CleareDB();
@@ -2630,13 +2028,13 @@ public class GameStart extends AppCompatActivity  {
         setCounter(0);   //чтение и запись БД очки
         setStepOnNextLvl(0); //чтение и запись БД уровень
         setTryChenge(0); //чтение и запись БД попыток смены слов
-            setAddsc(""+0);
-            setAddlvl(""+0);
-            setAddtryss(""+0);
+        setAddsc(""+0);
+        setAddlvl(""+0);
+        setAddtryss(""+0);
     }// удалить
 
     //---работа с таблицей длинны слов букв
-        public void AddDB_lenght(){
+    public void AddDB_lenght(){
         String  b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus, b_minus;
         b3 = String.valueOf(getList_3());
         b4 = String.valueOf(getList_4());
@@ -2650,33 +2048,32 @@ public class GameStart extends AppCompatActivity  {
         b12 = String.valueOf(getList_12());
         b13 = String.valueOf(getList_13());
         b14 = String.valueOf(getList_14());
-            b_plus = String.valueOf(getLenght_plus());
-            b_minus = String.valueOf(getLenght_minus_minus());
+        b_plus = String.valueOf(getLenght_plus());
+        b_minus = String.valueOf(getLenght_minus_minus());
 
-            dbHelper.WriteDB_lenght(b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus, b_minus);
+        dbHelper.WriteDB_lenght(b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b_plus, b_minus);
     }
-        public void ReadfromDB_lenght() {
-            dbHelper.ReadDB_lenght();
-                setList_3(dbHelper.getLENGHT_3());
-                setList_4(dbHelper.getLENGHT_4());
-                setList_5(dbHelper.getLENGHT_5());
-                setList_6(dbHelper.getLENGHT_6());
-                setList_7(dbHelper.getLENGHT_7());
-                setList_8(dbHelper.getLENGHT_8());
-                setList_9(dbHelper.getLENGHT_9());
-                setList_10(dbHelper.getLENGHT_10());
-                setList_11(dbHelper.getLENGHT_11());
-                setList_12(dbHelper.getLENGHT_12());
-                setList_13(dbHelper.getLENGHT_13());
-                setList_14(dbHelper.getLENGHT_14());
-                int sum = getList_3()+getList_4()+getList_5()+getList_6()+getList_7()+getList_8()+getList_9()+getList_10()+getList_11()+getList_12()+getList_13()+getList_14();
-                setList_sum(sum);
-                    setLenght_plus(dbHelper.getLENGHT_PLUS());
-                    setLenght_minus_minus(dbHelper.getLENGHT_MINUS());
+    public void ReadfromDB_lenght() {
+        dbHelper.ReadDB_lenght();
+        setList_3(dbHelper.getLENGHT_3());
+        setList_4(dbHelper.getLENGHT_4());
+        setList_5(dbHelper.getLENGHT_5());
+        setList_6(dbHelper.getLENGHT_6());
+        setList_7(dbHelper.getLENGHT_7());
+        setList_8(dbHelper.getLENGHT_8());
+        setList_9(dbHelper.getLENGHT_9());
+        setList_10(dbHelper.getLENGHT_10());
+        setList_11(dbHelper.getLENGHT_11());
+        setList_12(dbHelper.getLENGHT_12());
+        setList_13(dbHelper.getLENGHT_13());
+        setList_14(dbHelper.getLENGHT_14());
+        setList_sum(getList_3()+getList_4()+getList_5()+getList_6()+getList_7()+getList_8()+getList_9()+getList_10()+getList_11()+getList_12()+getList_13()+getList_14());
+        setLenght_plus(dbHelper.getLENGHT_PLUS());
+        setLenght_minus_minus(dbHelper.getLENGHT_MINUS());
 
 
 
-        } // прочесть последнюю запись
+    } // прочесть последнюю запись
     //--
 
 
@@ -2739,28 +2136,28 @@ public class GameStart extends AppCompatActivity  {
             InputStreamReader inputStreamReader = new InputStreamReader(in);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             StringBuilder sb = new StringBuilder();
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
 //                        sb.append(line);
-                        if (getControl().equalsIgnoreCase("котлисаслон")) {
-                            thru_list_1.add(line);
-                        } else if (getControl().equalsIgnoreCase("распределитель")) {
-                            thru_list_2.add(line);
-                        } else if (getControl().equalsIgnoreCase("стенографистка")) {
-                            thru_list_3.add(line);
-                        } else if (getControl().equalsIgnoreCase("простокваша")) {
-                            thru_list_4.add(line);
-                        }
-                        inputStreamReader.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (getControl().equalsIgnoreCase("котлисаслон")) {
+                    thru_list_1.add(line);
+                } else if (getControl().equalsIgnoreCase("распределитель")) {
+                    thru_list_2.add(line);
+                } else if (getControl().equalsIgnoreCase("стенографистка")) {
+                    thru_list_3.add(line);
+                } else if (getControl().equalsIgnoreCase("простокваша")) {
+                    thru_list_4.add(line);
                 }
+                inputStreamReader.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     //-------
     public List<String> Wrong_Switch_answer() {
-                this.WrongSwitch = Wrong_list_1;
-            return this.WrongSwitch;
+        this.WrongSwitch = Wrong_list_1;
+        return this.WrongSwitch;
     }
     private String array2strWrong(List<String> strings){
         StringBuilder sb = new StringBuilder();
@@ -2771,7 +2168,7 @@ public class GameStart extends AppCompatActivity  {
     } //запись в тхт НЕ ВЕРНО
     public void WriteWrong(){
         myText = array2strWrong(Wrong_Switch_answer());
-            this.writeWrong = "text_wrong_dio_1.txt";
+        this.writeWrong = "text_wrong_dio_1.txt";
         try {
             outputStream = openFileOutput(writeWrong, MODE_PRIVATE);
             outputStream.write(myText.getBytes());
@@ -2782,7 +2179,7 @@ public class GameStart extends AppCompatActivity  {
     } //запись в тхт
     public void ReadFromTxtWrong(){
         String lineWrong;
-            this.readWrong = "text_wrong_dio_1.txt";
+        this.readWrong = "text_wrong_dio_1.txt";
 
         try {
             FileInputStream in = openFileInput(readWrong);
@@ -2815,7 +2212,7 @@ public class GameStart extends AppCompatActivity  {
         SaveText();
 //        Save_lenght_plus();
         AddDB();
-            AddDB_lenght();
+        AddDB_lenght();
 
 
         super.onDestroy();
@@ -2825,85 +2222,6 @@ public class GameStart extends AppCompatActivity  {
     public void Mission_random_lenght(View v) {
         MissionDialogStart();
         onClickStop();
-
-        img0 = a0;
-        adapter.setImage(img0);
-        img1 = a1;
-        adapter.setImage(img1);
-        img2 = a2;
-        adapter.setImage(img2);
-        img3 = a3;
-        adapter.setImage(img3);
-        img4 = a4;
-        adapter.setImage(img4);
-        img5 = a5;
-        adapter.setImage(img5);
-        img6 = a6;
-        adapter.setImage(img6);
-        img7 = a7;
-        adapter.setImage(img7);
-        img8 = a8;
-        adapter.setImage(img8);
-        img9 = a9;
-        adapter.setImage(img9);
-        img10 = a10;
-        adapter.setImage(img10);
-        img11 = a11;
-        adapter.setImage(img11);
-        img12 = a12;
-        adapter.setImage(img12);
-        img13 = a13;
-        adapter.setImage(img13);
-        img14 = a14;
-        adapter.setImage(img14);
-        img15 = a15;
-        adapter.setImage(img15);
-        img16 = a16;
-        adapter.setImage(img15);
-        img17 = a17;
-        adapter.setImage(img17);
-        img18 = a18;
-        adapter.setImage(img18);
-        img19 = a19;
-        adapter.setImage(img19);
-        img20 = a20;
-        adapter.setImage(img20);
-        img21 = a21;
-        adapter.setImage(img21);
-        img22 = a22;
-        adapter.setImage(img22);
-        img23 = a23;
-        adapter.setImage(img23);
-        img24 = a24;
-        adapter.setImage(img24);
-        img25 = a25;
-        adapter.setImage(img25);
-        img26 = a26;
-        adapter.setImage(img26);
-        img27 = a27;
-        adapter.setImage(img27);
-        img28 = a28;
-        adapter.setImage(img28);
-        img29 = a29;
-        adapter.setImage(img29);
-        img30 = a30;
-        adapter.setImage(img30);
-        img31 = a31;
-        adapter.setImage(img31);
-        img32 = a32;
-        adapter.setImage(img32);
-        img33 = a33;
-        adapter.setImage(img33);
-        img34 = a34;
-        adapter.setImage(img34);
-        img35 = a35;
-        adapter.setImage(img35);
-        img36 = a36;
-        adapter.setImage(img36);
-        img37 = a37;
-        adapter.setImage(img37);
-        img38 = a38;
-        adapter.setImage(img38);
 
 
     }
@@ -2915,25 +2233,89 @@ public class GameStart extends AppCompatActivity  {
         MissionsDialog = new AlertDialog.Builder(this).create();
         MissionsDialog.setTitle("Статистика");
         butClose_mission =  tasks.findViewById(R.id.butClose);
+            word_stat_lit_all = tasks.findViewById(R.id.word_stat_lit_all);
+            word_stat_lit_3 = tasks.findViewById(R.id.word_stat_lit_3);
+            word_stat_lit_4 = tasks.findViewById(R.id.word_stat_lit_4);
+            word_stat_lit_5 = tasks.findViewById(R.id.word_stat_lit_5);
+            word_stat_lit_6 = tasks.findViewById(R.id.word_stat_lit_6);
+            word_stat_lit_7 = tasks.findViewById(R.id.word_stat_lit_7);
+            word_stat_lit_8 = tasks.findViewById(R.id.word_stat_lit_8);
+            word_stat_lit_9 = tasks.findViewById(R.id.word_stat_lit_9);
+            word_stat_lit_10 = tasks.findViewById(R.id.word_stat_lit_10);
+            word_stat_lit_11 = tasks.findViewById(R.id.word_stat_lit_11);
+            word_stat_lit_12 = tasks.findViewById(R.id.word_stat_lit_12);
+            word_stat_lit_13 = tasks.findViewById(R.id.word_stat_lit_13);
+            word_stat_lit_14 = tasks.findViewById(R.id.word_stat_lit_14);
+
+
+                word_stat_lit_3.setText(""+getList_3());
+                word_stat_lit_4.setText(""+getList_4());
+                word_stat_lit_5.setText(""+getList_5());
+                word_stat_lit_6.setText(""+getList_6());
+                word_stat_lit_7.setText(""+getList_7());
+                word_stat_lit_8.setText(""+getList_8());
+                word_stat_lit_9.setText(""+getList_9());
+                word_stat_lit_10.setText(""+getList_10());
+                word_stat_lit_11.setText(""+getList_11());
+                word_stat_lit_12.setText(""+getList_12());
+                word_stat_lit_13.setText(""+getList_13());
+                word_stat_lit_14.setText(""+getList_14());
+                word_stat_lit_all.setText(""+getList_sum());
+
+                        word_bar_all = tasks.findViewById(R.id.word_bar_all);
+                        word_bar_3 = tasks.findViewById(R.id.word_bar_3);
+                        word_bar_4 = tasks.findViewById(R.id.word_bar_4);
+                        word_bar_5 = tasks.findViewById(R.id.word_bar_5);
+                        word_bar_6 = tasks.findViewById(R.id.word_bar_6);
+                        word_bar_7 = tasks.findViewById(R.id.word_bar_7);
+                        word_bar_8 = tasks.findViewById(R.id.word_bar_8);
+                        word_bar_9 = tasks.findViewById(R.id.word_bar_9);
+                        word_bar_10 = tasks.findViewById(R.id.word_bar_10);
+                        word_bar_11 = tasks.findViewById(R.id.word_bar_11);
+                        word_bar_12 = tasks.findViewById(R.id.word_bar_12);
+                        word_bar_13 = tasks.findViewById(R.id.word_bar_13);
+                        word_bar_14 = tasks.findViewById(R.id.word_bar_14);
+
+                            word_bar_all.setMax(3141);
+                                word_bar_all.setProgress(getList_sum());
+                            word_bar_3.setMax(511);
+                                word_bar_3.setProgress(getList_3());
+                             word_bar_4.setMax(765);
+                                word_bar_4.setProgress(getList_4());
+                            word_bar_5.setMax(792);
+                                word_bar_5.setProgress(getList_5());
+                            word_bar_6.setMax(534);
+                                word_bar_6.setProgress(getList_6());
+                            word_bar_7.setMax(307);
+                                word_bar_7.setProgress(getList_7());
+                            word_bar_8.setMax(158);
+                                word_bar_8.setProgress(getList_8());
+                            word_bar_9.setMax(40);
+                                word_bar_9.setProgress(getList_9());
+                            word_bar_10.setMax(21);
+                                word_bar_10.setProgress(getList_10());
+                            word_bar_11.setMax(1);
+                                word_bar_11.setProgress(getList_11());
+                            word_bar_12.setMax(4);
+                                word_bar_12.setProgress(getList_12());
+                            word_bar_13.setMax(5);
+                                word_bar_13.setProgress(getList_13());
+                            word_bar_14.setMax(3);
+                                word_bar_14.setProgress(getList_14());
+
 
 
         MissionsDialog = new AlertDialog.Builder(this).create();
 
 
 
-        adapter = new RecyclerViewAdapter(img0);
 
-        recyclerView = tasks.findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
 
-        layoutManager = new GridLayoutManager(this, 3);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter.setList(myValues);
+
         butClose = tasks.findViewById(R.id.butClose);
         MissionsDialog.setView(tasks);
         MissionsDialog.setCancelable(true);
-        butClose.setBackgroundColor(Color.CYAN);
+
         butClose.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 MissionsDialog.dismiss();
@@ -2941,7 +2323,7 @@ public class GameStart extends AppCompatActivity  {
         });
         MissionsDialog.show();
 
-        howAchivites();
+//        howAchivites();
 
         butClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -2950,10 +2332,51 @@ public class GameStart extends AppCompatActivity  {
                 MissionsDialog.dismiss();
             }
         });
-
-
-
     }
+
+
+    public void open_menu(View v){
+        OptionMenu();
+    }
+    public void OptionMenu(){
+        OptionDialog = new AlertDialog.Builder(this).create();
+        LayoutInflater menuOpt = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View v = menuOpt.inflate(R.layout.option_menu, null, false);
+        butCloseOption =  v.findViewById(R.id.butCloseOption);
+
+        butClose_mission =  v.findViewById(R.id.butCloseOption);
+
+        task = v.findViewById(R.id.task);
+        quest = v.findViewById(R.id.quest);
+        faq = v.findViewById(R.id.faq);
+
+
+
+        OptionDialog.setView(v);
+
+
+        butCloseOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickStart();
+                OptionDialog.dismiss();
+            }
+        });
+
+
+        OptionDialog.show();
+
+    }  // список собранных слов
+
+
+
+
+
+
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -2976,7 +2399,7 @@ public class GameStart extends AppCompatActivity  {
 }
 
 
-    //Ачивка за сбор  слова (3 раза словао из 3 букв ,только если они верные) сделать. сейчас все слова в зачет идут.
+//Ачивка за сбор  слова (3 раза словао из 3 букв ,только если они верные) сделать. сейчас все слова в зачет идут.
 
 
 

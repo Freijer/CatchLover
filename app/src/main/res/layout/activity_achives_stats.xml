@@ -1,0 +1,85 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/stats_background">
+
+
+    <ImageView
+        android:id="@+id/title_achive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/achives_bak_game_up"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:id="@+id/word_img_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_below="@+id/title_achive"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/achives_3"/>
+
+    <ProgressBar
+        android:id="@+id/word_bar_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignBottom="@+id/word_img_1"
+        android:layout_toEndOf="@+id/word_img_1"
+        android:layout_toStartOf="@+id/word_stat_img_1"
+        style="@android:style/Widget.ProgressBar.Horizontal" />
+    <TextView
+        android:id="@+id/word_name_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/word_img_1"
+        android:layout_alignTop="@+id/word_img_1"
+        android:text="Всего собранных слов"/>
+
+    <ImageView
+        android:id="@+id/word_stat_img_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_alignBottom="@+id/word_bar_1"
+        android:background="@drawable/achives_scores"/>
+    <TextView
+        android:id="@+id/word_stat_lit_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_toStartOf="@+id/word_stat_max_1"
+        android:layout_alignBottom="@+id/word_stat_img_1"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/word_stat_max_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/word_stat_img_1"
+        android:layout_marginStart="-50dp"
+        android:layout_alignBottom="@+id/word_stat_img_1"
+        android:textSize="18sp"
+        android:text="/100"/>
+
+
+    <Button
+        android:id="@+id/butClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="back"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/achives_bak_game"
+        android:text="Назад в игру" />
+
+
+
+
+</RelativeLayout>
