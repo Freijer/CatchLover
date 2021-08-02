@@ -71,9 +71,36 @@ public class GameStart extends AppCompatActivity  {
 
 
 
-    protected ArrayList<Integer> list_lvl;
-    protected int currentMaxProgress = 0;
+
+    protected ArrayList<Integer> list_lvl = new ArrayList();
+    protected ArrayList<Integer> all = new ArrayList();
     int currentLVL = 0;
+    int currentMaxProgress = 0;
+    SharedPreferences sp;
+
+
+    int thrue_lvl = 0;
+    int thrue_exp = 0;
+    int income_exp = 0;
+
+    public int getThrue_lvl() {
+        return thrue_lvl;
+    }
+    public void setThrue_lvl(int thrue_lvl) {
+        this.thrue_lvl = thrue_lvl;
+    }
+    public int getThrue_exp() {
+        return thrue_exp;
+    }
+    public void setThrue_exp(int thrue_exp) {
+        this.thrue_exp = thrue_exp;
+    }
+    public int getIncome_exp() {
+        return income_exp;
+    }
+    public void setIncome_exp(int income_exp) {
+        this.income_exp = income_exp;
+    }
 
 
     protected int lenght_minus_minus;
@@ -266,23 +293,23 @@ public class GameStart extends AppCompatActivity  {
     protected int f001;
 
 
-    ObjectAnimator  button1;
-    ObjectAnimator  button2;
-    ObjectAnimator  button3;
-    ObjectAnimator  button4;
-    ObjectAnimator  button5;
-    ObjectAnimator  button6;
-    ObjectAnimator  button7;
-    ObjectAnimator  button8;
-    ObjectAnimator  button9;
-    ObjectAnimator  button10;
-    ObjectAnimator  button11;
-    ObjectAnimator  button12;
-    ObjectAnimator  button13;
-    ObjectAnimator  button14;
+//    ObjectAnimator  button1;
+//    ObjectAnimator  button2;
+//    ObjectAnimator  button3;
+//    ObjectAnimator  button4;
+//    ObjectAnimator  button5;
+//    ObjectAnimator  button6;
+//    ObjectAnimator  button7;
+//    ObjectAnimator  button8;
+//    ObjectAnimator  button9;
+//    ObjectAnimator  button10;
+//    ObjectAnimator  button11;
+//    ObjectAnimator  button12;
+//    ObjectAnimator  button13;
+//    ObjectAnimator  button14;
 
     protected ProgressBar progressBar, word_bar_all, word_bar_3, word_bar_4, word_bar_5, word_bar_6, word_bar_7, word_bar_8, word_bar_9, word_bar_10, word_bar_11, word_bar_12, word_bar_13, word_bar_14;
-    protected TextView lvlview, textClock, score, thisWordShow, textLvl, textScore, tryChange, word_stat_lit_all,
+    protected TextView lvlview, textClock, score, scoreMax, thisWordShow, textLvl, textScore, tryChange, word_stat_lit_all,
             word_stat_lit_3, word_stat_lit_4,word_stat_lit_5,word_stat_lit_6,word_stat_lit_7,word_stat_lit_8,word_stat_lit_9,word_stat_lit_10,word_stat_lit_11,word_stat_lit_12,word_stat_lit_13,word_stat_lit_14;
     protected Button menu, starter, faq, task,  reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button  quest, resetWord, butCloseOption;
@@ -526,6 +553,7 @@ public class GameStart extends AppCompatActivity  {
         lvlview = findViewById(R.id.lvlview);
 
         score = findViewById(R.id.score);
+        scoreMax = findViewById(R.id.scoreMax);
 
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
@@ -568,11 +596,26 @@ public class GameStart extends AppCompatActivity  {
 
         list_lvl = new ArrayList();
         list_lvl.add(0);
+        list_lvl.add(3);
+        list_lvl.add(7);
+        list_lvl.add(10);
+        list_lvl.add(15);
         list_lvl.add(20);
+        list_lvl.add(35);
         list_lvl.add(50);
+        list_lvl.add(65);
         list_lvl.add(80);
+        list_lvl.add(95);
         list_lvl.add(110);
+        list_lvl.add(130);
         list_lvl.add(150);
+        list_lvl.add(170);
+        list_lvl.add(185);
+        list_lvl.add(200);
+        list_lvl.add(225);
+        list_lvl.add(250);
+        list_lvl.add(275);
+        list_lvl.add(300);
 
 
         bufferReadList = new ArrayList<>();
@@ -588,9 +631,9 @@ public class GameStart extends AppCompatActivity  {
 
         progressBar = findViewById(R.id.progressBar);
 
-        progressBar.setProgress(getCounter());
-        newLvlFromProgressBar();
-        ProgressBarNextLvl();
+//        progressBar.setProgress(getCounter());
+
+//        initSP();
 
 //        resetWord.setVisibility(GONE);
 //        menu.setVisibility(GONE);
@@ -620,8 +663,8 @@ public class GameStart extends AppCompatActivity  {
 
         ClockWork();
 
-
-
+        initSP();
+        progressLvl_exp();
     }
 
 
@@ -631,19 +674,18 @@ public class GameStart extends AppCompatActivity  {
 
 
 
-        score.setText(getCounter()+"/"+progressBar.getMax());
+        score.setText(getCounter()+"");
         textClock.setText(""+getTryChenge());
         lvlview.setText(""+getStepOnNextLvl());
 
         ReadfromDB();
         ReadfromDB_lenght();
 
-        score.setText(getCounter()+"/"+progressBar.getMax());
-        textClock.setText(""+getTryChenge());
-        lvlview.setText(""+getStepOnNextLvl());
+//        score.setText(getCounter()+"/"+progressBar.getMax());
+//        textClock.setText(""+getTryChenge());
+//        lvlview.setText(""+getStepOnNextLvl());
 
-        newLvlFromProgressBar();
-        ProgressBarNextLvl();
+//        progressLvl_exp();
 //        score.setVisibility(VISIBLE);
 //        lvlview.setVisibility(VISIBLE);
 //
@@ -706,7 +748,7 @@ public class GameStart extends AppCompatActivity  {
 
         onClickStart();//старт часов
 
-
+        progressLvl_exp();
 
     }  // СТАРТ, часы
 
@@ -963,10 +1005,16 @@ public class GameStart extends AppCompatActivity  {
         builder.setTitle("     Инструкция")
                 .setMessage("По экрану движутся кнопки, нажимая на них нужно собрать слово" + "\n"  +
                         "за каждое правильно собранное слово  " + "\n"  +
-                        "Вы получаете очки" + "\n"  +
-                        "и очки смены слова." + "\n"  +
+                        "Вы получаете очки: за слова содержащие 3 и 4 буквы по 1 очку " + "\n"  +
+                        "за слова содержащие 3 и 4 буквы по 1 очку " + "\n"  +
+                        "за слова содержащие содержащие 5 букв по 2 очка " + "\n"  +
+                        "за слова содержащие содержащие 6, 7 и 8 букв по 3 очка " + "\n"  +
+                        "за слова содержащие содержащие 9 и 10 букв по 4 очка " + "\n"  +
+                        "за слова содержащие содержащие 11 и 12 букв по 5 очков " + "\n"  +
+                        "за слова содержащие содержащие 13 и 14 букв по 6 очков " + "\n"  +
+                        "и очки смены слова, за которые можете меня набор букв на кнопках." + "\n"  +
                         "За не верные слова и повторные " + "\n"  +
-                        "вы теряете -1 очко " + "\n"  +
+                        "вы теряете -1 очко" + "\n"  +
                         "При смене слова вы рандомно получете новый набор букв." + "\n"
                 )
                 .setCancelable(false)
@@ -1007,41 +1055,93 @@ public class GameStart extends AppCompatActivity  {
         textClock.setText(""+getTryChenge());//2
         ressetChars();
     }  //Включить новое слово
+
+    int expr;
+    public int getExpr() {
+        return expr;
+    }
+    public void setExpr(int expr) {
+        this.expr = expr;
+    }
+
     @SuppressLint("SetTextI18n")
+//    protected void HowScore(int A){
+//        switch (A){
+//            case 2:
+//                setCounter(getCounter()+0);
+//                break;
+//            case 3:
+//                setCounter(getCounter()+1);
+//                break;
+//            case 4:
+//                setCounter(getCounter()+2);
+//                break;
+//            case 5:
+//                setCounter(getCounter()+3);
+//                break;
+//            case 6:
+//                setCounter(getCounter()+4);
+//                break;
+//            case 7:
+//                setCounter(getCounter()+4);
+//                break;
+//            case 8:
+//                setCounter(getCounter()+4);
+//                break;
+//            case 9:
+//                setCounter(getCounter()+4);
+//                break;
+//            case 10:
+//                setCounter(getCounter()+4);
+//                break;
+       // }
 
-    protected void HowScore(int A){
-        switch (A){
-            case 2:
-                setCounter(getCounter()+0);
-                break;
+   // }//подсчет очков за Ачивки
+
+
+    protected int HowScore(int A) {
+        switch (A) {
             case 3:
-                setCounter(getCounter()+1);
-                break;
+                setExpr(1);
+                return expr;
             case 4:
-                setCounter(getCounter()+2);
-                break;
+                setExpr(1);
+                return expr;
             case 5:
-                setCounter(getCounter()+3);
-                break;
+                setExpr(2);
+                return expr;
             case 6:
-                setCounter(getCounter()+4);
-                break;
+                setExpr(3);
+                return expr;
             case 7:
-                setCounter(getCounter()+4);
-                break;
+                setExpr(3);
+                return expr;
             case 8:
-                setCounter(getCounter()+4);
-                break;
+                setExpr(3);
+                return expr;
             case 9:
-                setCounter(getCounter()+4);
-                break;
+                setExpr(4);
+                return expr;
             case 10:
-                setCounter(getCounter()+4);
-                break;
+                setExpr(4);
+                return expr;
+            case 11:
+                setExpr(5);
+                return expr;
+            case 12:
+                setExpr(5);
+                return expr;
+            case 13:
+                setExpr(6);
+                return expr;
+            case 14:
+                setExpr(6);
+                return expr;
         }
+        return expr;
+    } //назначение очков за собранные слова
 
-    }//подсчет очков за Ачивки
-    protected void HowLenght (int incom1){
+                protected void HowLenght (int incom1){
         switch (incom1){
             case 2:
                 setList_2(getList_2()+0);
@@ -1139,38 +1239,39 @@ public class GameStart extends AppCompatActivity  {
         // Toast.makeText(this, KeyWord, Toast.LENGTH_SHORT).show();
         if (listControl.contains(KeyWord) && !listBuffer.contains(KeyWord) && !Switch_answer().contains(KeyWord)) {
             ListXUpFull();
-            HowScore(ArrayListWord.length); // Передача ОЧКОВ
+            //HowScore(ArrayListWord.length); // Передача ОЧКОВ
+            setCounter(HowScore(ArrayListWord.length));
             HowLenght(ArrayListWord.length);
             howLenght_plus(KeyWord);
             howLenght_minus(KeyWord);
             Switch_answer().add(KeyWord);
-            setCounter(getCounter()+1);
-            setExp(getExp()+4);
+//            setCounter(getCounter()+1);
+//            setExp(getExp()+4);
 
-            progressBar.setProgress(getCounter());
-            newLvlFromProgressBar();
-            ProgressBarNextLvl();
-
+//            progressBar.setProgress(getCounter());
+            progressLvl_exp();
 
             chars_layout.startAnimation(animation);
         } else if (listBuffer.contains(KeyWord)){
             ListXUpFull();
-            setCounter(getCounter()-1);
-            setExp(getExp()-2);
-            progressBar.setProgress(getCounter());
-            newLvlFromProgressBar();
-            ProgressBarNextLvl();
+//            setCounter(getCounter()-0);
+//            setExp(getExp()-0);
+////            progressBar.setProgress(getCounter());
+//            progressLvl_exp();
+            setCounter(-1);
+            progressLvl_exp();
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
             Wrong_Switch_answer().add(KeyWord);
             chars_layout.startAnimation(animation2);
             ressetChars();
         } else{
             ListXUpFull();
-            setCounter(getCounter()-1);
-            setExp(getExp()-1);
-            progressBar.setProgress(getCounter());
-            newLvlFromProgressBar();
-            ProgressBarNextLvl();
+//            setCounter(getCounter()-0);
+//            setExp(getExp()-0);
+////            progressBar.setProgress(getCounter());
+//            progressLvl_exp();
+            setCounter(-1);
+            progressLvl_exp();
             Wrong_Switch_answer().add(KeyWord);
             chars_layout.startAnimation(animation2);
             ressetChars();
@@ -1201,14 +1302,14 @@ public class GameStart extends AppCompatActivity  {
         supportClass.ShowTaskWelDone(taskList);
 
 
-        score.setText(getCounter()+"/"+progressBar.getMax()); // ФИНАЛЬНЫЕ данные очки
+//        score.setText(getCounter()+"/"+progressBar.getMax()); // ФИНАЛЬНЫЕ данные очки
         textClock.setText(""+getTryChenge());// ФИНАЛЬНЫЕ данные попыток смены
-        lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
+//        lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
 
-        AddDB();
-        SaveText();
-        WriteWrong();
-        AddDB_lenght();
+//        AddDB();
+//        SaveText();
+//        WriteWrong();
+//        AddDB_lenght();
 
 //        howAchivites();
 
@@ -1225,11 +1326,14 @@ public class GameStart extends AppCompatActivity  {
         char_13.setVisibility(GONE);
         char_14.setVisibility(GONE);
         //--Показ очков сразу при получении авчивки
-        score.setText(getCounter()+"/"+progressBar.getMax()); // ФИНАЛЬНЫЕ данные очки
+//        score.setText(getCounter()+"/"+progressBar.getMax()); // ФИНАЛЬНЫЕ данные очки
         textClock.setText(""+getTryChenge());// ФИНАЛЬНЫЕ данные попыток смены
-        lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
-
+//        lvlview.setText(""+getStepOnNextLvl()); // ФИНАЛЬНЫЕ данные уровень
+//        progressLvl_exp();
         AddDB();
+        SaveText();
+        WriteWrong();
+        AddDB_lenght();
 
     } //проверка
 
@@ -1266,44 +1370,42 @@ public class GameStart extends AppCompatActivity  {
 
 
 
-    public void ProgressBarNextLvl() {
-        progressBar.setProgress(getCounter());
-       if (progressBar.getProgress() >= 10){
-           progressBar.setMax(20);
-           setCounter(0);
-           progressBar.setProgress(getCounter());
-           setTryChenge(getTryChenge()+5);
-           setStepOnNextLvl(1);
-       } else if (progressBar.getProgress() >= 20){
-            progressBar.setMax(35);
-            setCounter(0);
-           progressBar.setProgress(getCounter());
-            setStepOnNextLvl(2);
-           setTryChenge(getTryChenge()+5);
-       } else if (progressBar.getProgress() >= 35){
-           progressBar.setMax(50);
-           setCounter(0);
-           progressBar.setProgress(getCounter());
-           setStepOnNextLvl(3);
-           setTryChenge(getTryChenge()+5);
-       }
-    }
-
-    public void newLvlFromProgressBar() {
-        switch (progressBar.getMax()){
-            case 10:
-                progressBar.setMax(20);
-                break;
-            case 20:
-                progressBar.setMax(35);
-                break;
-            case 35:
-                progressBar.setMax(50);
-                break;
-        }
-    }
-
-
+//    public void ProgressBarNextLvl() {
+//        progressBar.setProgress(getCounter());
+//       if (progressBar.getProgress() >= 10){
+//           progressBar.setMax(20);
+//           setCounter(0);
+//           progressBar.setProgress(getCounter());
+//           setTryChenge(getTryChenge()+5);
+//           setStepOnNextLvl(1);
+//       } else if (progressBar.getProgress() >= 20){
+//            progressBar.setMax(35);
+//            setCounter(0);
+//           progressBar.setProgress(getCounter());
+//            setStepOnNextLvl(2);
+//           setTryChenge(getTryChenge()+5);
+//       } else if (progressBar.getProgress() >= 35){
+//           progressBar.setMax(50);
+//           setCounter(0);
+//           progressBar.setProgress(getCounter());
+//           setStepOnNextLvl(3);
+//           setTryChenge(getTryChenge()+5);
+//       }
+//    }
+//
+//    public void newLvlFromProgressBar() {
+//        switch (progressBar.getMax()){
+//            case 10:
+//                progressBar.setMax(20);
+//                break;
+//            case 20:
+//                progressBar.setMax(35);
+//                break;
+//            case 35:
+//                progressBar.setMax(50);
+//                break;
+//        }
+//    }
 //    protected void ShowNewLvl(){
 //        setTryChenge(getTryChenge()+5);
 //        ObjectAnimator scaleXAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleX", 0.3f, 2.5f);
@@ -2308,10 +2410,6 @@ public class GameStart extends AppCompatActivity  {
         MissionsDialog = new AlertDialog.Builder(this).create();
 
 
-
-
-
-
         butClose = tasks.findViewById(R.id.butClose);
         MissionsDialog.setView(tasks);
         MissionsDialog.setCancelable(true);
@@ -2363,19 +2461,102 @@ public class GameStart extends AppCompatActivity  {
                 OptionDialog.dismiss();
             }
         });
-
-
         OptionDialog.show();
-
     }  // список собранных слов
 
 
 
 
+    public void progressLvl_exp(){
+        int rndProgress = getCounter();
+        currentMaxProgress = calculateMaxProgress();
+        int currentProgress = progressBar.getProgress() + rndProgress;
+        if (currentLVL<list_lvl.size()-1){
+            if (list_lvl.get(list_lvl.size() - 1) >= getSum())
+                all.add(rndProgress);
+            if (lvlUP(rndProgress)) {
+                int i = progressBar.getProgress() + rndProgress - currentMaxProgress;
+                progressBar.setProgress(i);
+            } else
+                progressBar.setProgress(currentProgress);
+            progressBar.setMax(calculateMaxProgress());
+            //Toast.makeText(this, "+ " + rndProgress + " exp", Toast.LENGTH_SHORT).show();
+            updateUIafterClick();
+        }
+    }
 
 
 
+    private Boolean lvlUP(int nextExp) {
+        if ((currentLVL < list_lvl.size() - 2 && (progressBar.getProgress() + nextExp) >= list_lvl.get(currentLVL + 1) - list_lvl.get(currentLVL))) {
+            currentLVL++;
+            setTryChenge(getTryChenge()+5);
+            return true;
+        }
+        return false;
+    }
 
+    private int calculateMaxProgress() {
+        if (currentLVL < list_lvl.size() - 1)
+            return list_lvl.get(currentLVL + 1) - list_lvl.get(currentLVL);
+        return list_lvl.get(list_lvl.size() - 1) - list_lvl.get(list_lvl.size() - 2);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void updateUIafterClick() {
+        if (currentLVL > 0)
+//            min.setText(list_lvl.get(currentLVL) + "");
+        if (currentLVL < list_lvl.size() - 1)
+           scoreMax.setText(list_lvl.get(currentLVL + 1) + "");
+        else
+            scoreMax.setText(list_lvl.get(currentLVL) + "");
+        lvlview.setText(currentLVL + "");
+       score.setText(getSummaryExp());
+    }
+
+    private String getSummaryExp() {
+        return list_lvl.get(currentLVL) + progressBar.getProgress() + "";
+    }
+
+    private int getSum() {
+        int sum = 0;
+        for (int i = 0; i < all.size(); i++)
+            sum += all.get(i);
+        return sum;
+    }
+
+    private String getAllNumber() {
+        String sum = "";
+        for (int i = 0; i < all.size(); i++) {
+            if (i > 0)
+                sum += all.get(i) + "; ";
+            else
+                sum += "All numbers: " + all.get(i) + "; ";
+        }
+        return sum;
+    }
+
+    private void initSP() {
+        load();
+    }
+
+
+    private void load() {
+        currentLVL = getStepOnNextLvl();
+        int sum = getCounter();
+        lvlview.setText(currentLVL + "");
+        score.setText(sum + "");
+        int d = 0;
+        if (currentLVL >= 0 && currentLVL+1 < list_lvl.size()) {
+            d = sum  - list_lvl.get(currentLVL);
+//            min.setText(list_lvl.get(currentLVL) + "");
+            scoreMax.setText(list_lvl.get(currentLVL + 1) + "");
+            progressBar.setMax(list_lvl.get(currentLVL + 1) - list_lvl.get(currentLVL));
+            progressBar.setProgress(d);
+        }
+
+
+    }
 
 
     @Override
