@@ -8,24 +8,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-
 import androidx.constraintlayout.motion.widget.MotionLayout;
-import androidx.constraintlayout.motion.widget.MotionScene;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import androidx.recyclerview.widget.GridLayoutManager;
 import java.util.ArrayList;
 import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Looper;
@@ -61,7 +54,6 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 
-
 //** АВТОЧТЕНИЕ из БАЗЫ ДАННЫХ в кноаку СТАРТ ИГРЫ
 
 
@@ -76,8 +68,6 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<Integer> all = new ArrayList();
     int currentLVL = 0;
     int currentMaxProgress = 0;
-    SharedPreferences sp;
-
 
     int thrue_lvl = 0;
     int thrue_exp = 0;
@@ -313,7 +303,7 @@ public class GameStart extends AppCompatActivity  {
             word_stat_lit_3, word_stat_lit_4,word_stat_lit_5,word_stat_lit_6,word_stat_lit_7,word_stat_lit_8,word_stat_lit_9,word_stat_lit_10,word_stat_lit_11,word_stat_lit_12,word_stat_lit_13,word_stat_lit_14;
     protected Button menu, starter, faq, task,  reset, pr1, pr2, pr3, pr4, pr5, pr6, pr7, pr8, pr9, pr10, pr11, pr12, pr13, pr14;
     protected Button  quest, resetWord, butCloseOption;
-    private ImageView img_nextlvl, change_img, score_img;
+    private ImageView img_nextlvl, thrue_word, img_miss_word, change_img, score_img;
     protected ArrayList<String> MainListWord = new ArrayList<>();// при нажатии кнопки собисрется слово
     protected ArrayList<Integer> ListCoordinateX_1 = new ArrayList<Integer>();
     protected ArrayList<Integer> LineY_1 = new ArrayList<Integer>();
@@ -322,7 +312,6 @@ public class GameStart extends AppCompatActivity  {
     protected ArrayList<String> listBuffer = new ArrayList<String>();
     protected Chronometer mChronometer;
     protected RelativeLayout chars_layout, engine_buttons, topLayout;
-
 
     private int img0, img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16, img17, img18, img19, img20, img21, img22, img23, img24, img25, img26,
             img27, img28, img29, img30, img31, img32, img33, img34, img35, img36, img37, img38 = R.drawable.star;
@@ -554,7 +543,9 @@ public class GameStart extends AppCompatActivity  {
 
         score = findViewById(R.id.score);
         scoreMax = findViewById(R.id.scoreMax);
-
+        img_nextlvl = findViewById(R.id.img_nextlvl);
+        thrue_word = findViewById(R.id.thrue_word);
+        img_miss_word = findViewById(R.id.img_miss_word);
         textClock = findViewById(R.id.textClock);
         Colo = findViewById(R.id.Colo);
         mChronometer = findViewById(R.id.chronometer);
@@ -564,7 +555,7 @@ public class GameStart extends AppCompatActivity  {
 //        score_img = findViewById(R.id.score_img);
 
 
-        menu = findViewById(R.id.menu);
+//        menu = findViewById(R.id.menu);
         textLvl = findViewById(R.id.textLvl);
         textScore = findViewById(R.id.textScore);
         tryChange = findViewById(R.id.tryChange);
@@ -663,61 +654,40 @@ public class GameStart extends AppCompatActivity  {
 
         ClockWork();
 
-        initSP();
+
         progressLvl_exp();
+        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Lets_Go();
+            }
+        }, 1000);
     }
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void LetsGo(View v){
+        Lets_Go();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void Lets_Go(){
 
 
-
-        score.setText(getCounter()+"");
-        textClock.setText(""+getTryChenge());
-        lvlview.setText(""+getStepOnNextLvl());
 
         ReadfromDB();
         ReadfromDB_lenght();
+        initSP();
 
-//        score.setText(getCounter()+"/"+progressBar.getMax());
-//        textClock.setText(""+getTryChenge());
-//        lvlview.setText(""+getStepOnNextLvl());
-
-//        progressLvl_exp();
-//        score.setVisibility(VISIBLE);
-//        lvlview.setVisibility(VISIBLE);
-//
-//        textClock.setVisibility(VISIBLE);
-//
-//
-//        textLvl.setVisibility(VISIBLE);
-//        textScore.setVisibility(VISIBLE);
-//        tryChange.setVisibility(VISIBLE);
-        //--
-//        resetWord.setVisibility(VISIBLE);
-//        menu.setVisibility(VISIBLE);
-//        reset.setVisibility(VISIBLE);
-
-//        topLayout.setVisibility(VISIBLE);
-//        engine_buttons.setVisibility(VISIBLE);
-//        chars_layout.setVisibility(VISIBLE);
-
-
-
+        score.setText(getCounter()+ "/");
+        textClock.setText(""+getTryChenge());
+        lvlview.setText(""+getStepOnNextLvl());
 
 
         ListXUpFull(); // заполняем листы координат
-//        ControlWordsfinFail(); // читаем проверочные слова
-//        ReadWords(); // читаем ключевык
-//        Randomizator(); // разиваем на буквы
-        GoneButnnons(); //все кнопки изначально не видимы
 
         SetLiteralsonButtons(); //установка букв на слова
-      //  Creates(); //активация и движеение кнопок
 
-        ShowButtons();
+
         starter.setVisibility(GONE);
 
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
@@ -727,7 +697,7 @@ public class GameStart extends AppCompatActivity  {
                 LineY_1.clear();
                 LineY_1.add(f001);
             }
-        }, 500);
+        }, 30);
 
         thru_list_1.clear();
         thru_list_2.clear();
@@ -748,8 +718,8 @@ public class GameStart extends AppCompatActivity  {
 
         onClickStart();//старт часов
 
-        progressLvl_exp();
-
+        progressLvl_exp_letsGo();
+       ShowButtons();
     }  // СТАРТ, часы
 
 
@@ -1006,8 +976,8 @@ public class GameStart extends AppCompatActivity  {
                 .setMessage("По экрану движутся кнопки, нажимая на них нужно собрать слово" + "\n"  +
                         "за каждое правильно собранное слово  " + "\n"  +
                         "Вы получаете очки: за слова содержащие 3 и 4 буквы по 1 очку " + "\n"  +
-                        "за слова содержащие 3 и 4 буквы по 1 очку " + "\n"  +
-                        "за слова содержащие содержащие 5 букв по 2 очка " + "\n"  +
+                        "за слова содержащие 3 буквы по 1 очку " + "\n"  +
+                        "за слова содержащие содержащие 4 и 5 букв по 2 очка " + "\n"  +
                         "за слова содержащие содержащие 6, 7 и 8 букв по 3 очка " + "\n"  +
                         "за слова содержащие содержащие 9 и 10 букв по 4 очка " + "\n"  +
                         "за слова содержащие содержащие 11 и 12 букв по 5 очков " + "\n"  +
@@ -1038,6 +1008,7 @@ public class GameStart extends AppCompatActivity  {
         Randomizator(); // разиваем на буквы
         SetLiteralsonButtons(); //установка букв на слова
         ListXUpFull(); // заполняем листы координат
+
         ShowButtons(); // услвие появление кнопок зависитот кол-ва букв в слове
       //  Creates(); //активация и движеение кнопок
     } // следующее слово
@@ -1105,7 +1076,7 @@ public class GameStart extends AppCompatActivity  {
                 setExpr(1);
                 return expr;
             case 4:
-                setExpr(1);
+                setExpr(2);
                 return expr;
             case 5:
                 setExpr(2);
@@ -1250,8 +1221,8 @@ public class GameStart extends AppCompatActivity  {
 
 //            progressBar.setProgress(getCounter());
             progressLvl_exp();
-
             chars_layout.startAnimation(animation);
+            ShowTrueWord();
         } else if (listBuffer.contains(KeyWord)){
             ListXUpFull();
 //            setCounter(getCounter()-0);
@@ -1259,23 +1230,28 @@ public class GameStart extends AppCompatActivity  {
 ////            progressBar.setProgress(getCounter());
 //            progressLvl_exp();
             setCounter(-1);
+            ShowMissWord();
             progressLvl_exp();
             Toast.makeText(this, "Повтор слова, такое уже есть", Toast.LENGTH_SHORT).show();
             Wrong_Switch_answer().add(KeyWord);
             chars_layout.startAnimation(animation2);
             ressetChars();
-        } else{
+        } else if (ArrayListWord.length<=3) {
+                Toast.makeText(this, "Меньше трех букв нельзя", Toast.LENGTH_SHORT).show();
+        }else{
             ListXUpFull();
 //            setCounter(getCounter()-0);
 //            setExp(getExp()-0);
 ////            progressBar.setProgress(getCounter());
 //            progressLvl_exp();
             setCounter(-1);
+            ShowMissWord();
             progressLvl_exp();
             Wrong_Switch_answer().add(KeyWord);
             chars_layout.startAnimation(animation2);
             ressetChars();
         }
+
 
 
         EneblendButtonsAffterPress();
@@ -1406,23 +1382,7 @@ public class GameStart extends AppCompatActivity  {
 //                break;
 //        }
 //    }
-//    protected void ShowNewLvl(){
-//        setTryChenge(getTryChenge()+5);
-//        ObjectAnimator scaleXAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleX", 0.3f, 2.5f);
-//        scaleXAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-//        scaleXAnimation.setDuration(1900);
-//        ObjectAnimator scaleYAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleY", 0.3f, 2.5f);
-//        scaleYAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-//        scaleYAnimation.setDuration(1900);
-//        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(img_nextlvl, "alpha", 1F, 0F);
-//        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
-//        alphaAnimation.setDuration(2500);
-//
-//
-//        AnimatorSet animationSet = new AnimatorSet();
-//        animationSet.play(scaleXAnimation).with(scaleYAnimation).with(alphaAnimation);
-//        animationSet.start();
-//    } //показать уведомление о новом уровне
+
 
     protected void EneblendButtonsAffterPress(){
         pr1.setEnabled(true);
@@ -1455,166 +1415,10 @@ public class GameStart extends AppCompatActivity  {
         pr14.setBackgroundResource(R.drawable.main_note_press);
     } //кнопки снова активны и имеют исходный стиль
 
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    public void Creates(){
-//
-//        button1 = ObjectAnimator.ofPropertyValuesHolder(pr1,
-//                PropertyValuesHolder.ofFloat("x", 0, 850),
-//                PropertyValuesHolder.ofFloat("y", 140, 1050));
-//                    button1.setDuration(6000 +getSpeed_a());
-//                        button1.setRepeatCount(ObjectAnimator.INFINITE);
-//                        button1.setRepeatMode(ObjectAnimator.REVERSE);
-//
-////        button1.start();
-////2 кнопка
-//        button2 = ObjectAnimator.ofPropertyValuesHolder(pr2,
-//                PropertyValuesHolder.ofFloat("x", 200, 400),
-//                PropertyValuesHolder.ofFloat("y", 140, 1050));
-//        button2.setDuration(6300+getSpeed_a());
-//        button2.setRepeatCount(ObjectAnimator.INFINITE);
-//        button2.setRepeatMode(ObjectAnimator.REVERSE);
-////        button2.start();
-////3 кнопка
-//        button3 = ObjectAnimator.ofPropertyValuesHolder(pr3,
-//                PropertyValuesHolder.ofFloat("x", 0, 850),
-//                PropertyValuesHolder.ofFloat("y", 140, 140));
-//        button3.setDuration(7500+getSpeed_a());
-//        button3.setRepeatCount(ObjectAnimator.INFINITE);
-//        button3.setRepeatMode(ObjectAnimator.REVERSE);
-////        button3.start();
-////4 кнопка
-//        button4 = ObjectAnimator.ofPropertyValuesHolder(pr4,
-//                PropertyValuesHolder.ofFloat("x", 0, 850),
-//                PropertyValuesHolder.ofFloat("y", 500, 500));
-//        button4.setDuration(8000+getSpeed_a());
-//        button4.setRepeatCount(ObjectAnimator.INFINITE);
-//        button4.setRepeatMode(ObjectAnimator.REVERSE);
-////        button4.start();
-////5 кнопка
-//        button5 = ObjectAnimator.ofPropertyValuesHolder(pr5,
-//                PropertyValuesHolder.ofFloat("x", 0, 850),
-//                PropertyValuesHolder.ofFloat("y", 900, 900));
-//        button5.setDuration(5300+getSpeed_a());
-//        button5.setRepeatCount(ObjectAnimator.INFINITE);
-//        button5.setRepeatMode(ObjectAnimator.REVERSE);
-////        button5.start();
-////6 кнопка
-//        button6 = ObjectAnimator.ofPropertyValuesHolder(pr6,
-//                PropertyValuesHolder.ofFloat("x", 850, 0),
-//                PropertyValuesHolder.ofFloat("y", 300, 300));
-//        button6.setDuration(5600 +getSpeed_a());
-//        button6.setRepeatCount(ObjectAnimator.INFINITE);
-//        button6.setRepeatMode(ObjectAnimator.REVERSE);
-////        button6.start();
-////7 кнопка
-//        button7 = ObjectAnimator.ofPropertyValuesHolder(pr7,
-//                PropertyValuesHolder.ofFloat("x", 850, 0),
-//                PropertyValuesHolder.ofFloat("y", 700, 700));
-//        button7.setDuration(4400 +getSpeed_a());
-//        button7.setRepeatCount(ObjectAnimator.INFINITE);
-//        button7.setRepeatMode(ObjectAnimator.REVERSE);
-////        button7.start();
-////8 кнопка
-//        button8 = ObjectAnimator.ofPropertyValuesHolder(pr8,
-//                PropertyValuesHolder.ofFloat("x", 200, 650),
-//                PropertyValuesHolder.ofFloat("y", 1050, 140));
-//        button8.setDuration(3900 +getSpeed_a());
-//        button8.setRepeatCount(ObjectAnimator.INFINITE);
-//        button8.setRepeatMode(ObjectAnimator.REVERSE);
-////        button8.start();
-////9 кнопка не настроил
-//        button9 = ObjectAnimator.ofPropertyValuesHolder(pr9,
-//                PropertyValuesHolder.ofFloat("x", 800, 800),
-//                PropertyValuesHolder.ofFloat("y", 1050, 140));
-//        button9.setDuration(4100 +getSpeed_a());
-//        button9.setRepeatCount(ObjectAnimator.INFINITE);
-//        button9.setRepeatMode(ObjectAnimator.REVERSE);
-////        button9.start();
-////10 кнопка
-//        button10 = ObjectAnimator.ofPropertyValuesHolder(pr10,
-//                PropertyValuesHolder.ofFloat("x", 0, 250),
-//                PropertyValuesHolder.ofFloat("y", 1050, 140));
-//        button10.setDuration(4500 +getSpeed_a());
-//        button10.setRepeatCount(ObjectAnimator.INFINITE);
-//        button10.setRepeatMode(ObjectAnimator.REVERSE);
-////        button10.start();
-////11 кнопка
-//        button11 = ObjectAnimator.ofPropertyValuesHolder(pr11,
-//                PropertyValuesHolder.ofFloat("x", 850, 100),
-//                PropertyValuesHolder.ofFloat("y", 140, 950));
-//        button11.setDuration(5700 +getSpeed_a());
-//        button11.setRepeatCount(ObjectAnimator.INFINITE);
-//        button11.setRepeatMode(ObjectAnimator.REVERSE);
-////        button11.start();
-////12 кнопка
-//        button12 = ObjectAnimator.ofPropertyValuesHolder(pr12,
-//                PropertyValuesHolder.ofFloat("x", 700, 400),
-//                PropertyValuesHolder.ofFloat("y", 140, 1050));
-//        button12.setDuration(3600 +getSpeed_a());
-//        button12.setRepeatCount(ObjectAnimator.INFINITE);
-//        button12.setRepeatMode(ObjectAnimator.REVERSE);
-////        button12.start();
-//
-////13 кнопка
-//        button13 = ObjectAnimator.ofPropertyValuesHolder(pr13,
-//                PropertyValuesHolder.ofFloat("x", 850, 0),
-//                PropertyValuesHolder.ofFloat("y", 1100, 1050));
-//        button13.setDuration(5100 +getSpeed_a());
-//        button13.setRepeatCount(ObjectAnimator.INFINITE);
-//        button13.setRepeatMode(ObjectAnimator.REVERSE);
-////        button13.start();
-////14 кнопка
-//        button14 = ObjectAnimator.ofPropertyValuesHolder(pr14,
-//                PropertyValuesHolder.ofFloat("x", 500, 500),
-//                PropertyValuesHolder.ofFloat("y", 140, 1050));
-//        button14.setDuration(4800 +getSpeed_a());
-//        button14.setRepeatCount(ObjectAnimator.INFINITE);
-//        button14.setRepeatMode(ObjectAnimator.REVERSE);
-////        button14.start();
-//    } //движение кнопок
 
 
 
     protected void SwitchTextField(){
-//        switch(getTextFlag()){
-//            case 1:
-//                textButton1.setText(String.valueOf(MainListWord));
-//                break;
-//            case 2:
-//                textButton2.setText(String.valueOf(MainListWord));
-//                break;
-//            case 3:
-//                textButton3.setText(String.valueOf(MainListWord));
-//                break;
-//            case 4:
-//                textButton4.setText(String.valueOf(MainListWord));
-//                break;
-//            case 5:
-//                textButton5.setText(String.valueOf(MainListWord));
-//                break;
-//            case 6:
-//                textButton6.setText(String.valueOf(MainListWord));
-//                break;
-//            case 7:
-//                textButton7.setText(String.valueOf(MainListWord));
-//                break;
-//            case 8:
-//                textButton8.setText(String.valueOf(MainListWord));
-//                break;
-//            case 9:
-//                textButton9.setText(String.valueOf(MainListWord));
-//                break;
-//            case 10:
-//                textButton10.setText(String.valueOf(MainListWord));
-//                break;
-//        }
-
-
-// Старое назначение букв на выход     // ста
-
-        // старое назначение букв на вывод на виюшку
-
-
         if (MainListWord.size() == 1){
             char_1.setText(MainListWord.get(0));
             char_2.setText("");
@@ -2052,9 +1856,9 @@ public class GameStart extends AppCompatActivity  {
         Thru_answer_3.setAdapter(adapter_thru_3);
         Thru_answer_4.setAdapter(adapter_thru_4);
 
-        Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
-        adapter_wrong_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, Wrong_list_1);
-        Wrong_answer_1.setAdapter(adapter_wrong_1);
+//        Wrong_answer_1 = v.findViewById(R.id.Wrong_answer_1);
+//        adapter_wrong_1 = new ArrayAdapter<>(this, R.layout.simple_list_item_my, Wrong_list_1);
+//        Wrong_answer_1.setAdapter(adapter_wrong_1);
 
 
 
@@ -2069,32 +1873,32 @@ public class GameStart extends AppCompatActivity  {
             }
         });
 
-        thisWordShow.setText(getControl());
+//        thisWordShow.setText(getControl());
 
         if (getControl().equalsIgnoreCase("котлисаслон")) {
             Thru_answer_1.setVisibility(View.VISIBLE);
             Thru_answer_2.setVisibility(View.GONE);
             Thru_answer_3.setVisibility(View.GONE);
             Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.VISIBLE);
+//            Wrong_answer_1.setVisibility(View.VISIBLE);
         } else if (getControl().equalsIgnoreCase("распределитель")) {
             Thru_answer_1.setVisibility(View.GONE);
             Thru_answer_2.setVisibility(View.VISIBLE);
             Thru_answer_3.setVisibility(View.GONE);
             Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.VISIBLE);
+//            Wrong_answer_1.setVisibility(View.VISIBLE);
         } else if (getControl().equalsIgnoreCase("стенографистка")) {
             Thru_answer_1.setVisibility(View.GONE);
             Thru_answer_2.setVisibility(View.GONE);
             Thru_answer_3.setVisibility(View.VISIBLE);
             Thru_answer_4.setVisibility(View.GONE);
-            Wrong_answer_1.setVisibility(View.VISIBLE);
+//            Wrong_answer_1.setVisibility(View.VISIBLE);
         } else if (getControl().equalsIgnoreCase("простокваша")) {
             Thru_answer_1.setVisibility(View.GONE);
             Thru_answer_2.setVisibility(View.GONE);
             Thru_answer_3.setVisibility(View.GONE);
             Thru_answer_4.setVisibility(View.VISIBLE);
-            Wrong_answer_1.setVisibility(View.VISIBLE);
+//            Wrong_answer_1.setVisibility(View.VISIBLE);
         }
         TaskDialog.show();
 
@@ -2467,6 +2271,33 @@ public class GameStart extends AppCompatActivity  {
 
 
 
+    public void progressLvl_exp_letsGo(){
+        int rndProgress = getCounter();
+        currentMaxProgress = calculateMaxProgress();
+        int currentProgress = progressBar.getProgress() + rndProgress;
+        if (currentLVL<list_lvl.size()-1){
+            if (list_lvl.get(list_lvl.size() - 1) >= getSum())
+                all.add(rndProgress);
+            if (lvlUP_lets_go(rndProgress)) {
+                int i = progressBar.getProgress() + rndProgress - currentMaxProgress;
+                progressBar.setProgress(i);
+            } else
+                progressBar.setProgress(currentProgress);
+            progressBar.setMax(calculateMaxProgress());
+            //Toast.makeText(this, "+ " + rndProgress + " exp", Toast.LENGTH_SHORT).show();
+            updateUIafterClick();
+        }
+    }
+
+    private Boolean lvlUP_lets_go(int nextExp) {
+        if ((currentLVL < list_lvl.size() - 2 && (progressBar.getProgress() + nextExp) >= list_lvl.get(currentLVL + 1) - list_lvl.get(currentLVL))) {
+            currentLVL++;
+            setTryChenge(getTryChenge()+5);
+            return true;
+        }
+        return false;
+    }
+
     public void progressLvl_exp(){
         int rndProgress = getCounter();
         currentMaxProgress = calculateMaxProgress();
@@ -2491,6 +2322,7 @@ public class GameStart extends AppCompatActivity  {
         if ((currentLVL < list_lvl.size() - 2 && (progressBar.getProgress() + nextExp) >= list_lvl.get(currentLVL + 1) - list_lvl.get(currentLVL))) {
             currentLVL++;
             setTryChenge(getTryChenge()+5);
+            ShowNewLvl();
             return true;
         }
         return false;
@@ -2511,7 +2343,7 @@ public class GameStart extends AppCompatActivity  {
         else
             scoreMax.setText(list_lvl.get(currentLVL) + "");
         lvlview.setText(currentLVL + "");
-       score.setText(getSummaryExp());
+       score.setText(getSummaryExp()+ "/");
     }
 
     private String getSummaryExp() {
@@ -2542,10 +2374,11 @@ public class GameStart extends AppCompatActivity  {
 
 
     private void load() {
+        ReadfromDB();
         currentLVL = getStepOnNextLvl();
         int sum = getCounter();
         lvlview.setText(currentLVL + "");
-        score.setText(sum + "");
+        score.setText(sum + "/");
         int d = 0;
         if (currentLVL >= 0 && currentLVL+1 < list_lvl.size()) {
             d = sum  - list_lvl.get(currentLVL);
@@ -2554,9 +2387,53 @@ public class GameStart extends AppCompatActivity  {
             progressBar.setMax(list_lvl.get(currentLVL + 1) - list_lvl.get(currentLVL));
             progressBar.setProgress(d);
         }
-
-
     }
+
+
+    protected void ShowNewLvl(){
+        ObjectAnimator scaleXAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleX", 0.3f, 2.5f);
+        scaleXAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleXAnimation.setDuration(1900);
+        ObjectAnimator scaleYAnimation = ObjectAnimator.ofFloat(img_nextlvl, "scaleY", 0.3f, 2.5f);
+        scaleYAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleYAnimation.setDuration(1900);
+        ObjectAnimator alphaAnimation = ObjectAnimator.ofFloat(img_nextlvl, "alpha", 1F, 0F);
+        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        alphaAnimation.setDuration(2500);
+        AnimatorSet animationSet = new AnimatorSet();
+        animationSet.play(scaleXAnimation).with(scaleYAnimation).with(alphaAnimation);
+        animationSet.start();
+    } //показать уведомление о новом уровне
+
+    protected void ShowTrueWord(){
+        ObjectAnimator scaleXAnimation_wow = ObjectAnimator.ofFloat(thrue_word, "scaleX", 0.3f, 2.5f);
+        scaleXAnimation_wow.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleXAnimation_wow.setDuration(1900);
+        ObjectAnimator scaleYAnimation_wow = ObjectAnimator.ofFloat(thrue_word, "scaleY", 0.3f, 2.5f);
+        scaleYAnimation_wow.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleYAnimation_wow.setDuration(1900);
+        ObjectAnimator alphaAnimation_wow = ObjectAnimator.ofFloat(thrue_word, "alpha", 1F, 0F);
+        alphaAnimation_wow.setInterpolator(new AccelerateDecelerateInterpolator());
+        alphaAnimation_wow.setDuration(2500);
+        AnimatorSet animationSet_wow = new AnimatorSet();
+        animationSet_wow.play(scaleXAnimation_wow).with(scaleYAnimation_wow).with(alphaAnimation_wow);
+        animationSet_wow.start();
+    } //показать уведомление о верном слове
+
+    protected void ShowMissWord(){
+        ObjectAnimator scaleXAnimation_miss = ObjectAnimator.ofFloat(img_miss_word, "scaleX", 0.3f, 2.5f);
+        scaleXAnimation_miss.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleXAnimation_miss.setDuration(1900);
+        ObjectAnimator scaleYAnimation_miss = ObjectAnimator.ofFloat(img_miss_word, "scaleY", 0.3f, 2.5f);
+        scaleYAnimation_miss.setInterpolator(new AccelerateDecelerateInterpolator());
+        scaleYAnimation_miss.setDuration(1900);
+        ObjectAnimator alphaAnimation_miss = ObjectAnimator.ofFloat(img_miss_word, "alpha", 1F, 0F);
+        alphaAnimation_miss.setInterpolator(new AccelerateDecelerateInterpolator());
+        alphaAnimation_miss.setDuration(2500);
+        AnimatorSet animationSet_miss = new AnimatorSet();
+        animationSet_miss.play(scaleXAnimation_miss).with(scaleYAnimation_miss).with(alphaAnimation_miss);
+        animationSet_miss.start();
+    } //показать уведомление о верном слове
 
 
     @Override
@@ -2572,11 +2449,9 @@ public class GameStart extends AppCompatActivity  {
                         Intent intent = new Intent(GameStart.this, MainActivity.class);
                         startActivity(intent);
                         finish();
-
                     }
                 }).create().show();
     } //переназнчание кнопки назад
-
 }
 
 

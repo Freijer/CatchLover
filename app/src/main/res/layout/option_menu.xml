@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/sub_menu_title"
             android:layout_margin="10dp"
-            android:text="Меню"
             android:textSize="40dp"
             android:textAlignment="center"/>
 
@@ -33,11 +32,8 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/title_sub_menu"
-            android:background="@drawable/sub_menu_button"
-
-            android:layout_centerHorizontal="true"
-            android:text="Продолжить"/>
-
+            android:background="@drawable/sub_menu_button_next"
+            android:layout_centerHorizontal="true"/>
 
         <Button
             android:id="@+id/faq"
@@ -46,9 +42,8 @@
             android:layout_margin="10dp"
             android:layout_below="@id/butCloseOption"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/sub_menu_button"
-            android:onClick="onClick"
-            android:text="инструкция"/>
+            android:background="@drawable/sub_menu_button_instruction"
+            android:onClick="onClick"/>
 
         <Button
             android:id="@+id/quest"
@@ -57,9 +52,8 @@
             android:layout_margin="10dp"
             android:layout_below="@id/faq"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/sub_menu_button"
-            android:onClick="Mission_random_lenght"
-            android:text="статистика"/>
+            android:background="@drawable/sub_menu_button_statistic"
+            android:onClick="Mission_random_lenght" />
 
 
         <Button
@@ -69,9 +63,8 @@
             android:layout_margin="10dp"
             android:layout_below="@id/quest"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/sub_menu_button"
-            android:onClick="TaskShow"
-            android:text="собранные слова"/>
+            android:background="@drawable/sub_menu_words"
+            android:onClick="TaskShow"/>
 
         <Button
             android:id="@+id/about"
@@ -81,8 +74,7 @@
             android:layout_marginBottom="30dp"
             android:layout_below="@id/task"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/sub_menu_button"
-            android:text="Об игре"/>
+            android:background="@drawable/sub_menu_button_about"/>
 
 
 

@@ -10,6 +10,9 @@
     android:screenOrientation="portrait" >
 
 
+
+
+
     <Button
         android:id="@+id/starter"
         android:layout_width="wrap_content"
@@ -24,78 +27,96 @@
     <RelativeLayout
         android:id="@+id/topLayout"
         android:layout_margin="5dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+        <RelativeLayout
+            android:id="@+id/intod_latout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_alignParentStart="true"
             android:layout_toStartOf="@+id/change_img"
             android:layout_centerVertical="true"
-            android:background="@drawable/main_progress"/>
+            android:background="@drawable/main_progressbar"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:shape="oval"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/change_img"
+            android:progressDrawable="@drawable/dash_progressbar"
+            />
+
+
 
         <TextView
             android:id="@+id/textLvl"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/lvlview"
             android:layout_alignTop="@+id/progressBar"
             android:layout_marginStart="15dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="3dp"
             android:layout_marginTop="5dp"
-            android:text="Уровень"
-            android:textColor="#000000"
+            android:text="Уровень:"
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textAlignment="center"/>
         <TextView
             android:id="@+id/lvlview"
             android:layout_width="30dp"
             android:layout_height="20dp"
+            android:layout_marginTop="5dp"
             android:layout_alignEnd="@id/progressBar"
             android:layout_alignTop="@+id/progressBar"
             android:layout_marginEnd="5dp"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
-            android:textAlignment="center"/>
+            android:gravity="left"
+            android:textAlignment="gravity"
+            />
 
 
         <TextView
             android:id="@+id/textScore"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@+id/score"
             android:layout_alignBottom="@+id/progressBar"
             android:layout_marginStart="15dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="25dp"
             android:layout_marginBottom="5dp"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="12sp"
             android:textAlignment="center"
-            android:text="Очки" />
+            android:text="Очки:" />
         <TextView
             android:id="@+id/score"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="20dp"
             android:layout_alignStart="@id/scoreMax"
-            android:textColor="#000000"
-            android:layout_marginStart="-30dp"
+            android:textColor="#FFFFFF"
+            android:layout_marginStart="-25dp"
             android:layout_marginBottom="5dp"
             android:layout_alignBottom="@+id/progressBar"
-            android:textAlignment="center"
+            android:textAlignment="textEnd"
             android:textSize="12sp"/>
         <TextView
             android:id="@+id/scoreMax"
-            android:layout_width="30dp"
+            android:layout_width="25dp"
             android:layout_height="20dp"
             android:layout_alignEnd="@id/progressBar"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
             android:layout_alignBottom="@+id/progressBar"
@@ -111,7 +132,7 @@
             android:layout_height="50dp"
             android:background="@drawable/main_change_try"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="7dp"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_centerVertical="true"
@@ -121,15 +142,13 @@
                     android:id="@+id/tryChange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Очки смены слов:"
-                    android:textColor="#000000"
+                    android:text="Cмена слов:"
+                    android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     android:layout_alignStart="@+id/change_img"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginTop="10dp"
-                     />
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/textClock"
@@ -140,7 +159,7 @@
             android:layout_marginStart="5dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="50dp"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textSize="12sp" />
 
 
@@ -156,8 +175,43 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/main_game_board"
-        app:layoutDescription="@xml/game_start_xml_colo_scene2">
+        app:layoutDescription="@xml/game_start_xml_colo_scene2"
+        android:onClick="open_menu">
 
+
+
+        <ImageView
+            android:id="@+id/img_nextlvl"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/nextlvl" />
+
+        <ImageView
+            android:id="@+id/thrue_word"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/wow" />
+
+        <ImageView
+            android:id="@+id/img_miss_word"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:alpha="0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/main_miss_word" />
 
         <Button
             android:id="@+id/pr1"
@@ -300,7 +354,6 @@
             android:textSize="14sp"
             tools:layout_editor_absoluteX="7dp"
             tools:layout_editor_absoluteY="326dp" />
-
     </androidx.constraintlayout.motion.widget.MotionLayout>
 
     <RelativeLayout
@@ -536,7 +589,7 @@
 
     <RelativeLayout
         android:id="@+id/engine_buttons"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
@@ -547,34 +600,34 @@
 
         <Button
             android:id="@+id/resetWord"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/main_reset_word"
             android:onClick="ResetField"
-            android:layout_centerVertical="true" />
 
+            android:layout_toStartOf="@+id/menu_pause" />
 
         <Button
-            android:id="@+id/menu"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/main_menu"
-            android:layout_toEndOf="@id/resetWord"
-            android:layout_marginBottom="5dp"
-            android:layout_centerVertical="true"
-            android:onClick="open_menu"/>
+            android:id="@+id/menu_pause"
+            android:layout_width="55dp"
+            android:layout_height="45dp"
+            android:onClick="open_menu"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/main_menu" />
 
         <Button
             android:id="@+id/reset"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:layout_toEndOf="@id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/main_reset_all"
-            android:onClick="ResTart" />
+            android:onClick="ResTart"
+            android:layout_toEndOf="@+id/menu_pause"
+       />
+
     </RelativeLayout>
 
 </RelativeLayout>
